@@ -12,18 +12,18 @@ public class Crew {
 
 	private int numberOfCrewMembers;
 	private Ship ship;
-	private Double money;
+	private Double money = 2.0;
 	Scanner scanner = new Scanner(System.in);
+//	private int raceNum;
 
 
 	
 	
 	//needs medical and food
-	public Crew(int numberOfCrewMembers, String shipName, Double money) {
+	public Crew(int numberOfCrewMembers, String shipName) {
 //		private ArrayList<Person> crewMemberArray = new ArrayList<Person>(numberOfCrewMembers);
 		this.crewMemberArray = new ArrayList<Person>(numberOfCrewMembers);
 		this.numberOfCrewMembers = numberOfCrewMembers;
-		this.money = money;
 		this.ship = new Ship(shipName);
 		
 		
@@ -32,24 +32,47 @@ public class Crew {
 		}
 	public void buildCrew() {
 		for (int i = 0; i <numberOfCrewMembers; i+=1) {
-			Person newMember = new Person();
-			this.crewMemberArray.add(newMember);
-			this.addCrewMember(i);
+//			Person newMember = new Person();
+			this.crewMemberArray.add(addCrewMember(i));
+//			this.addCrewMember(i);
 		}
+		System.out.println(this.crewMemberArray);
 		}
 	
-	public void addCrewMember(int i) {
+	public Person addCrewMember(int i) {
+		int raceNum = 1;
 		System.out.println("Name? ");
 		String name = scanner.next();
-		System.out.println("Please select a race.\n1. Human\n2. Rockman\n3. Egghead\n4. Bugman\n5. Gazer\n6. Warbot");
+		System.out.println("Please select a race.\n1. Human\n2. Rockman\n3. Grey\n4. Bugman\n5. Gazer\n6. Warbot");
 		try {
-			int raceNum = scanner.nextInt();
+			raceNum = scanner.nextInt();
 		} catch (InputMismatchException e) {
-			System.out.println("Not a valid selection. Defaulting to human");
+			System.out.println("Invalid selection. Defaulting to human");
+//			int raceNum = 1;
 		}
+		return createCrewMember(name, i, raceNum);
 	}
 	
-	
+	public Person createCrewMember(String name, int i, int raceNum) {
+		switch (raceNum) {
+		case 1:
+			return new Human(name, i);
+		case 2:
+			return new Rockman(name, i);
+		case 3:
+			return new Grey(name, i);
+		case 4:
+			return new Bugman(name, i);
+		case 5:
+			return new Gazer(name, i);
+		case 6:
+			return new Warbot(name, i);
+		default:
+			System.out.println("Invalid selection. Defaulting to human.");
+			return new Human(name, i);
+		}
+		
+	}
 	
 	public void addMoney(Double cost) {
 		this.money -= cost;
@@ -63,7 +86,7 @@ public class Crew {
 	}
 	
 	public static void main(String[] args) {
-		Crew crew = new Crew(4, "Betty", 2.0);
+		Crew crew = new Crew(4, "Betty");
 		crew.buildCrew();
 	}
 	
