@@ -1,4 +1,7 @@
+package main;
 
-public class Items {
-
+public interface Items {
+	public void useItem();
+	
+	
 }
