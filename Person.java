@@ -3,20 +3,20 @@ package main;
 
 public class Person {
 	
-	private Integer uniqueIdentifier;
-	private String person_name;
-	private String person_race;
-	private Integer person_health;
-	private Integer person_max_health;
-	private Integer person_vigour;
-	private Integer person_max_vigour;
-	private Integer person_hunger;
-	private Integer person_max_hunger;
-	private Integer person_max_actions;
-	private Integer person_actions_remaining;
-	private Double person_repair_value;
-	private Double person_search_value;
-	private Boolean has_plague;
+	protected Integer uniqueIdentifier;
+	protected String person_name;
+	protected String person_race;
+	protected Integer person_health;
+	protected Integer person_max_health;
+	protected Integer person_vigour;
+	protected Integer person_max_vigour;
+	protected Integer person_hunger;
+	protected Integer person_max_hunger;
+	protected Integer person_max_actions;
+	protected Integer person_actions_remaining;
+	protected Double person_repair_value;
+	protected Double person_search_value;
+	protected Boolean has_plague;
 	
 	public Person() {
 		person_name = "unnamed crewmember";
