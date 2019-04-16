@@ -13,6 +13,7 @@ public class HealingConsumeable extends Consumable {
 		return this.Healing;
 	}
 	
+
 	public String toString() {
 		return String.format("Name = %s\nValue = %s\nHealing = %s", this.getName(), this.getValue(), getHealing());
 	}
