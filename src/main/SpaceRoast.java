@@ -2,13 +2,13 @@ package main;
 
 public class SpaceRoast extends FoodConsumable {
 
-	public SpaceRoast(String tempName, int tempvalue, int tempHunger) {
+	public SpaceRoast() {
 		super("SpaceRoast", 130, 100);
 		
 	}
 	
 	public static void main(String[] args) {
-		SpaceRoast roast = new SpaceRoast("not sure", 50, 20);
+		SpaceRoast roast = new SpaceRoast();
 		System.out.println(roast);	
 	}
 

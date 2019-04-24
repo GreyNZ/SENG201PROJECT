@@ -19,7 +19,7 @@ public class Console {
 	public void showOptions() {
 		int decision = 0;
 		String optionString = "What would you like to do? \n1. View crew member status\n2. View spaceship status\n";
-		String optionString2 = "3. Visit nearest space outpost\n4. Take action. \5. End day.\n";
+		String optionString2 = "3. Visit nearest space outpost *Currently broken*\n4. Take action. *Does Nothing* \n5. End day.\n";
 		System.out.println(optionString + optionString2);
 
 		decision = getIntDecision();
@@ -69,10 +69,21 @@ public class Console {
 		
 	}
 
-
+	//severely broken. getIntDecision is fucking it up.
 	private void visitOutpost() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Visiting outpost.");
+		Outpost outpost = new Outpost();
+		while (scanner.next() != "q") {
+			System.out.println("Would you like to purchase an item? Press q to quit.");
+			System.out.println(outpost);
+			int decision = getIntDecision();
+			if (decision < 0 || decision > 9) {
+				System.out.println("Invalid input");
+			}
+			else {
+				outpost.buyItem(decision);
+			}
+		}
 	}
 
 

@@ -2,13 +2,16 @@ package main;
 
 public class RottenFood extends FoodConsumable {
 
-	public RottenFood(String tempName, int tempvalue, int tempHunger) {
+
+	public RottenFood() {
 		super("RottenFood", 5, 2);
 		
 	}
 	
+
+	
 	public static void main(String[] args) {
-		RottenFood rottie = new RottenFood("not sure", 50, 20);
+		RottenFood rottie = new RottenFood();
 		System.out.println(rottie);	
 	}
 }
