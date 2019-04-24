@@ -54,7 +54,7 @@ public class Person {
 	}
 	
 	public String toString() {
-		return String.format("Name = %s\nRace = %s\nHealth = %s\nVigour = %s\nHunger = %s\nActions = %s\nHas Plague = %s", this.getName(), this.getRace(), this.getHealth(), this.getVigour(), this.getHunger(), this.getActions(), this.getPlagueValue());
+		return String.format("\nName = %s\nRace = %s\nHealth = %s\nVigour = %s\nHunger = %s\nActions = %s\nHas Plague = %s\n", this.getName(), this.getRace(), this.getHealth(), this.getVigour(), this.getHunger(), this.getActions(), this.getPlagueValue());
 	}
 	
 	public String getPersonStatus() {

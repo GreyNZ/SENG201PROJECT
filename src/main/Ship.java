@@ -35,7 +35,8 @@ public class Ship {
 		this.shipHealth -=  damage * shieldModifier;
 		this.lowerShield(damage);
 		if (this.shipHealth <= 0.0) {
-			Game.gameOver();
+//			Game.gameOver();
+			System.out.println("GAME HECKIN OVER SON");
 		}
 		
 
