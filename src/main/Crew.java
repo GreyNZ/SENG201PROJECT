@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+
+
+/**
+ * Builds and stores an ArrayList of Person types. Stores their ship, food, medical items and cash. 
+ * @author cam, grey
+ * 
+ */
 public class Crew {
 	
 	private ArrayList<Person> crewMemberArray;
@@ -33,12 +40,19 @@ public class Crew {
 
 	}	
 	
-	//needs medical and food
+	/**
+	 * 
+	 * @param crewSize      integer defined from GameInit class between 2-4 that specifies 
+	 *                      how many Person objects will be added to crewMemberArray.
+	 *                      
+	 * @param shipName      String defined from GameInit class, name of the ship
+	 */
 	public Crew(int crewSize, String shipName) {
 //		private ArrayList<Person> crewMemberArray = new ArrayList<Person>(numberOfCrewMembers);
 		this.crewMemberArray = new ArrayList<Person>(crewSize);
 		this.crewSize = crewSize;
 		this.ship = new Ship(shipName);
+		this.buildCrew();
 		
 		
 		//this will eventually be a switch statement inside the for loop
@@ -46,7 +60,9 @@ public class Crew {
 		}
 
 
-
+	/**
+	 * Adds Person objects to addCrewMember ArrayList
+	 */
 	public void buildCrew() {
 		for (int i = 0; i <this.crewSize; i+=1) {
 //			Person newMember = new Person();
@@ -55,7 +71,11 @@ public class Crew {
 		}
 		System.out.println(this.crewMemberArray);
 		}
-	
+	/**
+	 * Receives user input to select the race of Person object
+	 * @param i         unique identifier for the Person object, based on what index they were added to crewMemberArray
+	 * @return          Person object, specifically the user the selected subclass (race)
+	 */
 	public Person addCrewMember(int i) {
 		int raceNum = 1;
 		System.out.println("Name? ");
@@ -69,7 +89,15 @@ public class Crew {
 		}
 		return createCrewMember(name, i, raceNum);
 	}
-	
+	/**
+	 * Switch statement to create a Person object of specific race. 
+	 * Uses int's from 1-6 as cases. 
+	 * Defaults to Human to make invalid user input easier to deal with for command-line mode.
+	 * @param name              String that holds crew member's name
+	 * @param i                 Unique identifying int
+	 * @param raceNum           Switch case int
+	 * @return                  Person object 
+	 */
 	public Person createCrewMember(String name, int i, int raceNum) {
 		switch (raceNum) {
 		case 1:
