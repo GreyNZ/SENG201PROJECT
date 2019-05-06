@@ -344,64 +344,34 @@ public class MainScreen {
 		
 		JPanel TravelPanel = new JPanel();
 		tabbedPane.addTab("Travel", null, TravelPanel, null);
-		GridBagLayout gbl_TravelPanel = new GridBagLayout();
-		gbl_TravelPanel.columnWidths = new int[]{51, 252, 45, 280, 0};
-		gbl_TravelPanel.rowHeights = new int[]{95, 50, 24, 216, 34, 86, 0};
-		gbl_TravelPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_TravelPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		TravelPanel.setLayout(gbl_TravelPanel);
+		TravelPanel.setLayout(null);
 		
 		JLabel lblCaptain = new JLabel("Captain");
+		lblCaptain.setBounds(126, 0, 97, 90);
 		lblCaptain.setFont(new Font("Dialog", Font.BOLD, 22));
-		GridBagConstraints gbc_lblCaptain = new GridBagConstraints();
-		gbc_lblCaptain.fill = GridBagConstraints.VERTICAL;
-		gbc_lblCaptain.insets = new Insets(0, 0, 5, 5);
-		gbc_lblCaptain.gridx = 1;
-		gbc_lblCaptain.gridy = 1;
-		TravelPanel.add(lblCaptain, gbc_lblCaptain);
+		TravelPanel.add(lblCaptain);
 		
 		JLabel lblCoPilot = new JLabel("Co Pilot");
+		lblCoPilot.setBounds(439, 31, 97, 27);
 		lblCoPilot.setFont(new Font("Dialog", Font.BOLD, 22));
-		GridBagConstraints gbc_lblCoPilot = new GridBagConstraints();
-		gbc_lblCoPilot.insets = new Insets(0, 0, 5, 0);
-		gbc_lblCoPilot.gridx = 3;
-		gbc_lblCoPilot.gridy = 1;
-		TravelPanel.add(lblCoPilot, gbc_lblCoPilot);
+		TravelPanel.add(lblCoPilot);
 		
 		JComboBox comboBox = new JComboBox();
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.anchor = GridBagConstraints.NORTH;
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox.gridx = 1;
-		gbc_comboBox.gridy = 2;
-		TravelPanel.add(comboBox, gbc_comboBox);
+		comboBox.setBounds(51, 95, 247, 24);
+		TravelPanel.add(comboBox);
 		
 		JComboBox comboBox_1 = new JComboBox();
-		GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
-		gbc_comboBox_1.anchor = GridBagConstraints.NORTH;
-		gbc_comboBox_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_1.insets = new Insets(0, 0, 5, 0);
-		gbc_comboBox_1.gridx = 3;
-		gbc_comboBox_1.gridy = 2;
-		TravelPanel.add(comboBox_1, gbc_comboBox_1);
+		comboBox_1.setBounds(348, 95, 280, 24);
+		TravelPanel.add(comboBox_1);
 		
 		JLabel lblCockpitImage = new JLabel("HoldingText for Cockpit Image");
-		GridBagConstraints gbc_lblCockpitImage = new GridBagConstraints();
-		gbc_lblCockpitImage.fill = GridBagConstraints.BOTH;
-		gbc_lblCockpitImage.insets = new Insets(0, 0, 5, 0);
-		gbc_lblCockpitImage.gridwidth = 3;
-		gbc_lblCockpitImage.gridx = 1;
-		gbc_lblCockpitImage.gridy = 3;
-		TravelPanel.add(lblCockpitImage, gbc_lblCockpitImage);
+		lblCockpitImage.setIcon(new ImageIcon(MainScreen.class.getResource("/images/hyperspace.jpg")));
+		lblCockpitImage.setBounds(12, 175, 638, 211);
+		TravelPanel.add(lblCockpitImage);
 		
 		JButton btnTravelToNext = new JButton("Travel To Next Planet");
-		GridBagConstraints gbc_btnTravelToNext = new GridBagConstraints();
-		gbc_btnTravelToNext.fill = GridBagConstraints.BOTH;
-		gbc_btnTravelToNext.gridwidth = 3;
-		gbc_btnTravelToNext.gridx = 1;
-		gbc_btnTravelToNext.gridy = 5;
-		TravelPanel.add(btnTravelToNext, gbc_btnTravelToNext);
+		btnTravelToNext.setBounds(51, 479, 577, 86);
+		TravelPanel.add(btnTravelToNext);
 		
 		JPanel MedbayPanel = new JPanel();
 		tabbedPane.addTab("Medbay", null, MedbayPanel, null);
@@ -482,7 +452,7 @@ public class MainScreen {
 		ShipPanel.setLayout(null);
 		
 		JLabel ShipImageShipTab = new JLabel("HoldingTextShipImage");
-		ShipImageShipTab.setIcon(new ImageIcon(MainScreen.class.getResource("/images/Firefly.png")));
+		ShipImageShipTab.setIcon(new ImageIcon(MainScreen.class.getResource("/images/FireflyResized.png")));
 		ShipImageShipTab.setBounds(12, 0, 638, 404);
 		ShipPanel.add(ShipImageShipTab);
 		
