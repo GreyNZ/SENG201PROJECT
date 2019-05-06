@@ -8,10 +8,12 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class StartScreen {
 
-	private JFrame frame;
+	JFrame frame;
 
 	/**
 	 * Launch the application.
@@ -27,6 +29,16 @@ public class StartScreen {
 				}
 			}
 		});
+	}
+	
+	public void launchNewGameScreen() {
+		NewGameScreen newGame = new NewGameScreen();
+		newGame.frame.setVisible(true);
+	}
+	
+	
+	public void closeWindow() {
+		frame.dispose();
 	}
 
 	/**
@@ -52,11 +64,22 @@ public class StartScreen {
 		frame.getContentPane().add(lblTitle);
 		
 		JButton btnNewGame = new JButton("New Game");
+		btnNewGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				launchNewGameScreen();
+				closeWindow();
+			}
+		});
 		btnNewGame.setFont(new Font("L M Roman Caps10", Font.BOLD, 21));
 		btnNewGame.setBounds(54, 670, 231, 71);
 		frame.getContentPane().add(btnNewGame);
 		
 		JButton btnExitGame = new JButton("Exit Game");
+		btnExitGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				closeWindow();
+			}
+		});
 		btnExitGame.setFont(new Font("L M Roman Caps10", Font.BOLD, 21));
 		btnExitGame.setBounds(914, 670, 231, 71);
 		frame.getContentPane().add(btnExitGame);

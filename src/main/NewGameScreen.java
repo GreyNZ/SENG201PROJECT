@@ -16,7 +16,7 @@ import javax.swing.SwingConstants;
 
 public class NewGameScreen {
 
-	private JFrame frame;
+	JFrame frame;
 	private JTextField txtEnterShipName;
 	private JTextField txtEnterCrewMembers;
 
@@ -34,6 +34,20 @@ public class NewGameScreen {
 				}
 			}
 		});
+	}
+	
+	public void launchNewGameScreen() {
+		NewGameScreen newGame = new NewGameScreen();
+		newGame.frame.setVisible(true);
+	}
+	
+	public void launchStartScreen() {
+		StartScreen StartScreen = new StartScreen();
+		StartScreen.frame.setVisible(true);
+	}
+	
+	public void closeWindow() {
+		frame.dispose();
 	}
 
 	/**
@@ -90,6 +104,12 @@ public class NewGameScreen {
 		frame.getContentPane().add(btnStartGame);
 		
 		JButton btnResetScreen = new JButton("Reset Game");
+		btnResetScreen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				launchNewGameScreen();
+				closeWindow();
+			}
+		});
 		btnResetScreen.setBounds(957, 616, 231, 71);
 		btnResetScreen.setFont(new Font("L M Roman Caps10", Font.BOLD, 21));
 		frame.getContentPane().add(btnResetScreen);
@@ -132,5 +152,31 @@ public class NewGameScreen {
 		lblSelectCrewmembersRace.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSelectCrewmembersRace.setFont(new Font("Dialog", Font.BOLD, 14));
 		frame.getContentPane().add(lblSelectCrewmembersRace);
+		
+		JButton btnReturnToStartScreen = new JButton("Back");
+		btnReturnToStartScreen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				launchStartScreen();
+				closeWindow();
+			}
+		});
+		btnReturnToStartScreen.setFont(new Font("L M Roman Caps10", Font.BOLD, 21));
+		btnReturnToStartScreen.setBounds(27, 689, 231, 71);
+		frame.getContentPane().add(btnReturnToStartScreen);
+		
+		JLabel pickCrewSizeLabel = new JLabel("Please select the number of days the game lasts:");
+		pickCrewSizeLabel.setFont(new Font("Dialog", Font.BOLD, 16));
+		pickCrewSizeLabel.setBounds(12, 114, 470, 31);
+		frame.getContentPane().add(pickCrewSizeLabel);
+		
+		JSpinner crewSizeSpiner = new JSpinner();
+		crewSizeSpiner.setModel(new SpinnerNumberModel(2, 2, 4, 1));
+		crewSizeSpiner.setBounds(467, 121, 46, 20);
+		frame.getContentPane().add(crewSizeSpiner);
+		
+		JButton btnCrewSizeConfirm = new JButton("Confirm");
+		btnCrewSizeConfirm.setFont(new Font("Dialog", Font.BOLD, 14));
+		btnCrewSizeConfirm.setBounds(525, 118, 114, 25);
+		frame.getContentPane().add(btnCrewSizeConfirm);
 	}
 }
