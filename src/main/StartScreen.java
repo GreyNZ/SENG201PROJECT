@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JButton;
+import javax.swing.ImageIcon;
 
 public class StartScreen {
 
@@ -61,6 +62,7 @@ public class StartScreen {
 		frame.getContentPane().add(btnExitGame);
 		
 		JLabel lblStartScreenImage = new JLabel("holding text");
+		lblStartScreenImage.setIcon(new ImageIcon(StartScreen.class.getResource("/images/WideRectangePlanetGIF.gif")));
 		lblStartScreenImage.setHorizontalAlignment(SwingConstants.CENTER);
 		lblStartScreenImage.setBounds(246, 213, 796, 415);
 		frame.getContentPane().add(lblStartScreenImage);

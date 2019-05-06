@@ -31,6 +31,7 @@ import javax.swing.SpinnerListModel;
 import javax.swing.JTable;
 import javax.swing.JComboBox;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.ImageIcon;
 
 public class MainScreen {
 
@@ -181,7 +182,9 @@ public class MainScreen {
 		gbc_lblPartsRemainingOnPlanetLabel.gridy = 1;
 		CurrentPlanetPanel.add(lblPartsRemainingOnPlanetLabel, gbc_lblPartsRemainingOnPlanetLabel);
 		
-		JLabel lblPlanetImageLabel = new JLabel("Holding Text will take planetImage");
+		JLabel lblPlanetImageLabel = new JLabel("");
+		lblPlanetImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPlanetImageLabel.setIcon(new ImageIcon(MainScreen.class.getResource("/images/SquarePlanetGIF.gif")));
 		GridBagConstraints gbc_lblPlanetImageLabel = new GridBagConstraints();
 		gbc_lblPlanetImageLabel.fill = GridBagConstraints.BOTH;
 		gbc_lblPlanetImageLabel.insets = new Insets(0, 0, 5, 5);
@@ -431,6 +434,7 @@ public class MainScreen {
 		MedbayPanel.add(comboBox_3);
 		
 		JLabel lbl_MedicalBay_Image = new JLabel("Nice Big medical bay image");
+		lbl_MedicalBay_Image.setIcon(new ImageIcon(MainScreen.class.getResource("/images/medbaysnip.png")));
 		lbl_MedicalBay_Image.setFont(new Font("Dialog", Font.BOLD, 19));
 		lbl_MedicalBay_Image.setBounds(12, 12, 638, 439);
 		MedbayPanel.add(lbl_MedicalBay_Image);
@@ -478,7 +482,8 @@ public class MainScreen {
 		ShipPanel.setLayout(null);
 		
 		JLabel ShipImageShipTab = new JLabel("HoldingTextShipImage");
-		ShipImageShipTab.setBounds(12, 12, 638, 392);
+		ShipImageShipTab.setIcon(new ImageIcon(MainScreen.class.getResource("/images/Firefly.png")));
+		ShipImageShipTab.setBounds(12, 0, 638, 404);
 		ShipPanel.add(ShipImageShipTab);
 		
 		JLabel ShipTabSheildsValue = new JLabel("Shields:  100/100");
