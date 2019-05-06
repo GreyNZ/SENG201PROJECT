@@ -99,6 +99,13 @@ public class NewGameScreen {
 		frame.getContentPane().add(spinner_GameLength);
 		
 		JButton btnStartGame = new JButton("Start Game");
+		btnStartGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// if all inputs completed close window and open mane game running it will all inputs
+				// else: throw error saying your missing shit
+				// closeWindow();   // bundle into if all working above
+			}
+		});
 		btnStartGame.setBounds(957, 689, 231, 71);
 		btnStartGame.setFont(new Font("L M Roman Caps10", Font.BOLD, 21));
 		frame.getContentPane().add(btnStartGame);
@@ -122,6 +129,9 @@ public class NewGameScreen {
 		btnStartDefultGame.setBounds(957, 543, 231, 71);
 		btnStartDefultGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//initiate game with set values
+				//open main game
+				closeWindow();
 			}
 		});
 		btnStartDefultGame.setFont(new Font("L M Roman Caps10", Font.BOLD, 21));
