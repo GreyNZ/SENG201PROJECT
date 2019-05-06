@@ -80,7 +80,7 @@ public class NewGameScreen {
 		frame.getContentPane().add(btn_ConfirmDays);
 		
 		JSpinner spinner_GameLength = new JSpinner();
-		spinner_GameLength.setBounds(484, 77, 29, 20);
+		spinner_GameLength.setBounds(467, 77, 46, 20);
 		spinner_GameLength.setModel(new SpinnerNumberModel(3, 3, 12, 1));
 		frame.getContentPane().add(spinner_GameLength);
 		
