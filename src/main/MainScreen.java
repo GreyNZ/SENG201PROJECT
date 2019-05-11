@@ -32,6 +32,9 @@ import javax.swing.JTable;
 import javax.swing.JComboBox;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.awt.event.ActionEvent;
 
 public class MainScreen {
 
@@ -39,9 +42,14 @@ public class MainScreen {
 	private WindowManager manager;
 	private InitGame initGame;
 	private Crew crew;
-
-	/**
-	 * Launch the application.
+	private JLabel lblCrewStatsLabelMainScreen;
+	private JLabel refreshedCrewStats;
+	private JComboBox assignCrewMemberSearchPartsComboBox;
+	 
+	
+	
+	
+	/* Launch the application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -74,6 +82,35 @@ public class MainScreen {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	public void refreshCrewStatsLabel() {
+		String s = ""; 
+		String format = "%-25s%-25%s%s%n<br/>";
+//		for (Person person : crew.getCrewMemberArray()) {
+//			s += person.getName() + "  " + person.getHealth() + " " + "holding action points" + "<br/>";
+//		}
+		for (Person person : crew.getCrewMemberArray()) {
+			s += String.format(format, person.getName(), person.getHealth(), person.getActions());
+		}
+//		lblCrewStatsLabelMainScreen.setText(crew.getCrewMemberArray());
+		refreshedCrewStats.setText("<html>" + s + "</html>");
+		
+	}
+	
+	public void updateAll() {
+		refreshCrewStatsLabel();
+	}
+	
+	public String[] buildCrewArrayForCombos() {
+		ArrayList<Person> crewArrayList = crew.getCrewMemberArray();
+		String[] crewMembers = new String[crewArrayList.size()];
+		for (int i=0; i < crewArrayList.size(); i++ ) {
+			crewMembers[i] = crewArrayList.get(i).toString();
+		}
+		return crewMembers;
+		
+		
+	}
+	
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBackground(Color.LIGHT_GRAY);
@@ -223,7 +260,7 @@ public class MainScreen {
 		gbc_btnSearchForPartsButton.gridy = 5;
 		CurrentPlanetPanel.add(btnSearchForPartsButton, gbc_btnSearchForPartsButton);
 		
-		JComboBox assignCrewMemberSearchPartsComboBox = new JComboBox();
+		assignCrewMemberSearchPartsComboBox = new JComboBox(buildCrewArrayForCombos());
 		GridBagConstraints gbc_assignCrewMemberSearchPartsComboBox = new GridBagConstraints();
 		gbc_assignCrewMemberSearchPartsComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_assignCrewMemberSearchPartsComboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -367,11 +404,11 @@ public class MainScreen {
 		lblCoPilot.setFont(new Font("Dialog", Font.BOLD, 22));
 		TravelPanel.add(lblCoPilot);
 		
-		JComboBox comboBox = new JComboBox();
+		JComboBox comboBox = new JComboBox(buildCrewArrayForCombos());
 		comboBox.setBounds(51, 95, 247, 24);
 		TravelPanel.add(comboBox);
 		
-		JComboBox comboBox_1 = new JComboBox();
+		JComboBox comboBox_1 = new JComboBox(buildCrewArrayForCombos());
 		comboBox_1.setBounds(348, 95, 280, 24);
 		TravelPanel.add(comboBox_1);
 		
@@ -388,7 +425,7 @@ public class MainScreen {
 		tabbedPane.addTab("Medbay", null, MedbayPanel, null);
 		MedbayPanel.setLayout(null);
 		
-		JComboBox comboBox_Medbay_Select_Crewmember = new JComboBox();
+		JComboBox comboBox_Medbay_Select_Crewmember = new JComboBox(buildCrewArrayForCombos() );
 		comboBox_Medbay_Select_Crewmember.setToolTipText("Select Crewmember\n");
 		comboBox_Medbay_Select_Crewmember.setBounds(12, 487, 313, 24);
 		MedbayPanel.add(comboBox_Medbay_Select_Crewmember);
@@ -428,7 +465,7 @@ public class MainScreen {
 		lblCrewTab_PrintoutOfFullCrewDetails.setBounds(12, 12, 638, 449);
 		CrewPanel.add(lblCrewTab_PrintoutOfFullCrewDetails);
 		
-		JComboBox comboBox_SelectCrewmember_CrewTab = new JComboBox();
+		JComboBox comboBox_SelectCrewmember_CrewTab = new JComboBox(buildCrewArrayForCombos());
 		comboBox_SelectCrewmember_CrewTab.setToolTipText("Select Crewmember\n");
 		comboBox_SelectCrewmember_CrewTab.setBounds(12, 502, 313, 24);
 		CrewPanel.add(comboBox_SelectCrewmember_CrewTab);
@@ -439,6 +476,11 @@ public class MainScreen {
 		CrewPanel.add(comboBox_SelectFood_CrewTab);
 		
 		JButton button_Sleep_CrewTab = new JButton("Sleep");
+		button_Sleep_CrewTab.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				refreshCrewStatsLabel();
+			}
+		});
 		button_Sleep_CrewTab.setBounds(359, 502, 291, 60);
 		CrewPanel.add(button_Sleep_CrewTab);
 		
@@ -474,10 +516,11 @@ public class MainScreen {
 		
 		JLabel ShipTabHullValue = new JLabel("Hull:  100/100");
 		ShipTabHullValue.setFont(new Font("Dialog", Font.BOLD, 18));
+
 		ShipTabHullValue.setBounds(352, 416, 169, 34);
 		ShipPanel.add(ShipTabHullValue);
 		
-		JComboBox ShipTabAsignRepairman = new JComboBox();
+		JComboBox ShipTabAsignRepairman = new JComboBox(buildCrewArrayForCombos());
 		ShipTabAsignRepairman.setBounds(237, 493, 199, 24);
 		ShipPanel.add(ShipTabAsignRepairman);
 		
@@ -531,13 +574,18 @@ public class MainScreen {
 		gbc_lblCrewstatisticsbreakdown.gridy = 2;
 		panel.add(lblCrewstatisticsbreakdown, gbc_lblCrewstatisticsbreakdown);
 		
-		JLabel lblCrewStatsLabelMainScreen = new JLabel("Holding Info For Crew Details");
+		
+		
+		lblCrewStatsLabelMainScreen = new JLabel("Holding Info For Crew Details");
 		lblCrewStatsLabelMainScreen.setVerticalAlignment(SwingConstants.TOP);
 		GridBagConstraints gbc_lblCrewStatsLabelMainScreen = new GridBagConstraints();
 		gbc_lblCrewStatsLabelMainScreen.fill = GridBagConstraints.BOTH;
 		gbc_lblCrewStatsLabelMainScreen.gridx = 0;
 		gbc_lblCrewStatsLabelMainScreen.gridy = 3;
 		panel.add(lblCrewStatsLabelMainScreen, gbc_lblCrewStatsLabelMainScreen);
+		refreshedCrewStats = lblCrewStatsLabelMainScreen;
+		refreshCrewStatsLabel();
+		
 		
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();

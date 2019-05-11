@@ -159,7 +159,7 @@ public class Crew {
 		// TODO Auto-generated method stub
 		return this.ship;
 	}
-	public ArrayList getCrewMemberArray() {
+	public ArrayList<Person> getCrewMemberArray() {
 		return this.crewMemberArray;
 	}
 	

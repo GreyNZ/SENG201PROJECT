@@ -13,6 +13,7 @@ public class InitGame {
 	private int crewSize;
 	private int currentDay = 0;
 	private Crew crew = new Crew();
+	private Outpost outpost = new Outpost();
 	
 
 	// legacy console
@@ -114,5 +115,8 @@ public class InitGame {
 	}
 	public Crew getCrew() {
 		return this.crew;
+	}
+	public Outpost getOutpost() {
+		return this.outpost;
 	}
 }

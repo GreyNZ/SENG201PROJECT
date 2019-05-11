@@ -53,8 +53,11 @@ public class Person {
 		uniqueIdentifier = unique;
 	}
 	
-	public String toString() {
+	public String toLongString() {
 		return String.format("\nName = %s\nRace = %s\nHealth = %s\nVigour = %s\nHunger = %s\nActions = %s\nHas Plague = %s\n", this.getName(), this.getRace(), this.getHealth(), this.getVigour(), this.getHunger(), this.getActions(), this.getPlagueValue());
+	}
+	public String toString() {
+		return this.person_name;
 	}
 	
 	public String getPersonStatus() {
