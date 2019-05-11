@@ -19,6 +19,8 @@ public class NewGameScreen {
 	JFrame frame;
 	private JTextField txtEnterShipName;
 	private JTextField txtEnterCrewMembers;
+	private WindowManager manager;
+	private InitGame initGame;
 
 	/**
 	 * Launch the application.
@@ -52,10 +54,27 @@ public class NewGameScreen {
 
 	/**
 	 * Create the application.
+	 * @param windowManager 
 	 */
+	public NewGameScreen(WindowManager windowManager) {
+		manager = windowManager;
+		this.initGame = manager.getInitGame();
+		initialize();
+		frame.setVisible(true);
+	}
+	//Old constructor for testing 
 	public NewGameScreen() {
 		initialize();
+		frame.setVisible(true);
 	}
+	
+	
+	public void setDefaultValues() {
+		initGame.setShipName("The Enterprise");
+		initGame.setGameLength(3);
+		initGame.getCrew().buildDefaultCrew();
+	}
+	
 
 	/**
 	 * Initialize the contents of the frame.
@@ -79,6 +98,18 @@ public class NewGameScreen {
 		txtEnterShipName.setColumns(10);
 		
 		JButton btnConfirmShipName = new JButton("Confirm");
+		btnConfirmShipName.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String shipName = txtEnterShipName.getText();
+				if (shipName != "Please enter a ship name 3-12 characters") {
+					initGame.setShipName(shipName);
+				}
+				else {
+					initGame.setShipName("The Enterprise");
+				}
+				
+			}
+		});
 		btnConfirmShipName.setBounds(525, 27, 114, 25);
 		btnConfirmShipName.setFont(new Font("Dialog", Font.BOLD, 14));
 		frame.getContentPane().add(btnConfirmShipName);
@@ -113,7 +144,7 @@ public class NewGameScreen {
 		JButton btnResetScreen = new JButton("Reset Game");
 		btnResetScreen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				launchNewGameScreen();
+				manager.launchNewGameScreen();
 				closeWindow();
 			}
 		});
@@ -130,10 +161,15 @@ public class NewGameScreen {
 		btnStartDefultGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//initiate game with set values
+				setDefaultValues();
 				//open main game
+				manager.launchMainScreen();
 				closeWindow();
 			}
 		});
+		
+
+		
 		btnStartDefultGame.setFont(new Font("L M Roman Caps10", Font.BOLD, 21));
 		frame.getContentPane().add(btnStartDefultGame);
 		
@@ -166,7 +202,7 @@ public class NewGameScreen {
 		JButton btnReturnToStartScreen = new JButton("Back");
 		btnReturnToStartScreen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				launchStartScreen();
+				manager.launchStartScreen();
 				closeWindow();
 			}
 		});
@@ -189,4 +225,6 @@ public class NewGameScreen {
 		btnCrewSizeConfirm.setBounds(525, 118, 114, 25);
 		frame.getContentPane().add(btnCrewSizeConfirm);
 	}
+	
+
 }

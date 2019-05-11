@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 public class StartScreen {
 
 	JFrame frame;
+	private WindowManager manager;
 
 	/**
 	 * Launch the application.
@@ -31,10 +32,16 @@ public class StartScreen {
 		});
 	}
 	
-	public void launchNewGameScreen() {
-		NewGameScreen newGame = new NewGameScreen();
-		newGame.frame.setVisible(true);
+	public StartScreen(WindowManager incomingManager) {
+		manager = incomingManager;
+		initialize();
+		frame.setVisible(true);
 	}
+	
+//	public void launchNewGameScreen() {
+//		NewGameScreen newGame = new NewGameScreen();
+//		newGame.frame.setVisible(true);
+//	}
 	
 	
 	public void closeWindow() {
@@ -66,7 +73,7 @@ public class StartScreen {
 		JButton btnNewGame = new JButton("New Game");
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				launchNewGameScreen();
+				manager.launchNewGameScreen();
 				closeWindow();
 			}
 		});

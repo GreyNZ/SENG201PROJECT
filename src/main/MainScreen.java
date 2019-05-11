@@ -19,10 +19,10 @@ import javax.swing.JScrollBar;
 import java.awt.Component;
 import javax.swing.Box;
 import java.awt.GridBagLayout;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import net.miginfocom.swing.MigLayout;
+//import com.jgoodies.forms.layout.FormLayout;
+//import com.jgoodies.forms.layout.ColumnSpec;
+//import com.jgoodies.forms.layout.RowSpec;
+//import net.miginfocom.swing.MigLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JButton;
@@ -36,6 +36,9 @@ import javax.swing.ImageIcon;
 public class MainScreen {
 
 	private JFrame frame;
+	private WindowManager manager;
+	private InitGame initGame;
+	private Crew crew;
 
 	/**
 	 * Launch the application.
@@ -60,6 +63,14 @@ public class MainScreen {
 		initialize();
 	}
 
+	public MainScreen(WindowManager windowManager) {
+		manager = windowManager;
+		this.initGame = manager.getInitGame();
+		this.crew = initGame.getCrew();
+		initialize();
+		frame.setVisible(true);
+		}
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -75,7 +86,7 @@ public class MainScreen {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
 		
-		JLabel lblShipName = new JLabel("ShipName");
+		JLabel lblShipName = new JLabel(initGame.getShipName());
 		lblShipName.setFont(new Font("Dialog", Font.BOLD, 18));
 		GridBagConstraints gbc_lblShipName = new GridBagConstraints();
 		gbc_lblShipName.fill = GridBagConstraints.BOTH;

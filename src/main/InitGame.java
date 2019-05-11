@@ -11,20 +11,22 @@ public class InitGame {
 	private int pieces;
 	private int crewSize;
 	private int currentDay = 0;
-
+	private Crew crew = new Crew();
 	
+
+	// legacy console
 	public void initializeGame() {
 		setShipName();
 		setGameLength();
 		setPieces();
 		setCrewSize();
-//		Crew crew = new Crew(this.crewSize, this.shipName);
+//		this.crew = new Crew(this.crewSize, this.shipName);
 //		Game game = new Game(crew, this. days, this.pieces);
 //		game.mainLoop();
 		
 		
 	}
-	
+	//console
 	public void setShipName() {
 		System.out.println("Enter the name of your ship");
 		try {
@@ -33,6 +35,10 @@ public class InitGame {
 			System.out.println("Invalid input. Defaulting to Betty.");
 			shipName = "Betty";
 		}
+	}
+	// gui
+	public void setShipName(String shipName) {
+		this.shipName = shipName;
 	}
 	
 	public void setGameLength() {
@@ -89,5 +95,15 @@ public class InitGame {
 		// TODO Auto-generated method stub
 		return this.currentDay;
 	}
-
+	
+	// gui
+	public void setGameLength(int i) {
+		this.days = i;
+		setPieces();
+		// TODO Auto-generated method stub
+		
+	}
+	public Crew getCrew() {
+		return this.crew;
+	}
 }

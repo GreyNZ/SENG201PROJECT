@@ -29,14 +29,10 @@ public class Crew {
 
 
 
-	// default Crew for testing
+	// constructor
 	public Crew() {
-		this.crewMemberArray = new ArrayList<Person>(crewSize);
+		this.crewMemberArray = new ArrayList<Person>();
 
-		this.crewSize = 2;
-		this.crewMemberArray.add(this.bruce);
-		this.crewMemberArray.add(this.pineapple);
-		this.ship = new Ship("The Bowie");
 
 	}	
 	
@@ -119,6 +115,18 @@ public class Crew {
 		
 	}
 	
+	public void buildDefaultCrew() {
+		Person bruce = new Human("Bruce", 0);
+		Person pancakes = new Warbot("Pancakes", 1);
+		Person trevor = new Rockman("Trevor", 2);
+		Person bob = new Grey("Bob", 3);
+		this.crewSize = 4;
+		this.crewMemberArray.add(bruce);
+		this.crewMemberArray.add(pancakes);
+		this.crewMemberArray.add(trevor);
+		this.crewMemberArray.add(bob);
+	}
+	
 	public void addMoney(Double cost) {
 		this.money -= cost;
 	}
@@ -150,6 +158,9 @@ public class Crew {
 	public Ship getShip() {
 		// TODO Auto-generated method stub
 		return this.ship;
+	}
+	public ArrayList getCrewMemberArray() {
+		return this.crewMemberArray;
 	}
 	
 }
