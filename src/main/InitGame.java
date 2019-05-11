@@ -9,6 +9,7 @@ public class InitGame {
 	private String shipName;
 	private int days;
 	private int pieces;
+	private int currentPieces = 0;
 	private int crewSize;
 	private int currentDay = 0;
 	private Crew crew = new Crew();
@@ -75,6 +76,14 @@ public class InitGame {
 	}
 	public int getPieces() {
 		return this.pieces;
+	}
+	
+	public int getCurrentPieces() {
+		return this.currentPieces;
+	}
+	
+	public void getAddCurrentPieces() {
+		this.currentPieces = this.getCurrentPieces() + 1;
 	}
 
 	public void endDay() {

@@ -113,7 +113,7 @@ public class MainScreen {
 		gbc_lblShipSheilds.gridy = 0;
 		frame.getContentPane().add(lblShipSheilds, gbc_lblShipSheilds);
 		
-		JLabel lblPartsFound = new JLabel("Parts Found: 1/6");
+		JLabel lblPartsFound = new JLabel("Parts Found: " + initGame.getCurrentPieces() + "/" + initGame.getPieces());
 		lblPartsFound.setFont(new Font("Dialog", Font.BOLD, 14));
 		GridBagConstraints gbc_lblPartsFound = new GridBagConstraints();
 		gbc_lblPartsFound.fill = GridBagConstraints.HORIZONTAL;
@@ -131,7 +131,7 @@ public class MainScreen {
 		gbc_lblSpaceCash.gridy = 0;
 		frame.getContentPane().add(lblSpaceCash, gbc_lblSpaceCash);
 		
-		JLabel lblDaysRemaining = new JLabel("Days Remaining: 5/10");
+		JLabel lblDaysRemaining = new JLabel("Current Day : " + initGame.getCurrentDay() + "/" + initGame.getDays());
 		lblDaysRemaining.setFont(new Font("Dialog", Font.BOLD, 14));
 		GridBagConstraints gbc_lblDaysRemaining = new GridBagConstraints();
 		gbc_lblDaysRemaining.fill = GridBagConstraints.HORIZONTAL;
@@ -160,7 +160,7 @@ public class MainScreen {
 		gbl_CurrentPlanetPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		CurrentPlanetPanel.setLayout(gbl_CurrentPlanetPanel);
 		
-		JLabel lblCurrentPlanetName = new JLabel("Holding text for planetname");
+		JLabel lblCurrentPlanetName = new JLabel("Current Planet");
 		lblCurrentPlanetName.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCurrentPlanetName.setVerticalAlignment(SwingConstants.TOP);
 		lblCurrentPlanetName.setFont(new Font("Dialog", Font.BOLD, 18));
@@ -172,7 +172,7 @@ public class MainScreen {
 		gbc_lblCurrentPlanetName.gridy = 0;
 		CurrentPlanetPanel.add(lblCurrentPlanetName, gbc_lblCurrentPlanetName);
 		
-		JLabel label = new JLabel("Parts Found: 1/6");
+		JLabel label = new JLabel("Parts Found: " + initGame.getCurrentPieces() + "/" + initGame.getPieces());
 		label.setFont(new Font("Dialog", Font.BOLD, 14));
 		GridBagConstraints gbc_label = new GridBagConstraints();
 		gbc_label.anchor = GridBagConstraints.NORTH;
