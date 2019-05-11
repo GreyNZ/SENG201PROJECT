@@ -43,12 +43,27 @@ public class MainScreen {
 	private InitGame initGame;
 	private Crew crew;
 	private JLabel lblCrewStatsLabelMainScreen;
+	private JLabel lblHealthLabelMainScreen;
+	private JLabel lblActionsLabelMainScreen;
 	private JLabel refreshedCrewStats;
+	private JLabel refreshedCrewHealth;
+	private JLabel refreshedCrewActions;
 	private JComboBox assignCrewMemberSearchPartsComboBox;
-	 
-	
-	
-	
+	private JSpinner spinner_RottenFood;
+	private JSpinner spinner_SpaceSausage;
+	private JSpinner spinner_SpaceCandy;
+	private JSpinner spinner_SpaceApple;
+	private JSpinner spinner_SpaceRoast;
+	private JSpinner spinner_Bandages;
+	private JSpinner spinner_Medkit;
+	private JSpinner spinner_Nanites;
+	private JSpinner spinner_PlagueCure;
+	private ArrayList<JSpinner> spinnerArrayList = new ArrayList<JSpinner>();
+	private Outpost outpost;
+
+
+
+
 	/* Launch the application.
 	 */
 	public static void main(String[] args) {
@@ -75,6 +90,7 @@ public class MainScreen {
 		manager = windowManager;
 		this.initGame = manager.getInitGame();
 		this.crew = initGame.getCrew();
+		this.outpost = initGame.getOutpost();
 		initialize();
 		frame.setVisible(true);
 		}
@@ -82,24 +98,54 @@ public class MainScreen {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void refreshCrewStatsLabel() {
-		String s = ""; 
-		String format = "%-25s%-25%s%s%n<br/>";
+	public void refreshCrewNameLabel() {
+		String s = "";
+		String format = "%s<br/>";
 //		for (Person person : crew.getCrewMemberArray()) {
 //			s += person.getName() + "  " + person.getHealth() + " " + "holding action points" + "<br/>";
 //		}
 		for (Person person : crew.getCrewMemberArray()) {
-			s += String.format(format, person.getName(), person.getHealth(), person.getActions());
+			s += String.format(format, person.getName());
 		}
 //		lblCrewStatsLabelMainScreen.setText(crew.getCrewMemberArray());
 		refreshedCrewStats.setText("<html>" + s + "</html>");
-		
+
 	}
-	
+
+	public void refreshCrewHealth() {
+		String s = "";
+		String format = "%s<br/>";
+//		for (Person person : crew.getCrewMemberArray()) {
+//			s += person.getName() + "  " + person.getHealth() + " " + "holding action points" + "<br/>";
+//		}
+		for (Person person : crew.getCrewMemberArray()) {
+			s += String.format(format, person.getHealth());
+		}
+//		lblCrewStatsLabelMainScreen.setText(crew.getCrewMemberArray());
+		refreshedCrewHealth.setText("<html>" + s + "</html>");
+
+	}
+
+	public void refreshCrewActions() {
+		String s = "";
+		String format = "%s<br/>";
+//		for (Person person : crew.getCrewMemberArray()) {
+//			s += person.getName() + "  " + person.getHealth() + " " + "holding action points" + "<br/>";
+//		}
+		for (Person person : crew.getCrewMemberArray()) {
+			s += String.format(format, person.getActions());
+		}
+//		lblCrewStatsLabelMainScreen.setText(crew.getCrewMemberArray());
+		refreshedCrewActions.setText("<html>" + s + "</html>");
+
+	}
+
 	public void updateAll() {
-		refreshCrewStatsLabel();
+		refreshCrewNameLabel();
+		refreshCrewHealth();
+		refreshCrewActions();
 	}
-	
+
 	public String[] buildCrewArrayForCombos() {
 		ArrayList<Person> crewArrayList = crew.getCrewMemberArray();
 		String[] crewMembers = new String[crewArrayList.size()];
@@ -107,10 +153,28 @@ public class MainScreen {
 			crewMembers[i] = crewArrayList.get(i).toString();
 		}
 		return crewMembers;
-		
-		
+
+
 	}
-	
+
+
+	public void getSpinnerValues() {
+		ArrayList<Integer> shopItems = new ArrayList<>();
+		for (JSpinner spinner: this.spinnerArrayList) {
+			int value = (int) spinner.getValue();
+			shopItems.add(value);
+//			System.out.println(spinner.getValue());
+		}
+		outpost.buyItems(shopItems);
+
+	}
+	public void resetSpinnerValues() {
+		for (JSpinner spinner: this.spinnerArrayList) {
+			spinner.setValue(0);
+		}
+	}
+
+
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBackground(Color.LIGHT_GRAY);
@@ -122,7 +186,7 @@ public class MainScreen {
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
-		
+
 		JLabel lblShipName = new JLabel(initGame.getShipName());
 		lblShipName.setFont(new Font("Dialog", Font.BOLD, 18));
 		GridBagConstraints gbc_lblShipName = new GridBagConstraints();
@@ -131,7 +195,7 @@ public class MainScreen {
 		gbc_lblShipName.gridx = 0;
 		gbc_lblShipName.gridy = 0;
 		frame.getContentPane().add(lblShipName, gbc_lblShipName);
-		
+
 		JLabel lblShipHull = new JLabel("Ship Hull: 100");
 		lblShipHull.setFont(new Font("Dialog", Font.BOLD, 14));
 		GridBagConstraints gbc_lblShipHull = new GridBagConstraints();
@@ -140,7 +204,7 @@ public class MainScreen {
 		gbc_lblShipHull.gridx = 2;
 		gbc_lblShipHull.gridy = 0;
 		frame.getContentPane().add(lblShipHull, gbc_lblShipHull);
-		
+
 		JLabel lblShipSheilds = new JLabel("Ship Sheilds: 100");
 		lblShipSheilds.setFont(new Font("Dialog", Font.BOLD, 14));
 		GridBagConstraints gbc_lblShipSheilds = new GridBagConstraints();
@@ -149,7 +213,7 @@ public class MainScreen {
 		gbc_lblShipSheilds.gridx = 3;
 		gbc_lblShipSheilds.gridy = 0;
 		frame.getContentPane().add(lblShipSheilds, gbc_lblShipSheilds);
-		
+
 		JLabel lblPartsFound = new JLabel("Parts Found: " + initGame.getCurrentPieces() + "/" + initGame.getPieces());
 		lblPartsFound.setFont(new Font("Dialog", Font.BOLD, 14));
 		GridBagConstraints gbc_lblPartsFound = new GridBagConstraints();
@@ -158,7 +222,7 @@ public class MainScreen {
 		gbc_lblPartsFound.gridx = 6;
 		gbc_lblPartsFound.gridy = 0;
 		frame.getContentPane().add(lblPartsFound, gbc_lblPartsFound);
-		
+
 		JLabel lblSpaceCash = new JLabel("Space Cash: $100");
 		lblSpaceCash.setFont(new Font("Dialog", Font.BOLD, 14));
 		GridBagConstraints gbc_lblSpaceCash = new GridBagConstraints();
@@ -167,7 +231,7 @@ public class MainScreen {
 		gbc_lblSpaceCash.gridx = 7;
 		gbc_lblSpaceCash.gridy = 0;
 		frame.getContentPane().add(lblSpaceCash, gbc_lblSpaceCash);
-		
+
 		JLabel lblDaysRemaining = new JLabel("Current Day : " + initGame.getCurrentDay() + "/" + initGame.getDays());
 		lblDaysRemaining.setFont(new Font("Dialog", Font.BOLD, 14));
 		GridBagConstraints gbc_lblDaysRemaining = new GridBagConstraints();
@@ -177,7 +241,7 @@ public class MainScreen {
 		gbc_lblDaysRemaining.gridx = 8;
 		gbc_lblDaysRemaining.gridy = 0;
 		frame.getContentPane().add(lblDaysRemaining, gbc_lblDaysRemaining);
-		
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		GridBagConstraints gbc_tabbedPane = new GridBagConstraints();
 		gbc_tabbedPane.insets = new Insets(0, 0, 0, 5);
@@ -187,7 +251,7 @@ public class MainScreen {
 		gbc_tabbedPane.gridx = 0;
 		gbc_tabbedPane.gridy = 2;
 		frame.getContentPane().add(tabbedPane, gbc_tabbedPane);
-		
+
 		JPanel CurrentPlanetPanel = new JPanel();
 		tabbedPane.addTab("Current Planet", null, CurrentPlanetPanel, null);
 		GridBagLayout gbl_CurrentPlanetPanel = new GridBagLayout();
@@ -196,7 +260,7 @@ public class MainScreen {
 		gbl_CurrentPlanetPanel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_CurrentPlanetPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		CurrentPlanetPanel.setLayout(gbl_CurrentPlanetPanel);
-		
+
 		JLabel lblCurrentPlanetName = new JLabel("Current Planet");
 		lblCurrentPlanetName.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCurrentPlanetName.setVerticalAlignment(SwingConstants.TOP);
@@ -208,7 +272,7 @@ public class MainScreen {
 		gbc_lblCurrentPlanetName.gridx = 0;
 		gbc_lblCurrentPlanetName.gridy = 0;
 		CurrentPlanetPanel.add(lblCurrentPlanetName, gbc_lblCurrentPlanetName);
-		
+
 		JLabel label = new JLabel("Parts Found: " + initGame.getCurrentPieces() + "/" + initGame.getPieces());
 		label.setFont(new Font("Dialog", Font.BOLD, 14));
 		GridBagConstraints gbc_label = new GridBagConstraints();
@@ -219,7 +283,7 @@ public class MainScreen {
 		gbc_label.gridx = 3;
 		gbc_label.gridy = 0;
 		CurrentPlanetPanel.add(label, gbc_label);
-		
+
 		JLabel lblPartsRemainingOnPlanetLabel = new JLabel("Parts on Planet: 1/1");
 		lblPartsRemainingOnPlanetLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		GridBagConstraints gbc_lblPartsRemainingOnPlanetLabel = new GridBagConstraints();
@@ -229,7 +293,7 @@ public class MainScreen {
 		gbc_lblPartsRemainingOnPlanetLabel.gridx = 3;
 		gbc_lblPartsRemainingOnPlanetLabel.gridy = 1;
 		CurrentPlanetPanel.add(lblPartsRemainingOnPlanetLabel, gbc_lblPartsRemainingOnPlanetLabel);
-		
+
 		JLabel lblPlanetImageLabel = new JLabel("");
 		lblPlanetImageLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPlanetImageLabel.setIcon(new ImageIcon(MainScreen.class.getResource("/images/SquarePlanetGIF.gif")));
@@ -240,7 +304,7 @@ public class MainScreen {
 		gbc_lblPlanetImageLabel.gridx = 0;
 		gbc_lblPlanetImageLabel.gridy = 3;
 		CurrentPlanetPanel.add(lblPlanetImageLabel, gbc_lblPlanetImageLabel);
-		
+
 		JLabel lblAssignCrewMember = new JLabel("Assign Crew Member To Search Planet For Parts");
 		lblAssignCrewMember.setFont(new Font("Dialog", Font.BOLD, 14));
 		GridBagConstraints gbc_lblAssignCrewMember = new GridBagConstraints();
@@ -250,7 +314,7 @@ public class MainScreen {
 		gbc_lblAssignCrewMember.gridx = 0;
 		gbc_lblAssignCrewMember.gridy = 5;
 		CurrentPlanetPanel.add(lblAssignCrewMember, gbc_lblAssignCrewMember);
-		
+
 		JButton btnSearchForPartsButton = new JButton("Search");
 		GridBagConstraints gbc_btnSearchForPartsButton = new GridBagConstraints();
 		gbc_btnSearchForPartsButton.insets = new Insets(0, 0, 5, 5);
@@ -259,7 +323,7 @@ public class MainScreen {
 		gbc_btnSearchForPartsButton.gridx = 3;
 		gbc_btnSearchForPartsButton.gridy = 5;
 		CurrentPlanetPanel.add(btnSearchForPartsButton, gbc_btnSearchForPartsButton);
-		
+
 		assignCrewMemberSearchPartsComboBox = new JComboBox(buildCrewArrayForCombos());
 		GridBagConstraints gbc_assignCrewMemberSearchPartsComboBox = new GridBagConstraints();
 		gbc_assignCrewMemberSearchPartsComboBox.insets = new Insets(0, 0, 5, 5);
@@ -267,279 +331,296 @@ public class MainScreen {
 		gbc_assignCrewMemberSearchPartsComboBox.gridx = 0;
 		gbc_assignCrewMemberSearchPartsComboBox.gridy = 6;
 		CurrentPlanetPanel.add(assignCrewMemberSearchPartsComboBox, gbc_assignCrewMemberSearchPartsComboBox);
-		
+
 		JPanel TradePanel = new JPanel();
 		tabbedPane.addTab("Trade", null, TradePanel, null);
 		TradePanel.setLayout(null);
-		
+
 		JLabel lblWelcomeToThe = new JLabel("Welcome to the Space Shop, here for all you space needs");
 		lblWelcomeToThe.setFont(new Font("Dialog", Font.BOLD, 14));
 		lblWelcomeToThe.setHorizontalAlignment(SwingConstants.CENTER);
 		lblWelcomeToThe.setBounds(22, 12, 638, 43);
 		TradePanel.add(lblWelcomeToThe);
-		
+
 		JButton btnPurchaseItems = new JButton("Purchase Items");
+		btnPurchaseItems.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				getSpinnerValues();
+				resetSpinnerValues();
+			}
+		});
 		btnPurchaseItems.setBounds(401, 551, 249, 66);
 		TradePanel.add(btnPurchaseItems);
-		
+
 		JLabel VenderNotelbl = new JLabel("Dear customer please select the items your wish to purchase and then confirm your order");
 		VenderNotelbl.setBounds(22, 67, 628, 43);
 		TradePanel.add(VenderNotelbl);
-		
+
 		JLabel lblHealingItems = new JLabel("Healing Items");
 		lblHealingItems.setFont(new Font("Dialog", Font.BOLD, 17));
 		lblHealingItems.setBounds(22, 122, 146, 24);
 		TradePanel.add(lblHealingItems);
-		
+
 		JLabel lblBandagesHeal = new JLabel("Item Name:                 Heaing:                    Cost:");
 		lblBandagesHeal.setVerticalAlignment(SwingConstants.TOP);
 		lblBandagesHeal.setBounds(22, 158, 349, 15);
 		TradePanel.add(lblBandagesHeal);
-		
+
 		JLabel lblNewLabel = new JLabel("Bandages                    20                             $50");
 		lblNewLabel.setBounds(22, 185, 349, 15);
 		TradePanel.add(lblNewLabel);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("Medkit                         75                             $100");
 		lblNewLabel_1.setBounds(22, 212, 329, 15);
 		TradePanel.add(lblNewLabel_1);
-		
+
 		JLabel lblNewLabel_2 = new JLabel("Nanites                       200                            $150 ");
 		lblNewLabel_2.setBounds(22, 239, 329, 15);
 		TradePanel.add(lblNewLabel_2);
-		
+
 		JLabel lblNewLabel_3 = new JLabel("Plague Cure                                                 $100");
 		lblNewLabel_3.setBounds(22, 266, 329, 15);
 		TradePanel.add(lblNewLabel_3);
-		
+
 		JLabel lblFoodItems = new JLabel("Food Items");
 		lblFoodItems.setFont(new Font("Dialog", Font.BOLD, 17));
 		lblFoodItems.setBounds(22, 293, 267, 24);
 		TradePanel.add(lblFoodItems);
-		
+
 		JLabel lblNewLabel_4 = new JLabel("Rotten Food                  2                               $5");
 		lblNewLabel_4.setBounds(22, 361, 349, 15);
 		TradePanel.add(lblNewLabel_4);
-		
+
 		JLabel lblItemNameHeaing = new JLabel("Food Name:                 Hunger:                    Cost:");
 		lblItemNameHeaing.setBounds(22, 334, 329, 15);
 		TradePanel.add(lblItemNameHeaing);
-		
+
 		JLabel lblNewLabel_5 = new JLabel("Space Sausage            20                              $30");
 		lblNewLabel_5.setBounds(22, 385, 329, 15);
 		TradePanel.add(lblNewLabel_5);
-		
+
 		JLabel lblNewLabel_6 = new JLabel("Space Candy                10                              $50");
 		lblNewLabel_6.setBounds(22, 412, 349, 15);
 		TradePanel.add(lblNewLabel_6);
-		
+
 		JLabel lblNewLabel_7 = new JLabel("Space Apple                 25                              $75");
 		lblNewLabel_7.setBounds(22, 439, 329, 15);
 		TradePanel.add(lblNewLabel_7);
-		
+
 		JLabel lblSpaceRoast = new JLabel("Space Roast                 100                            $130");
 		lblSpaceRoast.setBounds(22, 466, 329, 15);
 		TradePanel.add(lblSpaceRoast);
-		
-		JSpinner spinner_RottenFood = new JSpinner();
-		spinner_RottenFood.setModel(new SpinnerNumberModel(0, 0, 9, 1));
-		spinner_RottenFood.setBounds(357, 359, 29, 20);
-		TradePanel.add(spinner_RottenFood);
-		
-		JSpinner spinner_SpaceSausage = new JSpinner();
-		spinner_SpaceSausage.setModel(new SpinnerNumberModel(0, 0, 9, 1));
-		spinner_SpaceSausage.setBounds(357, 383, 29, 20);
-		TradePanel.add(spinner_SpaceSausage);
-		
-		JSpinner spinner_SpaceCandy = new JSpinner();
-		spinner_SpaceCandy.setModel(new SpinnerNumberModel(0, 0, 9, 1));
-		spinner_SpaceCandy.setBounds(357, 410, 29, 20);
-		TradePanel.add(spinner_SpaceCandy);
-		
-		JSpinner spinner_SpaceApple = new JSpinner();
-		spinner_SpaceApple.setModel(new SpinnerNumberModel(0, 0, 9, 1));
-		spinner_SpaceApple.setBounds(357, 439, 29, 20);
-		TradePanel.add(spinner_SpaceApple);
-		
-		JSpinner spinner_SpaceRoast = new JSpinner();
-		spinner_SpaceRoast.setModel(new SpinnerNumberModel(0, 0, 9, 1));
-		spinner_SpaceRoast.setBounds(357, 464, 29, 20);
-		TradePanel.add(spinner_SpaceRoast);
-		
-		JSpinner spinner_Bandages = new JSpinner();
+
+		spinner_Bandages = new JSpinner();
 		spinner_Bandages.setModel(new SpinnerNumberModel(0, 0, 9, 1));
 		spinner_Bandages.setBounds(357, 183, 29, 20);
 		TradePanel.add(spinner_Bandages);
-		
-		JSpinner spinner_Medkit = new JSpinner();
+		spinnerArrayList.add(spinner_Bandages);
+
+		spinner_Medkit = new JSpinner();
 		spinner_Medkit.setModel(new SpinnerNumberModel(0, 0, 9, 1));
 		spinner_Medkit.setBounds(357, 210, 29, 20);
 		TradePanel.add(spinner_Medkit);
-		
-		JSpinner spinner_Nanites = new JSpinner();
+		spinnerArrayList.add(spinner_Medkit);
+
+		spinner_Nanites = new JSpinner();
 		spinner_Nanites.setModel(new SpinnerNumberModel(0, 0, 9, 1));
 		spinner_Nanites.setBounds(357, 237, 29, 20);
 		TradePanel.add(spinner_Nanites);
-		
-		JSpinner spinner_PlagueCure = new JSpinner();
+		spinnerArrayList.add(spinner_Nanites);
+
+		spinner_PlagueCure = new JSpinner();
 		spinner_PlagueCure.setModel(new SpinnerNumberModel(0, 0, 9, 1));
 		spinner_PlagueCure.setBounds(357, 264, 29, 20);
 		TradePanel.add(spinner_PlagueCure);
-		
+		spinnerArrayList.add(spinner_PlagueCure);
+
+		spinner_RottenFood = new JSpinner();
+		spinner_RottenFood.setModel(new SpinnerNumberModel(0, 0, 9, 1));
+		spinner_RottenFood.setBounds(357, 359, 29, 20);
+		TradePanel.add(spinner_RottenFood);
+		spinnerArrayList.add(spinner_RottenFood);
+
+		spinner_SpaceSausage = new JSpinner();
+		spinner_SpaceSausage.setModel(new SpinnerNumberModel(0, 0, 9, 1));
+		spinner_SpaceSausage.setBounds(357, 383, 29, 20);
+		TradePanel.add(spinner_SpaceSausage);
+		spinnerArrayList.add(spinner_SpaceSausage);
+
+		spinner_SpaceCandy = new JSpinner();
+		spinner_SpaceCandy.setModel(new SpinnerNumberModel(0, 0, 9, 1));
+		spinner_SpaceCandy.setBounds(357, 410, 29, 20);
+		TradePanel.add(spinner_SpaceCandy);
+		spinnerArrayList.add(spinner_SpaceCandy);
+
+		spinner_SpaceApple = new JSpinner();
+		spinner_SpaceApple.setModel(new SpinnerNumberModel(0, 0, 9, 1));
+		spinner_SpaceApple.setBounds(357, 439, 29, 20);
+		TradePanel.add(spinner_SpaceApple);
+		spinnerArrayList.add(spinner_SpaceApple);
+
+		spinner_SpaceRoast = new JSpinner();
+		spinner_SpaceRoast.setModel(new SpinnerNumberModel(0, 0, 9, 1));
+		spinner_SpaceRoast.setBounds(357, 464, 29, 20);
+		TradePanel.add(spinner_SpaceRoast);
+		spinnerArrayList.add(spinner_SpaceRoast);
+
+
 		JLabel lblSubTotal = new JLabel("Holding Vlaue, subtotal");
 		lblSubTotal.setBounds(22, 551, 238, 54);
 		TradePanel.add(lblSubTotal);
-		
+
 		JPanel TravelPanel = new JPanel();
 		tabbedPane.addTab("Travel", null, TravelPanel, null);
 		TravelPanel.setLayout(null);
-		
+
 		JLabel lblCaptain = new JLabel("Captain");
 		lblCaptain.setBounds(126, 0, 97, 90);
 		lblCaptain.setFont(new Font("Dialog", Font.BOLD, 22));
 		TravelPanel.add(lblCaptain);
-		
+
 		JLabel lblCoPilot = new JLabel("Co Pilot");
 		lblCoPilot.setBounds(439, 31, 97, 27);
 		lblCoPilot.setFont(new Font("Dialog", Font.BOLD, 22));
 		TravelPanel.add(lblCoPilot);
-		
+
 		JComboBox comboBox = new JComboBox(buildCrewArrayForCombos());
 		comboBox.setBounds(51, 95, 247, 24);
 		TravelPanel.add(comboBox);
-		
+
 		JComboBox comboBox_1 = new JComboBox(buildCrewArrayForCombos());
 		comboBox_1.setBounds(348, 95, 280, 24);
 		TravelPanel.add(comboBox_1);
-		
+
 		JLabel lblCockpitImage = new JLabel("HoldingText for Cockpit Image");
 		lblCockpitImage.setIcon(new ImageIcon(MainScreen.class.getResource("/images/hyperspace.jpg")));
 		lblCockpitImage.setBounds(12, 175, 638, 211);
 		TravelPanel.add(lblCockpitImage);
-		
+
 		JButton btnTravelToNext = new JButton("Travel To Next Planet");
 		btnTravelToNext.setBounds(51, 479, 577, 86);
 		TravelPanel.add(btnTravelToNext);
-		
+
 		JPanel MedbayPanel = new JPanel();
 		tabbedPane.addTab("Medbay", null, MedbayPanel, null);
 		MedbayPanel.setLayout(null);
-		
+
 		JComboBox comboBox_Medbay_Select_Crewmember = new JComboBox(buildCrewArrayForCombos() );
 		comboBox_Medbay_Select_Crewmember.setToolTipText("Select Crewmember\n");
 		comboBox_Medbay_Select_Crewmember.setBounds(12, 487, 313, 24);
 		MedbayPanel.add(comboBox_Medbay_Select_Crewmember);
-		
+
 		JButton btnUseHealingItem = new JButton("Use Healing Item");
 		btnUseHealingItem.setBounds(359, 487, 291, 68);
 		MedbayPanel.add(btnUseHealingItem);
-		
+
 		JLabel lblSelectCrewmember = new JLabel("Select Crewmember");
 		lblSelectCrewmember.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSelectCrewmember.setFont(new Font("Dialog", Font.BOLD, 15));
 		lblSelectCrewmember.setBounds(12, 459, 301, 24);
 		MedbayPanel.add(lblSelectCrewmember);
-		
+
 		JLabel lblSelectHealingItem = new JLabel("Select Healing Item");
 		lblSelectHealingItem.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSelectHealingItem.setFont(new Font("Dialog", Font.BOLD, 15));
 		lblSelectHealingItem.setBounds(24, 535, 301, 24);
 		MedbayPanel.add(lblSelectHealingItem);
-		
+
 		JComboBox comboBox_3 = new JComboBox();
 		comboBox_3.setToolTipText("Select Crewmember\n");
 		comboBox_3.setBounds(12, 571, 313, 24);
 		MedbayPanel.add(comboBox_3);
-		
+
 		JLabel lbl_MedicalBay_Image = new JLabel("Nice Big medical bay image");
 		lbl_MedicalBay_Image.setIcon(new ImageIcon(MainScreen.class.getResource("/images/medbaysnip.png")));
 		lbl_MedicalBay_Image.setFont(new Font("Dialog", Font.BOLD, 19));
 		lbl_MedicalBay_Image.setBounds(12, 12, 638, 439);
 		MedbayPanel.add(lbl_MedicalBay_Image);
-		
+
 		JPanel CrewPanel = new JPanel();
 		tabbedPane.addTab("Crew", null, CrewPanel, null);
 		CrewPanel.setLayout(null);
-		
-		JLabel lblCrewTab_PrintoutOfFullCrewDetails = new JLabel("lblCrewTab_PrintoutOfFullCrewDetails");
-		lblCrewTab_PrintoutOfFullCrewDetails.setBounds(12, 12, 638, 449);
-		CrewPanel.add(lblCrewTab_PrintoutOfFullCrewDetails);
-		
+
 		JComboBox comboBox_SelectCrewmember_CrewTab = new JComboBox(buildCrewArrayForCombos());
 		comboBox_SelectCrewmember_CrewTab.setToolTipText("Select Crewmember\n");
 		comboBox_SelectCrewmember_CrewTab.setBounds(12, 502, 313, 24);
 		CrewPanel.add(comboBox_SelectCrewmember_CrewTab);
-		
+
 		JComboBox comboBox_SelectFood_CrewTab = new JComboBox();
 		comboBox_SelectFood_CrewTab.setToolTipText("Select Crewmember\n");
 		comboBox_SelectFood_CrewTab.setBounds(12, 560, 313, 24);
 		CrewPanel.add(comboBox_SelectFood_CrewTab);
-		
+
 		JButton button_Sleep_CrewTab = new JButton("Sleep");
 		button_Sleep_CrewTab.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				refreshCrewStatsLabel();
+				refreshCrewNameLabel();
 			}
 		});
 		button_Sleep_CrewTab.setBounds(359, 502, 291, 60);
 		CrewPanel.add(button_Sleep_CrewTab);
-		
+
 		JButton btnEatFood = new JButton("Eat Food");
 		btnEatFood.setBounds(359, 560, 291, 68);
 		CrewPanel.add(btnEatFood);
-		
+
 		JLabel label_1 = new JLabel("Select Crewmember");
 		label_1.setHorizontalAlignment(SwingConstants.CENTER);
 		label_1.setFont(new Font("Dialog", Font.BOLD, 15));
 		label_1.setBounds(22, 478, 301, 24);
 		CrewPanel.add(label_1);
-		
+
 		JLabel lblSelectFoodTo = new JLabel("Select Food To Eat");
 		lblSelectFoodTo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSelectFoodTo.setFont(new Font("Dialog", Font.BOLD, 15));
 		lblSelectFoodTo.setBounds(22, 538, 301, 24);
 		CrewPanel.add(lblSelectFoodTo);
-		
+
+		JLabel LblCrewTabHeader = new JLabel("Name:                    Health:                  Action Points:");
+		LblCrewTabHeader.setBounds(12, 12, 638, 24);
+		CrewPanel.add(LblCrewTabHeader);
+
 		JPanel ShipPanel = new JPanel();
 		tabbedPane.addTab("Ship", null, ShipPanel, null);
 		ShipPanel.setLayout(null);
-		
+
 		JLabel ShipImageShipTab = new JLabel("HoldingTextShipImage");
 		ShipImageShipTab.setIcon(new ImageIcon(MainScreen.class.getResource("/images/FireflyResized.png")));
 		ShipImageShipTab.setBounds(12, 0, 638, 404);
 		ShipPanel.add(ShipImageShipTab);
-		
+
 		JLabel ShipTabSheildsValue = new JLabel("Shields:  100/100");
 		ShipTabSheildsValue.setFont(new Font("Dialog", Font.BOLD, 18));
 		ShipTabSheildsValue.setBounds(117, 416, 199, 34);
 		ShipPanel.add(ShipTabSheildsValue);
-		
+
 		JLabel ShipTabHullValue = new JLabel("Hull:  100/100");
 		ShipTabHullValue.setFont(new Font("Dialog", Font.BOLD, 18));
 
 		ShipTabHullValue.setBounds(352, 416, 169, 34);
 		ShipPanel.add(ShipTabHullValue);
-		
+
 		JComboBox ShipTabAsignRepairman = new JComboBox(buildCrewArrayForCombos());
 		ShipTabAsignRepairman.setBounds(237, 493, 199, 24);
 		ShipPanel.add(ShipTabAsignRepairman);
-		
+
 		JLabel ShipTabAssignRepairmanLabel = new JLabel("Assign Repairman");
 		ShipTabAssignRepairmanLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		ShipTabAssignRepairmanLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		ShipTabAssignRepairmanLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		ShipTabAssignRepairmanLabel.setBounds(237, 462, 199, 24);
 		ShipPanel.add(ShipTabAssignRepairmanLabel);
-		
+
 		JButton ShipTabRepairSheildButton = new JButton("Repair Shields");
 		ShipTabRepairSheildButton.setBounds(117, 527, 199, 45);
 		ShipPanel.add(ShipTabRepairSheildButton);
-		
+
 		JButton ShipTabRepairHull = new JButton("Repair Hull");
 		ShipTabRepairHull.setBounds(352, 529, 169, 43);
 		ShipPanel.add(ShipTabRepairHull);
-		
+
 		JPanel panel = new JPanel();
+		panel.setLayout(null);
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.insets = new Insets(0, 0, 5, 5);
@@ -547,46 +628,42 @@ public class MainScreen {
 		gbc_panel.gridx = 6;
 		gbc_panel.gridy = 2;
 		frame.getContentPane().add(panel, gbc_panel);
-		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{456, 0};
-		gbl_panel.rowHeights = new int[]{17, 0, 15, 144, 0};
-		gbl_panel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel.setLayout(gbl_panel);
-		
+
 		JLabel lblCrewStats = new JLabel("Crew Stats:");
+		lblCrewStats.setBounds(0, 30, 92, 17);
 		lblCrewStats.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblCrewStats.setFont(new Font("Dialog", Font.BOLD, 14));
 		lblCrewStats.setHorizontalAlignment(SwingConstants.LEFT);
-		GridBagConstraints gbc_lblCrewStats = new GridBagConstraints();
-		gbc_lblCrewStats.anchor = GridBagConstraints.NORTHWEST;
-		gbc_lblCrewStats.insets = new Insets(0, 0, 5, 0);
-		gbc_lblCrewStats.gridx = 0;
-		gbc_lblCrewStats.gridy = 1;
-		panel.add(lblCrewStats, gbc_lblCrewStats);
-		
+		panel.add(lblCrewStats);
+
 		JLabel lblCrewstatisticsbreakdown = new JLabel("Name:                    Health:                  Action Points:");
-		GridBagConstraints gbc_lblCrewstatisticsbreakdown = new GridBagConstraints();
-		gbc_lblCrewstatisticsbreakdown.anchor = GridBagConstraints.NORTH;
-		gbc_lblCrewstatisticsbreakdown.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblCrewstatisticsbreakdown.insets = new Insets(0, 0, 5, 0);
-		gbc_lblCrewstatisticsbreakdown.gridx = 0;
-		gbc_lblCrewstatisticsbreakdown.gridy = 2;
-		panel.add(lblCrewstatisticsbreakdown, gbc_lblCrewstatisticsbreakdown);
-		
-		
-		
+		lblCrewstatisticsbreakdown.setBounds(0, 52, 456, 15);
+		panel.add(lblCrewstatisticsbreakdown);
+
+
+
 		lblCrewStatsLabelMainScreen = new JLabel("Holding Info For Crew Details");
+		lblCrewStatsLabelMainScreen.setBounds(0, 72, 122, 144);
 		lblCrewStatsLabelMainScreen.setVerticalAlignment(SwingConstants.TOP);
-		GridBagConstraints gbc_lblCrewStatsLabelMainScreen = new GridBagConstraints();
-		gbc_lblCrewStatsLabelMainScreen.fill = GridBagConstraints.BOTH;
-		gbc_lblCrewStatsLabelMainScreen.gridx = 0;
-		gbc_lblCrewStatsLabelMainScreen.gridy = 3;
-		panel.add(lblCrewStatsLabelMainScreen, gbc_lblCrewStatsLabelMainScreen);
+		panel.add(lblCrewStatsLabelMainScreen);
 		refreshedCrewStats = lblCrewStatsLabelMainScreen;
-		refreshCrewStatsLabel();
-		
-		
+		refreshCrewNameLabel();
+
+
+		lblHealthLabelMainScreen = new JLabel("");
+		lblHealthLabelMainScreen.setBounds(123, 72, 113, 144);
+		lblHealthLabelMainScreen.setVerticalAlignment(SwingConstants.TOP);
+		panel.add(lblHealthLabelMainScreen);
+		refreshedCrewHealth = lblHealthLabelMainScreen;
+		refreshCrewHealth();
+
+		lblActionsLabelMainScreen = new JLabel("");
+		lblActionsLabelMainScreen.setBounds(248, 72, 122, 144);
+		lblActionsLabelMainScreen.setVerticalAlignment(SwingConstants.TOP);
+		panel.add(lblActionsLabelMainScreen);
+		refreshedCrewActions = lblActionsLabelMainScreen;
+		refreshCrewActions();
+
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.insets = new Insets(0, 0, 0, 5);
@@ -595,14 +672,14 @@ public class MainScreen {
 		gbc_scrollPane.gridx = 6;
 		gbc_scrollPane.gridy = 3;
 		frame.getContentPane().add(scrollPane, gbc_scrollPane);
-		
+
 		JLabel lblGamelog = new JLabel("Game Log:");
 		lblGamelog.setFont(new Font("Dialog", Font.BOLD, 15));
 		scrollPane.setColumnHeaderView(lblGamelog);
-		
+
 		JScrollBar scrollBar = new JScrollBar();
 		scrollPane.setRowHeaderView(scrollBar);
-		
+
 		JLabel ScrollableGameLog = new JLabel("holding text");
 		scrollPane.setViewportView(ScrollableGameLog);
 	}

@@ -70,21 +70,21 @@ public class Console {
 	}
 
 	//severely broken. getIntDecision is fucking it up.
-	private void visitOutpost() {
-		System.out.println("Visiting outpost.");
-		Outpost outpost = new Outpost();
-		while (scanner.next() != "q") {
-			System.out.println("Would you like to purchase an item? Press q to quit.");
-			System.out.println(outpost);
-			int decision = getIntDecision();
-			if (decision < 0 || decision > 9) {
-				System.out.println("Invalid input");
-			}
-			else {
-				outpost.buyItem(decision);
-			}
-		}
-	}
+//	private void visitOutpost() {
+//		System.out.println("Visiting outpost.");
+////		Outpost outpost = new Outpost();
+//		while (scanner.next() != "q") {
+//			System.out.println("Would you like to purchase an item? Press q to quit.");
+//			System.out.println(outpost);
+//			int decision = getIntDecision();
+//			if (decision < 0 || decision > 9) {
+//				System.out.println("Invalid input");
+//			}
+//			else {
+//				outpost.buyItem(decision);
+//			}
+//		}
+//	}
 
 
 	private void viewSpaceShip() {

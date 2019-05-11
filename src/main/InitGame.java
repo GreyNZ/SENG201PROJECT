@@ -12,8 +12,9 @@ public class InitGame {
 	private int currentPieces = 0;
 	private int crewSize;
 	private int currentDay = 0;
+	private int money = 1000;
 	private Crew crew = new Crew();
-	private Outpost outpost = new Outpost();
+	private Outpost outpost = new Outpost(this);
 	
 
 	// legacy console
@@ -119,4 +120,16 @@ public class InitGame {
 	public Outpost getOutpost() {
 		return this.outpost;
 	}
+	public void addMoney(int newMoney) {
+		this.money += newMoney;
+	}
+	
+	public void subtractMoney(int spentMoney) {
+		this.money -= spentMoney;
+	}
+	
+	public int getMoney() {
+		return this.money;
+	}
+	
 }

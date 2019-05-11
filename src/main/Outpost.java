@@ -18,29 +18,19 @@ public class Outpost {
 //	private ArrayList<String> allItems;
 	private Random random = new Random();
 	private int numTotalItems = 10;
+	private ArrayList<Integer> shopPrices;
+	private InitGame initGame;
 	
 
-	public Outpost() {
-		this.shopSize = setShopSize(this.minSize, this.maxSize);
-		buildShop();
-
+	public Outpost(InitGame initGame) {
 		
-		//waste of time lol
-//		this.foodItems.add("Magic Mushrooms");
-//		this.foodItems.add("Rotten Food");
-//		this.foodItems.add("Space Apple");
-//		this.foodItems.add("Space Candy");
-//		this.foodItems.add("Space Roast");
-//		this.foodItems.add("Space Sausage");
-//		
-//		this.healItems.add("Bandages");
-//		this.healItems.add("Medkit");
-//		this.healItems.add("Nanties");
-//		this.healItems.add("Plague Cure");
-//		allItems.addAll(foodItems);
-//		allItems.addAll(healItems);
-
+		this.initGame = initGame;
+		shopPrices = buildShopPrices();
+//		this.shopSize = setShopSize(this.minSize, this.maxSize);
+//		buildShop();
 	}
+		
+		
 	public int setShopSize(int min, int max) {
 		int rand = new Random().nextInt(max) + min;
 		return rand;
@@ -106,6 +96,54 @@ public class Outpost {
 	}
 	public void buyItem(int decision) {
 		// TODO Auto-generated method stub
+		
+	}
+	public void buyItems(ArrayList<Integer> shopItems) {
+		int price = calculatePrice(shopItems);
+		System.out.println(price);
+		if (price > initGame.getMoney()) {
+			raiseNotEnoughMoney(price); }
+		else {
+			initGame.subtractMoney(price);
+			populateShopList(shopItems);
+			
+		}
+	}
+	
+	private void populateShopList(ArrayList<Integer> shopItems) {
+		int index = 0;
+		for (int amount : shopItems) {
+			
+		}
+		
+	}
+
+
+	public ArrayList<Integer> buildShopPrices(){
+		shopPrices = new ArrayList<Integer>();
+		shopPrices.add(50);
+		shopPrices.add(100);
+		shopPrices.add(150);
+		shopPrices.add(100);
+		shopPrices.add(5);
+		shopPrices.add(30);
+		shopPrices.add(50);
+		shopPrices.add(75);
+		shopPrices.add(130);
+		return shopPrices;
+	}
+	
+	public int calculatePrice(ArrayList<Integer> shopItems) {
+		int price = 0;
+		for (int i=0; i < shopItems.size(); i++) {
+			price += shopItems.get(i) * this.shopPrices.get(i);	
+		}
+		return price;
+	}
+
+
+	private void raiseNotEnoughMoney(int price) {
+		System.out.println("Not enough money.\n Cost is $" + price + " but you only have $" + initGame.getMoney());
 		
 	}
 
