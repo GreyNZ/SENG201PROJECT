@@ -60,6 +60,8 @@ public class MainScreen {
 	private JSpinner spinner_PlagueCure;
 	private ArrayList<JSpinner> spinnerArrayList = new ArrayList<JSpinner>();
 	private Outpost outpost;
+	private JLabel ScrollableGameLog;
+	private JLabel labelPieces;
 
 
 
@@ -111,6 +113,11 @@ public class MainScreen {
 		refreshedCrewStats.setText("<html>" + s + "</html>");
 
 	}
+	
+	public void refreshPieces() {
+		String s = "Parts Found: " + initGame.getCurrentPieces() + "/" + initGame.getPieces();
+		labelPieces.setText(s);
+	}
 
 	public void refreshCrewHealth() {
 		String s = "";
@@ -144,6 +151,8 @@ public class MainScreen {
 		refreshCrewNameLabel();
 		refreshCrewHealth();
 		refreshCrewActions();
+		refreshPieces();
+		
 	}
 
 	public String[] buildCrewArrayForCombos() {
@@ -153,8 +162,6 @@ public class MainScreen {
 			crewMembers[i] = crewArrayList.get(i).toString();
 		}
 		return crewMembers;
-
-
 	}
 
 
@@ -165,7 +172,12 @@ public class MainScreen {
 			shopItems.add(value);
 //			System.out.println(spinner.getValue());
 		}
-		outpost.buyItems(shopItems);
+		if (outpost.buyItems(shopItems)) {
+			System.out.println("Success");
+		}
+		else {
+			printToLog("<html>Not enough cash<br/></html>");
+		};
 
 	}
 	public void resetSpinnerValues() {
@@ -173,8 +185,20 @@ public class MainScreen {
 			spinner.setValue(0);
 		}
 	}
+	public void printToLog(String s) {
+		String currentLog = ScrollableGameLog.getText();
+		ScrollableGameLog.setText(currentLog + s);
+		
+	}
+	private void searchPlanet() {
+		String name = assignCrewMemberSearchPartsComboBox.getSelectedItem().toString();
+		String searchResult = initGame.searchPlanet(name);
+		printToLog(searchResult);
+		updateAll();
+	}
 
-
+		
+	
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBackground(Color.LIGHT_GRAY);
@@ -273,8 +297,8 @@ public class MainScreen {
 		gbc_lblCurrentPlanetName.gridy = 0;
 		CurrentPlanetPanel.add(lblCurrentPlanetName, gbc_lblCurrentPlanetName);
 
-		JLabel label = new JLabel("Parts Found: " + initGame.getCurrentPieces() + "/" + initGame.getPieces());
-		label.setFont(new Font("Dialog", Font.BOLD, 14));
+		labelPieces = new JLabel("Parts Found: " + initGame.getCurrentPieces() + "/" + initGame.getPieces());
+		labelPieces.setFont(new Font("Dialog", Font.BOLD, 14));
 		GridBagConstraints gbc_label = new GridBagConstraints();
 		gbc_label.anchor = GridBagConstraints.NORTH;
 		gbc_label.fill = GridBagConstraints.HORIZONTAL;
@@ -282,7 +306,7 @@ public class MainScreen {
 		gbc_label.gridwidth = 2;
 		gbc_label.gridx = 3;
 		gbc_label.gridy = 0;
-		CurrentPlanetPanel.add(label, gbc_label);
+		CurrentPlanetPanel.add(labelPieces, gbc_label);
 
 		JLabel lblPartsRemainingOnPlanetLabel = new JLabel("Parts on Planet: 1/1");
 		lblPartsRemainingOnPlanetLabel.setFont(new Font("Dialog", Font.BOLD, 14));
@@ -316,6 +340,13 @@ public class MainScreen {
 		CurrentPlanetPanel.add(lblAssignCrewMember, gbc_lblAssignCrewMember);
 
 		JButton btnSearchForPartsButton = new JButton("Search");
+		btnSearchForPartsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				searchPlanet();
+			}
+
+
+		});
 		GridBagConstraints gbc_btnSearchForPartsButton = new GridBagConstraints();
 		gbc_btnSearchForPartsButton.insets = new Insets(0, 0, 5, 5);
 		gbc_btnSearchForPartsButton.fill = GridBagConstraints.BOTH;
@@ -680,7 +711,9 @@ public class MainScreen {
 		JScrollBar scrollBar = new JScrollBar();
 		scrollPane.setRowHeaderView(scrollBar);
 
-		JLabel ScrollableGameLog = new JLabel("holding text");
+		ScrollableGameLog = new JLabel("");
 		scrollPane.setViewportView(ScrollableGameLog);
 	}
+
+
 }

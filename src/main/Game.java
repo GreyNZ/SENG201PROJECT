@@ -38,6 +38,7 @@ public class Game {
 	//gui
 	public void mainLoop(InitGame newGame) {
 		manager = new WindowManager(newGame);
+		newGame.setWindowManager(manager);
 		manager.launchStartScreen();
 	}
 
@@ -45,6 +46,7 @@ public class Game {
 	
 	public static void main(String[] args) {
 		InitGame newGame = new InitGame();
+		
 //		newGame.initializeGame();
 //		newGame.defaultForTesting();
 //		uncomment these for console testing, using default constructor to save having to put in everything.

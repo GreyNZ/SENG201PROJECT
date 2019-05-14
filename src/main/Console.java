@@ -41,7 +41,7 @@ public class Console {
 			viewSpaceShip();
 			break;
 		case 3:
-			visitOutpost();
+//			visitOutpost();
 			break;
 		case 4:
 			takeAction();

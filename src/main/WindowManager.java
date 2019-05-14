@@ -27,6 +27,7 @@ public class WindowManager {
 	}
 	public void launchMainScreen() {
 		MainScreen mainScreen = new MainScreen(this);
+		initGame.setMainScreen(mainScreen);
 	}
 	
 //	public static void main(String[] args) {

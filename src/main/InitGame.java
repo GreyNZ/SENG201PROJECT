@@ -1,6 +1,7 @@
 package main;
 
 import java.util.InputMismatchException;
+import java.util.Random;
 import java.util.Scanner;
 
 public class InitGame {
@@ -15,8 +16,16 @@ public class InitGame {
 	private int money = 1000;
 	private Crew crew = new Crew();
 	private Outpost outpost = new Outpost(this);
+	private WindowManager manager;
+	private MainScreen mainScreen;
+	private Planet planet = new Planet();
+	private Random rand = new Random();
+
 	
 
+	
+
+	
 	// legacy console
 	public void initializeGame() {
 		setShipName();
@@ -130,6 +139,68 @@ public class InitGame {
 	
 	public int getMoney() {
 		return this.money;
+	}
+	public void setWindowManager(WindowManager manager) {
+		this.manager = manager;
+		
+	}
+	public WindowManager getWindowManager() {
+		return this.manager;
+		
+	}
+	public void setMainScreen(MainScreen mainScreen) {
+		this.mainScreen = mainScreen;
+		
+	}
+	public MainScreen getMainScreen() {
+		return this.mainScreen;
+	}
+	public String searchPlanet(String name) {
+		Person crewMember = crew.getMember(name);
+		System.out.println(crewMember.getRace());
+		Integer foundNum = rand.nextInt(15);
+		String searchResult = "";
+		if (crewMember.attemptAction()) {
+			if (foundNum < 8) {
+				String item = outpost.getItemNameArray().get(foundNum);
+				outpost.getShopList().addItem(item);
+				searchResult = "Found " + item;
+			}
+			else if (foundNum == 9) {
+				searchResult = "Found nothing";
+			}
+			else if (foundNum > 9 && foundNum < 13){
+				Integer goldAmount = randomGold();
+				addMoney(goldAmount);
+				searchResult = "Found " + goldAmount + " gold";
+			}
+			else {
+				// find piece, update pieces found, decrement pieces left on planet.
+				planet.foundPiece();
+				searchResult = "Found piece!";
+			}
+		}
+		else {
+			searchResult = name + " has no actions left.";
+		}
+		return searchResult;
+
+	}
+	
+	public Integer randomGold() {
+		Integer goldAmount = 100 + rand.nextInt(900);
+		Integer bigWinChance = rand.nextInt(100);
+		if (bigWinChance == 0) {
+			goldAmount = 1000000;
+		}
+		return goldAmount;
+		
+	}
+
+	// add checks for pilots and such. 
+	public void travelToNewPlanet() {
+		this.planet = new Planet(); 
+
 	}
 	
 }

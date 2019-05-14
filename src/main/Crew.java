@@ -1,6 +1,7 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -14,10 +15,11 @@ import java.util.Scanner;
 public class Crew {
 	
 	private ArrayList<Person> crewMemberArray;
+	private HashMap<String, Person> crewMemberMap;
 	private ArrayList<Items> foodArray;
 	private ArrayList<Items> medicalArray;
 
-	private int crewSize;
+	private int crewSize = 0;
 	private Ship ship;
 	private Double money = 2.0;
 	Scanner scanner = new Scanner(System.in);
@@ -32,6 +34,7 @@ public class Crew {
 	// constructor
 	public Crew() {
 		this.crewMemberArray = new ArrayList<Person>();
+		this.crewMemberMap = new HashMap<String, Person>();
 
 
 	}	
@@ -48,7 +51,7 @@ public class Crew {
 		this.crewMemberArray = new ArrayList<Person>(crewSize);
 		this.crewSize = crewSize;
 		this.ship = new Ship(shipName);
-		this.buildCrew();
+//		this.buildCrew();
 		
 		
 		//this will eventually be a switch statement inside the for loop
@@ -59,32 +62,32 @@ public class Crew {
 	/**
 	 * Adds Person objects to addCrewMember ArrayList
 	 */
-	public void buildCrew() {
-		for (int i = 0; i <this.crewSize; i+=1) {
-//			Person newMember = new Person();
-			this.crewMemberArray.add(addCrewMember(i));
-//			this.addCrewMember(i);
-		}
-		System.out.println(this.crewMemberArray);
-		}
+//	public void buildCrew() {
+//		for (int i = 0; i <this.crewSize; i+=1) {
+////			Person newMember = new Person();
+//			this.crewMemberArray.add(addCrewMember(i));
+////			this.addCrewMember(i);
+//		}
+//		System.out.println(this.crewMemberArray);
+//		}
 	/**
 	 * Receives user input to select the race of Person object
 	 * @param i         unique identifier for the Person object, based on what index they were added to crewMemberArray
 	 * @return          Person object, specifically the user the selected subclass (race)
 	 */
-	public Person addCrewMember(int i) {
-		int raceNum = 1;
-		System.out.println("Name? ");
-		String name = scanner.next();
-		System.out.println("Please select a race.\n1. Human\n2. Rockman\n3. Grey\n4. Bugman\n5. Gazer\n6. Warbot");
-		try {
-			raceNum = scanner.nextInt();
-		} catch (InputMismatchException e) {
-			System.out.println("Invalid selection. Defaulting to human");
-//			int raceNum = 1;
-		}
-		return createCrewMember(name, i, raceNum);
-	}
+//	public Person addCrewMember(int i) {
+//		int raceNum = 1;
+//		System.out.println("Name? ");
+//		String name = scanner.next();
+//		System.out.println("Please select a race.\n1. Human\n2. Rockman\n3. Grey\n4. Bugman\n5. Gazer\n6. Warbot");
+//		try {
+//			raceNum = scanner.nextInt();
+//		} catch (InputMismatchException e) {
+//			System.out.println("Invalid selection. Defaulting to human");
+////			int raceNum = 1;
+//		}
+//		return createCrewMember(name, i, raceNum);
+//	}
 	/**
 	 * Switch statement to create a Person object of specific race. 
 	 * Uses int's from 1-6 as cases. 
@@ -94,19 +97,19 @@ public class Crew {
 	 * @param raceNum           Switch case int
 	 * @return                  Person object 
 	 */
-	public Person createCrewMember(String name, int i, int raceNum) {
-		switch (raceNum) {
-		case 1:
+	public Person createCrewMember(String name, int i, String race) {
+		switch (race) {
+		case "Human":
 			return new Human(name, i);
-		case 2:
+		case "Rockman":
 			return new Rockman(name, i);
-		case 3:
+		case "Grey":
 			return new Grey(name, i);
-		case 4:
+		case "Bugman":
 			return new Bugman(name, i);
-		case 5:
+		case "Grazer":
 			return new Gazer(name, i);
-		case 6:
+		case "Warbot":
 			return new Warbot(name, i);
 		default:
 			System.out.println("Invalid selection. Defaulting to human.");
@@ -126,6 +129,22 @@ public class Crew {
 		this.crewMemberArray.add(trevor);
 		this.crewMemberArray.add(bob);
 	}
+	
+	
+	// dam I want to keep the crew in a dictionary for easy name look ups, but that means names have to 
+	// be unique. 
+//	public void addCrewMember(String name, String race) {
+//		Person newMember = createCrewMember(name, this.crewSize, race);
+//		this.crewSize += 1;
+//		this.crewMemberMap.put(name, newMember);
+//	}
+	
+	// array version
+	public void addCrewMember(String name, String race) {
+	Person newMember = createCrewMember(name, this.crewSize, race);
+	this.crewSize += 1;
+	this.crewMemberArray.add(newMember);
+}
 	
 	public void addMoney(Double cost) {
 		this.money -= cost;
@@ -151,9 +170,29 @@ public class Crew {
 		return this.crewMemberArray.get(i).getName();
 	}
 	
-	public Person getMember(int i) {
-		return this.crewMemberArray.get(i);
-	}
+	public Person getMember(String name) {
+		for (Person person : this.crewMemberArray) {
+			if (person.getName() == name) {
+				return person;	
+				}
+		}
+		// I hate this line, but I can't think of a way to avoid it
+		// The combobox should always give a valid name, so I'm not too concerned about bugs
+		return this.crewMemberArray.get(0);	
+
+	}	
+	
+	// Tried to get person object. not good.
+//	public Person getMember(String s) {
+//		for (Person person : this.crewMemberArray) {
+//			if (person.getName() == s) {
+//				return person;
+//			}
+//			else {
+//				System.out.println("Invalid person selection from getMember");
+//			}
+//		}
+//	}
 
 	public Ship getShip() {
 		// TODO Auto-generated method stub
@@ -161,6 +200,9 @@ public class Crew {
 	}
 	public ArrayList<Person> getCrewMemberArray() {
 		return this.crewMemberArray;
+	}
+	public Integer getCrewSize() {
+		return this.crewSize;
 	}
 	
 }

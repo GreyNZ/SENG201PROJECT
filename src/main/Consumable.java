@@ -1,6 +1,6 @@
 package main;
 
-public class Consumable {
+public class Consumable implements Items{
 	
 	protected String consumableName;
 	protected Integer consumableValue;
