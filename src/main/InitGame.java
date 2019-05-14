@@ -220,19 +220,20 @@ public class InitGame {
 	}
 
 	// add checks for pilots and such. 
-	public void travelToNewPlanet() {
-		this.planet = new Planet(); 
 
-	}
+
+
 	public boolean travelToNewPlanet(Person pilot1, Person pilot2) {
 		if (pilot1.getActions() > 0 && pilot2.getActions() > 0 ) {
 			this.planet = new Planet();
+			String planetName = planet.getName();
+			mainScreen.updatePlanetName(planetName);
 			asteroidBelt();
 			//random event for testing, remove
 			randomEvent();
 			pilot1.attemptAction();
 			pilot2.attemptAction();
-			mainScreen.printToLog("Made it to a new planet");
+			mainScreen.printToLog("Made it to a planet " + planetName);
 			return true;
 		}
 		else {

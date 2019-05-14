@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import java.awt.event.ActionListener;
+import java.util.Random;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
@@ -21,6 +22,11 @@ public class NewGameScreen {
 	private JTextField txtEnterCrewMembers;
 	private WindowManager manager;
 	private InitGame initGame;
+	private Crew crew;
+	private String[] raceArray;
+	private Random rand = new Random();
+	private JComboBox comboBox;
+
 
 	/**
 	 * Launch the application.
@@ -59,6 +65,8 @@ public class NewGameScreen {
 	public NewGameScreen(WindowManager windowManager) {
 		manager = windowManager;
 		this.initGame = manager.getInitGame();
+		this.crew = initGame.getCrew();
+		buildRaceArray();
 		initialize();
 		frame.setVisible(true);
 	}
@@ -75,7 +83,9 @@ public class NewGameScreen {
 		initGame.getCrew().buildDefaultCrew();
 	}
 	
-
+	public void buildRaceArray() {
+		raceArray = new String[] {"Human", "Rockman", "Grey", "Bugman", "Gazer", "Warbot"};
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -185,11 +195,18 @@ public class NewGameScreen {
 		frame.getContentPane().add(btnAddCrewmember);
 		
 		JButton btnDefaultCrewmember = new JButton("Add Default Crewmember");
+		btnDefaultCrewmember.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String name = randomName();
+				String race = randomRace();
+				crew.addCrewMember(name, race);
+			}
+		});
 		btnDefaultCrewmember.setBounds(12, 266, 276, 31);
 		btnDefaultCrewmember.setFont(new Font("Dialog", Font.BOLD, 14));
 		frame.getContentPane().add(btnDefaultCrewmember);
 		
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox(raceArray);
 		comboBox.setBounds(12, 185, 276, 24);
 		frame.getContentPane().add(comboBox);
 		
@@ -226,5 +243,16 @@ public class NewGameScreen {
 		frame.getContentPane().add(btnCrewSizeConfirm);
 	}
 	
+	protected String randomRace() {
+		int index = rand.nextInt(6);
+		return raceArray[index];
+	}
+
+	private String randomName() {
+		String[] names = new String[]{"Talisha", "Lulu", "Sid", "Gracia", "Tomas", "Jamison", "Christeen", "Tammera", "Fatima", "Alec", "Slyvia", "Oscar", "Evelia", "Lynetta", "Elly", "Merlene", "Shaunna", "Artie", "Shanika", "Fred", "Maisha", "Kenton", "Lynell", "Sha", "Shantae", "Vina", "Laure", "Treena", "Belkis", "Terry", "Carlee", "Fernanda", "Sharon", "Birgit", "Nenita", "Jenee", "Laurie", "Stephenie", "Misty", "Mitchell", "Felix", "Ailene", "Jonie", "Amelia", "Jannet", "Dorathy", "Stewart", "Lauran", "Lucila", "Manual"};
+		int index = rand.nextInt(50);
+		return names[index];
+
+	}
 
 }

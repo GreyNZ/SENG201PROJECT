@@ -100,7 +100,7 @@ public class Crew {
 	public Person createCrewMember(String name, int i, String race) {
 		switch (race) {
 		case "Human":
-			return new Human(name, i);
+			return new Human(name, i); 
 		case "Rockman":
 			return new Rockman(name, i);
 		case "Grey":

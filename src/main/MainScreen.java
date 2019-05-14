@@ -77,6 +77,7 @@ public class MainScreen {
 	private JLabel lblSpaceCash;
 	private JLabel lblPartsRemainingOnPlanetLabel;
 	private JLabel lblDaysRemaining;
+	private JLabel lblCurrentPlanetName;
 
 
 
@@ -359,7 +360,7 @@ public class MainScreen {
 		gbl_CurrentPlanetPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		CurrentPlanetPanel.setLayout(gbl_CurrentPlanetPanel);
 
-		JLabel lblCurrentPlanetName = new JLabel("Current Planet");
+		lblCurrentPlanetName = new JLabel("Current Planet");
 		lblCurrentPlanetName.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCurrentPlanetName.setVerticalAlignment(SwingConstants.TOP);
 		lblCurrentPlanetName.setFont(new Font("Dialog", Font.BOLD, 18));
@@ -813,6 +814,11 @@ public class MainScreen {
 
 	public void closeWindow() {
 		frame.dispose();
+		
+	}
+
+	public void updatePlanetName(String planetName) {
+		lblCurrentPlanetName.setText(planetName);
 		
 	}
 

@@ -154,7 +154,7 @@ public class Person {
 		else {
 			this.person_health = 0;
 			this.isDead();
-			System.out.println("Character has died, add death function to remove from crew");
+			System.out.println(person_name + " has died, add death function to remove from crew");
 			/// call death function, remove from crew
 		}
 		
@@ -261,6 +261,7 @@ public class Person {
 	
 	public String endDayChanges() {
 		increaseHungerEndDay();
+		resetActions();
 		String s = plagueSickness();
 		return s;
 
