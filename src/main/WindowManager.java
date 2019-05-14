@@ -30,6 +30,17 @@ public class WindowManager {
 		initGame.setMainScreen(mainScreen);
 	}
 	
+	public void closeMainScreen(MainScreen mainScreen) {
+		mainScreen.closeWindow();
+	}
+	
+	public void launchGameOverScreen() {
+		GameOver gameOver = new GameOver(this);
+	}
+	public void closeGameOverScreen(GameOver gameOver) {
+		gameOver.closeWindow();
+	}
+	
 //	public static void main(String[] args) {
 //		WindowManager manager = new WindowManager();
 //		manager.launchNewGameScreen();

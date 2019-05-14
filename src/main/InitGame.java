@@ -20,6 +20,8 @@ public class InitGame {
 	private MainScreen mainScreen;
 	private Planet planet = new Planet();
 	private Random rand = new Random();
+	private Ship ship;
+	private boolean gameHeckinOver = false;
 
 	
 
@@ -51,6 +53,7 @@ public class InitGame {
 	// gui
 	public void setShipName(String shipName) {
 		this.shipName = shipName;
+		this.ship = new Ship(shipName);
 	}
 	
 	public void setGameLength() {
@@ -98,11 +101,23 @@ public class InitGame {
 	}
 
 	public void endDay() {
-		this.days -= 1;
 		this.currentDay += 1;
+		if (currentDay > days) {
+			gameOver();
+		}
+		String s = crew.endDayActions();
+		mainScreen.printToLog(s);
+		randomEvent();
 		
 	}
 
+	private void gameOver() {
+		this.gameHeckinOver = true;
+		
+	}
+	public boolean isGameOver() {
+		return this.gameHeckinOver;
+	}
 	public void defaultForTesting() {
 		this.shipName = "space boi";
 		this.days = 3;
@@ -163,7 +178,7 @@ public class InitGame {
 		if (crewMember.attemptAction()) {
 			if (foundNum < 8) {
 				String item = outpost.getItemNameArray().get(foundNum);
-				outpost.getShopList().addItem(item);
+				outpost.getShopList().addItem(item, 1);
 				searchResult = "Found " + item;
 			}
 			else if (foundNum == 9) {
@@ -173,11 +188,18 @@ public class InitGame {
 				Integer goldAmount = randomGold();
 				addMoney(goldAmount);
 				searchResult = "Found " + goldAmount + " gold";
+				mainScreen.refreshMoney();
 			}
 			else {
 				// find piece, update pieces found, decrement pieces left on planet.
-				planet.foundPiece();
-				searchResult = "Found piece!";
+				if (planet.foundPiece()) {
+					searchResult = "Found piece!";
+					this.currentPieces += 1;
+				}
+				else {
+					searchResult = "Found an ornate mahogany set of drawers";
+				}
+				
 			}
 		}
 		else {
@@ -201,6 +223,86 @@ public class InitGame {
 	public void travelToNewPlanet() {
 		this.planet = new Planet(); 
 
+	}
+	public boolean travelToNewPlanet(Person pilot1, Person pilot2) {
+		if (pilot1.getActions() > 0 && pilot2.getActions() > 0 ) {
+			this.planet = new Planet();
+			asteroidBelt();
+			//random event for testing, remove
+			randomEvent();
+			pilot1.attemptAction();
+			pilot2.attemptAction();
+			mainScreen.printToLog("Made it to a new planet");
+			return true;
+		}
+		else {
+			String s = "Not enough actions.";
+			mainScreen.printToLog(s);
+			return false;
+		}
+	}
+	//adjust nextInt(range) range to decrease likeliness of event occurring
+
+	private void randomEvent() {
+		Integer event = rand.nextInt(4);
+		switch (event) {
+		case 0:
+			pirateAttack();
+			break;
+		case 1:
+			spacePlague();
+			break;
+		default:
+			break;
+		}
+		
+	}
+	private void asteroidBelt() {
+		Integer chance = rand.nextInt(3);
+		if (chance != 0) {
+			String s = "Oh no, we're passing through an asteroid belt. Hold on tight";
+			ship.takeDamage(10.0);
+			System.out.println(ship.getShipHealth() + "" + ship.getShipSheild());
+			mainScreen.printToLog(s);
+		}
+		
+	}
+	private void spacePlague() {
+		Integer plaguedIndex = rand.nextInt(crew.getCrewSize());
+		Person plaguedGuy = crew.getCrewMemberArray().get(plaguedIndex);
+		plaguedGuy.addPlague();
+		// 10 % of a second plague victim
+		Integer secondChance = rand.nextInt(10);
+		if (secondChance == 9) {
+			Integer secondIndex = rand.nextInt(crew.getCrewSize());
+			Person secondGuy = crew.getCrewMemberArray().get(secondIndex);
+			secondGuy.addPlague();
+			String s = plaguedGuy + " and " + secondGuy + " contracted space aids!";
+			mainScreen.printToLog(s);
+		}
+		else {
+			String s = plaguedGuy + " contracted space aids!";
+			mainScreen.printToLog(s);
+		}
+		
+	}
+	public void pirateAttack() {
+		String s = "Pirates are attacking. Oh my";
+		System.out.println(s);
+		mainScreen.printToLog(s);
+		String attack = outpost.stealItem();
+		mainScreen.printToLog(attack);
+		System.out.println(s);
+		
+		
+	}
+	public Ship getShip() {
+		// TODO Auto-generated method stub
+		return ship;
+	}
+	public Planet getPlanet() {
+		
+		return this.planet;
 	}
 	
 }

@@ -205,5 +205,21 @@ public class Crew {
 		return this.crewSize;
 	}
 	
+	// for when the pirates gank you with no item
+	public void beatUpCrew() {
+		for (Person person : crewMemberArray) {
+			person.decreaseHealth(40);
+		}
+		
+	}
+
+	public String endDayActions() {
+		String s = "";
+		for (Person person: crewMemberArray) {
+			s += person.endDayChanges();
+		}
+		return s;
+	}
+	
 }
 

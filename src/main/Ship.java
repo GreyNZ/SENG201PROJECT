@@ -9,9 +9,7 @@ public class Ship {
 		this.shipName = name;
 	}
 	
-	public Double getShield() {
-		return this.shipShields;
-	}
+
 	public void raiseShield(Double raiseValue) {
 		if (this.shipShields + raiseValue > 100.0) {
 			this.shipShields = 100.0;
@@ -44,6 +42,13 @@ public class Ship {
 	public String toString() {
 		String status = String.format("Shipname: %s\nShip Health: %s\nShip Shield: %s", this.shipName, this.shipHealth, this.shipShields);
 		return status;
+	}
+	
+	public Double getShipHealth() {
+		return this.shipHealth;
+	}
+	public Double getShipSheild() {
+		return this.shipShields;
 	}
 	
 	public static void main(String[] args) {

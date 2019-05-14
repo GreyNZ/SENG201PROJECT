@@ -17,6 +17,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JScrollPane;
 import javax.swing.JScrollBar;
 import java.awt.Component;
+import java.awt.Container;
+
 import javax.swing.Box;
 import java.awt.GridBagLayout;
 //import com.jgoodies.forms.layout.FormLayout;
@@ -35,6 +37,7 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextArea;
 
 public class MainScreen {
 
@@ -48,7 +51,7 @@ public class MainScreen {
 	private JLabel refreshedCrewStats;
 	private JLabel refreshedCrewHealth;
 	private JLabel refreshedCrewActions;
-	private JComboBox assignCrewMemberSearchPartsComboBox;
+	private JComboBox<Person> assignCrewMemberSearchPartsComboBox;
 	private JSpinner spinner_RottenFood;
 	private JSpinner spinner_SpaceSausage;
 	private JSpinner spinner_SpaceCandy;
@@ -60,8 +63,20 @@ public class MainScreen {
 	private JSpinner spinner_PlagueCure;
 	private ArrayList<JSpinner> spinnerArrayList = new ArrayList<JSpinner>();
 	private Outpost outpost;
-	private JLabel ScrollableGameLog;
+	private JTextArea ScrollableGameLog;
 	private JLabel labelPieces;
+	private JComboBox<Person> comboBox;
+	private JComboBox<Person> comboBox_1;
+	private JComboBox<Person> comboBox_Medbay_Select_Crewmember;
+	private JComboBox<Person> comboBox_SelectCrewmember_CrewTab;
+	private JComboBox<Person> ShipTabAsignRepairman;
+	private JComboBox<Person> comboBox_3;
+	private JLabel lblPartsFound;
+	private JLabel lblShipHull;
+	private JLabel lblShipSheilds;
+	private JLabel lblSpaceCash;
+	private JLabel lblPartsRemainingOnPlanetLabel;
+	private JLabel lblDaysRemaining;
 
 
 
@@ -100,6 +115,12 @@ public class MainScreen {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	
+	public void updateDay() {
+		String s = "Current Day : " + initGame.getCurrentDay() + "/" + initGame.getDays();
+		lblDaysRemaining.setText(s);
+	}
+	
 	public void refreshCrewNameLabel() {
 		String s = "";
 		String format = "%s<br/>";
@@ -117,6 +138,15 @@ public class MainScreen {
 	public void refreshPieces() {
 		String s = "Parts Found: " + initGame.getCurrentPieces() + "/" + initGame.getPieces();
 		labelPieces.setText(s);
+	}
+	public void refreshShipHealth() {
+		lblShipHull.setText("Ship Hull: "+ initGame.getShip().getShipHealth().toString());
+		lblShipSheilds.setText("Ship Health: " + initGame.getShip().getShipSheild());
+	}
+	
+	public void refreshMoney() {
+		String s = "Space Cash: $" + initGame.getMoney();
+		lblSpaceCash.setText(s);
 	}
 
 	public void refreshCrewHealth() {
@@ -146,25 +176,54 @@ public class MainScreen {
 		refreshedCrewActions.setText("<html>" + s + "</html>");
 
 	}
+	
+	public void updatePartsFound() {
+		String s = "Parts Found: " + initGame.getCurrentPieces() + "/" + initGame.getPieces();
+		lblPartsFound.setText(s);
+		String parts = "Parts on Planet: "+ initGame.getPlanet().pieces() + "/1";
+		lblPartsRemainingOnPlanetLabel.setText(parts);
+	}
 
+	// try and use this sparingly. prefer to call each method individually
 	public void updateAll() {
 		refreshCrewNameLabel();
 		refreshCrewHealth();
 		refreshCrewActions();
 		refreshPieces();
+		refreshShipHealth();
+		updatePartsFound();
+		updateDay();
+		if (initGame.isGameOver()) {
+			manager.launchGameOverScreen();
+			closeWindow();
+		}
 		
 	}
 
-	public String[] buildCrewArrayForCombos() {
-		ArrayList<Person> crewArrayList = crew.getCrewMemberArray();
-		String[] crewMembers = new String[crewArrayList.size()];
-		for (int i=0; i < crewArrayList.size(); i++ ) {
-			crewMembers[i] = crewArrayList.get(i).toString();
+//	public String[] buildCrewArrayForCombos() {
+//		ArrayList<Person> crewArrayList = crew.getCrewMemberArray();
+//		String[] crewMembers = new String[crewArrayList.size()];
+//		for (int i=0; i < crewArrayList.size(); i++ ) {
+//			crewMembers[i] = crewArrayList.get(i).toString();
+//		}
+//		return crewMembers;
+//	}
+	// use actual Person objects instead of just Strings!
+	public void buildCrewMemberCombos() {
+		for (Person person : crew.getCrewMemberArray()) {
+			//add person to all combos
+			assignCrewMemberSearchPartsComboBox.addItem(person);
+			comboBox.addItem(person);
+			comboBox_1.addItem(person);
+			comboBox_Medbay_Select_Crewmember.addItem(person);
+			comboBox_SelectCrewmember_CrewTab.addItem(person);
+			ShipTabAsignRepairman.addItem(person);
+			System.out.println(person);
 		}
-		return crewMembers;
+		
 	}
 
-
+	// this could separated so shop can have subtotal
 	public void getSpinnerValues() {
 		ArrayList<Integer> shopItems = new ArrayList<>();
 		for (JSpinner spinner: this.spinnerArrayList) {
@@ -187,7 +246,7 @@ public class MainScreen {
 	}
 	public void printToLog(String s) {
 		String currentLog = ScrollableGameLog.getText();
-		ScrollableGameLog.setText(currentLog + s);
+		ScrollableGameLog.setText(currentLog + s + "\n");
 		
 	}
 	private void searchPlanet() {
@@ -196,6 +255,21 @@ public class MainScreen {
 		printToLog(searchResult);
 		updateAll();
 	}
+	
+	protected void travelToPlanet() {
+		Person pilot1 = (Person) comboBox.getSelectedItem();
+		Person pilot2 = (Person) comboBox_1.getSelectedItem();
+		if (pilot1 == pilot2) {
+			printToLog("Select two pilots.");
+		}
+		else if (initGame.travelToNewPlanet(pilot1, pilot2)) {
+			System.out.println("Let's go!");
+			
+			
+		}
+
+	}
+
 
 		
 	
@@ -220,7 +294,7 @@ public class MainScreen {
 		gbc_lblShipName.gridy = 0;
 		frame.getContentPane().add(lblShipName, gbc_lblShipName);
 
-		JLabel lblShipHull = new JLabel("Ship Hull: 100");
+		lblShipHull = new JLabel("Ship Hull: 100");
 		lblShipHull.setFont(new Font("Dialog", Font.BOLD, 14));
 		GridBagConstraints gbc_lblShipHull = new GridBagConstraints();
 		gbc_lblShipHull.fill = GridBagConstraints.BOTH;
@@ -229,7 +303,7 @@ public class MainScreen {
 		gbc_lblShipHull.gridy = 0;
 		frame.getContentPane().add(lblShipHull, gbc_lblShipHull);
 
-		JLabel lblShipSheilds = new JLabel("Ship Sheilds: 100");
+		lblShipSheilds = new JLabel("Ship Sheilds: 100");
 		lblShipSheilds.setFont(new Font("Dialog", Font.BOLD, 14));
 		GridBagConstraints gbc_lblShipSheilds = new GridBagConstraints();
 		gbc_lblShipSheilds.fill = GridBagConstraints.HORIZONTAL;
@@ -238,7 +312,7 @@ public class MainScreen {
 		gbc_lblShipSheilds.gridy = 0;
 		frame.getContentPane().add(lblShipSheilds, gbc_lblShipSheilds);
 
-		JLabel lblPartsFound = new JLabel("Parts Found: " + initGame.getCurrentPieces() + "/" + initGame.getPieces());
+		lblPartsFound = new JLabel("Parts Found: " + initGame.getCurrentPieces() + "/" + initGame.getPieces());
 		lblPartsFound.setFont(new Font("Dialog", Font.BOLD, 14));
 		GridBagConstraints gbc_lblPartsFound = new GridBagConstraints();
 		gbc_lblPartsFound.fill = GridBagConstraints.HORIZONTAL;
@@ -247,7 +321,7 @@ public class MainScreen {
 		gbc_lblPartsFound.gridy = 0;
 		frame.getContentPane().add(lblPartsFound, gbc_lblPartsFound);
 
-		JLabel lblSpaceCash = new JLabel("Space Cash: $100");
+		lblSpaceCash = new JLabel("Space Cash: $" + initGame.getMoney());
 		lblSpaceCash.setFont(new Font("Dialog", Font.BOLD, 14));
 		GridBagConstraints gbc_lblSpaceCash = new GridBagConstraints();
 		gbc_lblSpaceCash.fill = GridBagConstraints.HORIZONTAL;
@@ -256,7 +330,7 @@ public class MainScreen {
 		gbc_lblSpaceCash.gridy = 0;
 		frame.getContentPane().add(lblSpaceCash, gbc_lblSpaceCash);
 
-		JLabel lblDaysRemaining = new JLabel("Current Day : " + initGame.getCurrentDay() + "/" + initGame.getDays());
+		lblDaysRemaining = new JLabel("Current Day : " + initGame.getCurrentDay() + "/" + initGame.getDays());
 		lblDaysRemaining.setFont(new Font("Dialog", Font.BOLD, 14));
 		GridBagConstraints gbc_lblDaysRemaining = new GridBagConstraints();
 		gbc_lblDaysRemaining.fill = GridBagConstraints.HORIZONTAL;
@@ -308,7 +382,7 @@ public class MainScreen {
 		gbc_label.gridy = 0;
 		CurrentPlanetPanel.add(labelPieces, gbc_label);
 
-		JLabel lblPartsRemainingOnPlanetLabel = new JLabel("Parts on Planet: 1/1");
+		lblPartsRemainingOnPlanetLabel = new JLabel("Parts on Planet: 1/1");
 		lblPartsRemainingOnPlanetLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		GridBagConstraints gbc_lblPartsRemainingOnPlanetLabel = new GridBagConstraints();
 		gbc_lblPartsRemainingOnPlanetLabel.fill = GridBagConstraints.BOTH;
@@ -343,6 +417,7 @@ public class MainScreen {
 		btnSearchForPartsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				searchPlanet();
+				updateAll();
 			}
 
 
@@ -355,7 +430,7 @@ public class MainScreen {
 		gbc_btnSearchForPartsButton.gridy = 5;
 		CurrentPlanetPanel.add(btnSearchForPartsButton, gbc_btnSearchForPartsButton);
 
-		assignCrewMemberSearchPartsComboBox = new JComboBox(buildCrewArrayForCombos());
+		assignCrewMemberSearchPartsComboBox = new JComboBox<Person>();
 		GridBagConstraints gbc_assignCrewMemberSearchPartsComboBox = new GridBagConstraints();
 		gbc_assignCrewMemberSearchPartsComboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_assignCrewMemberSearchPartsComboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -378,6 +453,7 @@ public class MainScreen {
 			public void actionPerformed(ActionEvent arg0) {
 				getSpinnerValues();
 				resetSpinnerValues();
+				refreshMoney();
 			}
 		});
 		btnPurchaseItems.setBounds(401, 551, 249, 66);
@@ -515,11 +591,11 @@ public class MainScreen {
 		lblCoPilot.setFont(new Font("Dialog", Font.BOLD, 22));
 		TravelPanel.add(lblCoPilot);
 
-		JComboBox comboBox = new JComboBox(buildCrewArrayForCombos());
+		comboBox = new JComboBox<Person>();
 		comboBox.setBounds(51, 95, 247, 24);
 		TravelPanel.add(comboBox);
 
-		JComboBox comboBox_1 = new JComboBox(buildCrewArrayForCombos());
+		comboBox_1 = new JComboBox<Person>();
 		comboBox_1.setBounds(348, 95, 280, 24);
 		TravelPanel.add(comboBox_1);
 
@@ -529,6 +605,12 @@ public class MainScreen {
 		TravelPanel.add(lblCockpitImage);
 
 		JButton btnTravelToNext = new JButton("Travel To Next Planet");
+		btnTravelToNext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				travelToPlanet();
+				updateAll();
+			}
+		});
 		btnTravelToNext.setBounds(51, 479, 577, 86);
 		TravelPanel.add(btnTravelToNext);
 
@@ -536,7 +618,7 @@ public class MainScreen {
 		tabbedPane.addTab("Medbay", null, MedbayPanel, null);
 		MedbayPanel.setLayout(null);
 
-		JComboBox comboBox_Medbay_Select_Crewmember = new JComboBox(buildCrewArrayForCombos() );
+		comboBox_Medbay_Select_Crewmember = new JComboBox<Person>();
 		comboBox_Medbay_Select_Crewmember.setToolTipText("Select Crewmember\n");
 		comboBox_Medbay_Select_Crewmember.setBounds(12, 487, 313, 24);
 		MedbayPanel.add(comboBox_Medbay_Select_Crewmember);
@@ -557,7 +639,7 @@ public class MainScreen {
 		lblSelectHealingItem.setBounds(24, 535, 301, 24);
 		MedbayPanel.add(lblSelectHealingItem);
 
-		JComboBox comboBox_3 = new JComboBox();
+		comboBox_3 = new JComboBox<Person>();
 		comboBox_3.setToolTipText("Select Crewmember\n");
 		comboBox_3.setBounds(12, 571, 313, 24);
 		MedbayPanel.add(comboBox_3);
@@ -572,7 +654,7 @@ public class MainScreen {
 		tabbedPane.addTab("Crew", null, CrewPanel, null);
 		CrewPanel.setLayout(null);
 
-		JComboBox comboBox_SelectCrewmember_CrewTab = new JComboBox(buildCrewArrayForCombos());
+		comboBox_SelectCrewmember_CrewTab = new JComboBox<Person>();
 		comboBox_SelectCrewmember_CrewTab.setToolTipText("Select Crewmember\n");
 		comboBox_SelectCrewmember_CrewTab.setBounds(12, 502, 313, 24);
 		CrewPanel.add(comboBox_SelectCrewmember_CrewTab);
@@ -586,6 +668,8 @@ public class MainScreen {
 		button_Sleep_CrewTab.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				refreshCrewNameLabel();
+				// TESTING, REMOVE PIRATE ATTACK
+				initGame.pirateAttack();
 			}
 		});
 		button_Sleep_CrewTab.setBounds(359, 502, 291, 60);
@@ -631,7 +715,7 @@ public class MainScreen {
 		ShipTabHullValue.setBounds(352, 416, 169, 34);
 		ShipPanel.add(ShipTabHullValue);
 
-		JComboBox ShipTabAsignRepairman = new JComboBox(buildCrewArrayForCombos());
+		ShipTabAsignRepairman = new JComboBox<Person>();
 		ShipTabAsignRepairman.setBounds(237, 493, 199, 24);
 		ShipPanel.add(ShipTabAsignRepairman);
 
@@ -693,6 +777,16 @@ public class MainScreen {
 		lblActionsLabelMainScreen.setVerticalAlignment(SwingConstants.TOP);
 		panel.add(lblActionsLabelMainScreen);
 		refreshedCrewActions = lblActionsLabelMainScreen;
+		
+		JButton btnEndDay = new JButton("End day");
+		btnEndDay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				initGame.endDay();
+				updateAll();
+			}
+		});
+		btnEndDay.setBounds(170, 170, 115, 29);
+		panel.add(btnEndDay);
 		refreshCrewActions();
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -711,9 +805,17 @@ public class MainScreen {
 		JScrollBar scrollBar = new JScrollBar();
 		scrollPane.setRowHeaderView(scrollBar);
 
-		ScrollableGameLog = new JLabel("");
+		ScrollableGameLog = new JTextArea("");
 		scrollPane.setViewportView(ScrollableGameLog);
+		buildCrewMemberCombos();
+
 	}
+
+	public void closeWindow() {
+		frame.dispose();
+		
+	}
+
 
 
 }

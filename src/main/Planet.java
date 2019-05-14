@@ -4,14 +4,19 @@ import java.util.Random;
 
 public class Planet {
 	
-	Integer piecesOnPlanet = 2;
+	Integer piecesOnPlanet = 1;
 	Random random = new Random();
 
 
-	public void foundPiece() {
-		piecesOnPlanet -= 1;
-		
+	public boolean foundPiece() {
+		if (piecesOnPlanet > 0) {
+			piecesOnPlanet -= 1;
+			return true;
 	}
+		else {
+			return false;
+		}
+		}
 	
 	public Integer pieces() {
 		return this.piecesOnPlanet;

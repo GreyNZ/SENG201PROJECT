@@ -40,7 +40,8 @@ public class Game {
 		manager = new WindowManager(newGame);
 		newGame.setWindowManager(manager);
 		manager.launchStartScreen();
-	}
+		}
+	
 
 
 	

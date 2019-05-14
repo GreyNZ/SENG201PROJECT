@@ -17,6 +17,7 @@ public class Person {
 	protected Double person_repair_value;
 	protected Double person_search_value;
 	protected Boolean has_plague;
+	private boolean hasDied;
 	
 	public Person() {
 		person_name = "unnamed crewmember";
@@ -151,12 +152,19 @@ public class Person {
 			this.person_health = currentHealth;
 		}
 		else {
+			this.person_health = 0;
+			this.isDead();
 			System.out.println("Character has died, add death function to remove from crew");
 			/// call death function, remove from crew
 		}
 		
 	}
 	
+	private boolean isDead() {
+		return this.hasDied;
+		
+	}
+
 	public void personSleep() {
 		this.person_vigour = this.person_max_vigour;
 	}
@@ -241,6 +249,22 @@ public class Person {
 		
 	}
 	
+	public String plagueSickness() {
+		String s = "";
+		if (has_plague) {
+			Integer plagued = 30;
+			decreaseHealth(plagued);
+			s += this.person_name + " lost " + plagued + " health from the plague";
+		}
+		return s;
+	}
+	
+	public String endDayChanges() {
+		increaseHungerEndDay();
+		String s = plagueSickness();
+		return s;
+
+	}
 	
 	public static void main(String[] args) {
 		Person grey = new Person("Captain Kirk", "Human", 100, 100, 100, 100, 0, 100, 2, 2, 1.0, 1.0, false, 1);

@@ -2,6 +2,7 @@ package main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import main.AllConsumables;
@@ -21,6 +22,9 @@ public class Outpost {
 	private ArrayList<Integer> shopPrices;
 	private InitGame initGame;
 	private ShopList shopList;
+	private Integer totalItems;
+
+	
 	
 
 	public Outpost(InitGame initGame) {
@@ -108,23 +112,37 @@ public class Outpost {
 			return false;}
 		else {
 			initGame.subtractMoney(price);
-			populateShopList(shopItems);
-			initGame.getMainScreen().printToLog(shopList.toString());
+			String purchase = populateShopList(shopItems);
+//			initGame.getMainScreen().printToLog(shopList.toString());
+			initGame.getMainScreen().printToLog(purchase);
+
 			return true;
 		}
 	}
 //	no see I want a dict like structure so if it's in the list already I can increment the amount
 //	or add it if it isn't
 	// ok it's called a hashmap
-	private void populateShopList(ArrayList<Integer> shopItems) {
+	private String populateShopList(ArrayList<Integer> shopItems) {
 		int index = 0;
+		String purchase = "Purchased: \n";
+		boolean madePurchase = false;
 		for (int amount : shopItems) {
-			shopList.addItem(itemNameArray.get(index));
+			//can do it with a for 
+			if (amount > 0) {
+				String item = itemNameArray.get(index);
+				shopList.addItem(item, amount);
+				purchase += amount + " " + item + "\n";
+				madePurchase = true;
+			}
 			index += 1;
 			
 			
 		}
 		System.out.println(shopList);
+		if (!madePurchase) {
+			purchase = "";
+		}
+		return purchase;
 		
 	}
 
@@ -170,5 +188,34 @@ public class Outpost {
 		
 	}
 	
-
+	// pirates stole an item. 
+	// currently horrible, refactor me plz
+	public String stealItem() {
+		HashMap<String, Integer> items = shopList.getShopMap();
+		Integer i = random.nextInt(9);
+		//check if there is an item to steal
+		Integer total = 0;
+		String s = "";
+		for (int value : items.values()) {
+			total += value;
+		}
+		if (total == 0) {
+			initGame.subtractMoney(200);
+			initGame.getCrew().beatUpCrew();
+			return "No item to steal. The pirates beat up your crew and took $200";
+		}
+		else {
+			while (s == "") {
+				String item = itemNameArray.get(i);
+				if (items.get(item) > 0) {
+					shopList.removeItem(item);
+					s = item;
+			}
+				else {
+					i = random.nextInt();
+				}
+			}
+		}
+		return "The pirates stole one " + s;
+	}
 }
