@@ -158,6 +158,7 @@ public class Outpost {
 		shopPrices.add(50);
 		shopPrices.add(75);
 		shopPrices.add(130);
+		shopPrices.add(200);
 		return shopPrices;
 	}
 	

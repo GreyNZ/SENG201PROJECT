@@ -57,10 +57,12 @@ public class MainScreen {
 	private JSpinner spinner_SpaceCandy;
 	private JSpinner spinner_SpaceApple;
 	private JSpinner spinner_SpaceRoast;
+	
 	private JSpinner spinner_Bandages;
 	private JSpinner spinner_Medkit;
 	private JSpinner spinner_Nanites;
 	private JSpinner spinner_PlagueCure;
+	private JSpinner spinner_MagicMushrooms;
 	private ArrayList<JSpinner> spinnerArrayList = new ArrayList<JSpinner>();
 	private Outpost outpost;
 	private JTextArea ScrollableGameLog;
@@ -230,6 +232,7 @@ public class MainScreen {
 		for (JSpinner spinner: this.spinnerArrayList) {
 			int value = (int) spinner.getValue();
 			shopItems.add(value);
+//			System.out.println(shopItems);
 //			System.out.println(spinner.getValue());
 		}
 		if (outpost.buyItems(shopItems)) {
@@ -453,6 +456,7 @@ public class MainScreen {
 		btnPurchaseItems.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				getSpinnerValues();
+				//System.out.println(getSpinnerValues());
 				resetSpinnerValues();
 				refreshMoney();
 			}
@@ -573,10 +577,19 @@ public class MainScreen {
 		TradePanel.add(spinner_SpaceRoast);
 		spinnerArrayList.add(spinner_SpaceRoast);
 
+		spinner_MagicMushrooms = new JSpinner();
+		spinner_MagicMushrooms.setModel(new SpinnerNumberModel(0, 0, 9, 1));
+		spinner_MagicMushrooms.setBounds(357, 491, 29, 17);
+		TradePanel.add(spinner_MagicMushrooms);
+		spinnerArrayList.add(spinner_MagicMushrooms);
 
 		JLabel lblSubTotal = new JLabel("Holding Vlaue, subtotal");
 		lblSubTotal.setBounds(22, 551, 238, 54);
 		TradePanel.add(lblSubTotal);
+		
+		JLabel LblMushrooms = new JLabel("Magic Mushrooms       200                            $200");
+		LblMushrooms.setBounds(22, 493, 329, 15);
+		TradePanel.add(LblMushrooms);
 
 		JPanel TravelPanel = new JPanel();
 		tabbedPane.addTab("Travel", null, TravelPanel, null);
@@ -821,7 +834,4 @@ public class MainScreen {
 		lblCurrentPlanetName.setText(planetName);
 		
 	}
-
-
-
 }
