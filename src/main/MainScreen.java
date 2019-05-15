@@ -705,7 +705,7 @@ public class MainScreen {
 		lblSelectFoodTo.setBounds(22, 538, 301, 24);
 		CrewPanel.add(lblSelectFoodTo);
 
-		JLabel LblCrewTabHeader = new JLabel("Name:                     Health:                     Hunger:                    Ailments:");
+		JLabel LblCrewTabHeader = new JLabel("Name:                    Health:                 Hunger:                Ailments:");
 		LblCrewTabHeader.setBounds(12, 12, 638, 24);
 		CrewPanel.add(LblCrewTabHeader);
 
