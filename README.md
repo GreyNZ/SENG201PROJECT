@@ -1,6 +1,6 @@
 <html>TO DO <br/>
-gui needs magic mushrooms<br/>         ----------------------------- DONE
-gui needs an end day button (a better one)<br/>   ------------------ DONE
+gui needs magic mushrooms        ----------------------------- DONE <br/> 
+gui needs an end day button (a better one)   ------------------ DONE <br/>
 make the new game screen work (more than just quickplay)<br/>
 death function<br/> 
 another field in the trade tab showing how many of each item are already owned  (seems nice but serperfulous) <br/>
