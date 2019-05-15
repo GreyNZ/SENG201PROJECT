@@ -14,3 +14,4 @@ Cool but not super necessary things:<br/>
 jlabels underneath 'use healing item' and 'select food'  that displays information about <br/>
 the item when the combobox changes<br/> 
 maybe 3 new windows to pop up for the random events<br/>
+sounds<br>/
