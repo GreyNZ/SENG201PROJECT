@@ -70,7 +70,7 @@ public class NewGameScreen {
 		initialize();
 		frame.setVisible(true);
 	}
-	//Old constructor for testing 
+	//Old constructor for testinds	
 	public NewGameScreen() {
 		initialize();
 		frame.setVisible(true);
