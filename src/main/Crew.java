@@ -28,11 +28,13 @@ public class Crew {
 	//testing variables
 	Person bruce = new Human("Bruce", 0);
 	Person pineapple = new Warbot("Pineapple", 1);
+	private InitGame initGame;
 
 
 
 	// constructor
-	public Crew() {
+	public Crew(InitGame initGame) {
+		this.initGame = initGame;
 		this.crewMemberArray = new ArrayList<Person>();
 		this.crewMemberMap = new HashMap<String, Person>();
 
@@ -157,13 +159,6 @@ public class Crew {
 		return this.money;
 	}
 	
-	public static void main(String[] args) {
-//		Crew crew = new Crew(4, "Betty");
-		Crew crew = new Crew();
-//		crew.buildCrew();
-		System.out.println(crew);
-	
-	}
 
 	public String getMemberName(int i) {
 		// TODO Auto-generated method stub
@@ -205,10 +200,22 @@ public class Crew {
 		return this.crewSize;
 	}
 	
+	public void sendDeath(Person person) {
+		if (!person.alreadLabelledDead()) {
+			String s = person.getName() +" has died!";
+			this.initGame.getMainScreen().printToLog(s);
+			this.initGame.getMainScreen().buildCrewMemberCombos();
+			person.setLabelledDead();
+		}
+	}
+	
 	// for when the pirates gank you with no item
 	public void beatUpCrew() {
 		for (Person person : crewMemberArray) {
-			person.decreaseHealth(40);
+			boolean death = person.decreaseHealth(40);
+			if (death) {
+				sendDeath(person);
+			}
 		}
 		
 	}

@@ -213,7 +213,7 @@ public class Outpost {
 					s = item;
 			}
 				else {
-					i = random.nextInt();
+					i = random.nextInt(10);
 				}
 			}
 		}

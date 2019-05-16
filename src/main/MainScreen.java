@@ -80,6 +80,7 @@ public class MainScreen {
 	private JLabel lblPartsRemainingOnPlanetLabel;
 	private JLabel lblDaysRemaining;
 	private JLabel lblCurrentPlanetName;
+	private JTextArea textAreaCrewStatus;
 
 
 
@@ -123,6 +124,13 @@ public class MainScreen {
 		String s = "Current Day : " + initGame.getCurrentDay() + "/" + initGame.getDays();
 		lblDaysRemaining.setText(s);
 	}
+	protected void sleepPerson() {
+		Person person = (Person) comboBox_Medbay_Select_Crewmember.getSelectedItem();
+		String sleepResult = person.personSleep();
+		printToLog(sleepResult);
+		refreshCrewStatus();
+		
+	}
 	
 	public void refreshCrewNameLabel() {
 		String s = "";
@@ -136,6 +144,16 @@ public class MainScreen {
 //		lblCrewStatsLabelMainScreen.setText(crew.getCrewMemberArray());
 		refreshedCrewStats.setText("<html>" + s + "</html>");
 
+	}
+	
+	public void refreshCrewStatus() {
+		ArrayList<Person> crewArray = crew.getCrewMemberArray();
+		String crewStatusText = "";
+		for (Person person : crewArray) {
+			crewStatusText += person.getPersonStatus();
+		}
+		textAreaCrewStatus.setText(crewStatusText);
+		
 	}
 	
 	public void refreshPieces() {
@@ -189,6 +207,7 @@ public class MainScreen {
 
 	// try and use this sparingly. prefer to call each method individually
 	public void updateAll() {
+		refreshCrewStatus();
 		refreshCrewNameLabel();
 		refreshCrewHealth();
 		refreshCrewActions();
@@ -211,17 +230,25 @@ public class MainScreen {
 //		}
 //		return crewMembers;
 //	}
-	// use actual Person objects instead of just Strings!
+	// its
 	public void buildCrewMemberCombos() {
+		assignCrewMemberSearchPartsComboBox.removeAllItems();
+		comboBox.removeAllItems();
+		comboBox_1.removeAllItems();
+		comboBox_Medbay_Select_Crewmember.removeAllItems();
+		comboBox_SelectCrewmember_CrewTab.removeAllItems();
+		ShipTabAsignRepairman.removeAllItems();
 		for (Person person : crew.getCrewMemberArray()) {
-			//add person to all combos
-			assignCrewMemberSearchPartsComboBox.addItem(person);
-			comboBox.addItem(person);
-			comboBox_1.addItem(person);
-			comboBox_Medbay_Select_Crewmember.addItem(person);
-			comboBox_SelectCrewmember_CrewTab.addItem(person);
-			ShipTabAsignRepairman.addItem(person);
-			System.out.println(person);
+			//add person to all combos, except if dead
+			if (!person.isDead()) {
+				assignCrewMemberSearchPartsComboBox.addItem(person);
+				comboBox.addItem(person);
+				comboBox_1.addItem(person);
+				comboBox_Medbay_Select_Crewmember.addItem(person);
+				comboBox_SelectCrewmember_CrewTab.addItem(person);
+				ShipTabAsignRepairman.addItem(person);
+				System.out.println(person);
+			}
 		}
 		
 	}
@@ -681,9 +708,7 @@ public class MainScreen {
 		JButton button_Sleep_CrewTab = new JButton("Sleep");
 		button_Sleep_CrewTab.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				refreshCrewNameLabel();
-				// TESTING, REMOVE PIRATE ATTACK
-				initGame.pirateAttack();
+				sleepPerson();
 			}
 		});
 		button_Sleep_CrewTab.setBounds(359, 502, 291, 60);
@@ -704,10 +729,18 @@ public class MainScreen {
 		lblSelectFoodTo.setFont(new Font("Dialog", Font.BOLD, 15));
 		lblSelectFoodTo.setBounds(22, 538, 301, 24);
 		CrewPanel.add(lblSelectFoodTo);
-
-		JLabel LblCrewTabHeader = new JLabel("Name:                    Health:                 Hunger:                Ailments:");
+		
+		Integer spaceValue = 20;
+		String spacing = new String(new char[spaceValue]).replace("\0", " ");
+		String headerString = "Name:" + spacing + "Race:" + spacing + "Hunger:"+ spacing + "Vigour:"+ spacing + "Status:";
+		JLabel LblCrewTabHeader = new JLabel(headerString);
 		LblCrewTabHeader.setBounds(12, 12, 638, 24);
 		CrewPanel.add(LblCrewTabHeader);
+		
+		textAreaCrewStatus = new JTextArea();
+		textAreaCrewStatus.setBounds(12, 52, 635, 387);
+		CrewPanel.add(textAreaCrewStatus);
+		refreshCrewStatus();
 
 		JPanel ShipPanel = new JPanel();
 		tabbedPane.addTab("Ship", null, ShipPanel, null);
@@ -829,6 +862,8 @@ public class MainScreen {
 		buildCrewMemberCombos();
 
 	}
+
+
 
 	public void closeWindow() {
 		frame.dispose();

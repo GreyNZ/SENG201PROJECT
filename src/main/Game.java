@@ -54,7 +54,7 @@ public class Game {
 //		Crew crew = new Crew(newGame.getCrewSize(), newGame.getShipName());
 //		game.mainLoop();
 		Game game = new Game(newGame.getDays(), newGame.getPieces());
-		Crew crew = new Crew();
+		Crew crew = new Crew(newGame);
 //		crew.buildCrew();
 		game.mainLoop(newGame);
 	}
