@@ -28,3 +28,4 @@ To buff:<br/>
 random event chance<br/>
 asteroid damage, especially to shield<br/>
 plague damage<br/>
+sounds<br>/

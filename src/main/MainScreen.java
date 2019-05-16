@@ -832,8 +832,13 @@ public class MainScreen {
 				updateAll();
 			}
 		});
-		btnEndDay.setBounds(170, 170, 115, 29);
+		btnEndDay.setBounds(333, 187, 115, 29);
 		panel.add(btnEndDay);
+		
+		JLabel lblNextDay = new JLabel("Proceed to next day:");
+		lblNextDay.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNextDay.setBounds(168, 187, 154, 29);
+		panel.add(lblNextDay);
 		refreshCrewActions();
 
 		JScrollPane scrollPane = new JScrollPane();

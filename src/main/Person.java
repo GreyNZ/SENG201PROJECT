@@ -137,10 +137,12 @@ public class Person {
 	}
 	
 	public void addPlague() {
+		person_status = "Plagued";
 		this.has_plague = true;
 	}
 	
 	public void removePlauge() {
+		person_status = "Healthy";
 		this.has_plague = false;			
 	}
 	
@@ -178,6 +180,7 @@ public class Person {
 		return this.hasDied;
 		
 	}
+	// redundant but stops constantly printing that person is dead
 	public boolean alreadLabelledDead() {
 		return this.labelledDead ;
 	}
@@ -267,6 +270,8 @@ public class Person {
 		currentActions -= 1;
 		if (currentActions >= 0) {
 			person_actions_remaining = currentActions;
+			increaseHungerEndDay();
+			decreaseVigourTravel();
 			return true;
 		}
 		else {
