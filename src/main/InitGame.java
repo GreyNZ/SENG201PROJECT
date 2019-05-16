@@ -14,7 +14,7 @@ public class InitGame {
 	private int crewSize;
 	private int currentDay = 0;
 	private int money = 1000;
-	private Crew crew = new Crew();
+	private Crew crew = new Crew(this);
 	private Outpost outpost = new Outpost(this);
 	private WindowManager manager;
 	private MainScreen mainScreen;
@@ -288,7 +288,7 @@ public class InitGame {
 		
 	}
 	public void pirateAttack() {
-		String s = "Pirates are attacking. Oh my";
+		String s = "Pirates are attacking!";
 		System.out.println(s);
 		mainScreen.printToLog(s);
 		String attack = outpost.stealItem();
