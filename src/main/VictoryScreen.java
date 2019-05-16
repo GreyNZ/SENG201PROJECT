@@ -104,7 +104,7 @@ public class VictoryScreen {
 //		lblCrewStatsLabelMainScreen.setVerticalAlignment(SwingConstants.TOP);
 //		panel.add(lblCrewStatsLabelMainScreen);
 //		refreshedCrewStats = lblCrewStatsLabelMainScreen;
-//		refreshCrewNameLabel();
+//		refreshCrewNameLabel(); //note to push
 		
 		lblScore = new JLabel("Your score was:   Holding value");
 		lblScore.setHorizontalAlignment(SwingConstants.CENTER);

@@ -99,7 +99,7 @@ public class LossScreen {
 		lblImage.setBounds(206, 145, 898, 532);
 		frame.getContentPane().add(lblImage);
 		
-		JLabel lblScoreMessage = new JLabel("Your score was:   Holding value");
+		JLabel lblScoreMessage = new JLabel("Your score was:   Holding value"); //note to push
 		lblScoreMessage.setFont(new Font("Dialog", Font.BOLD, 30));
 		lblScoreMessage.setHorizontalAlignment(SwingConstants.CENTER);
 		lblScoreMessage.setBounds(292, 88, 647, 71);

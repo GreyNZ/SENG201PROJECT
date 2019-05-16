@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
 public class GenericErrorScreen {
 	
 	JFrame frmError;
-	private WindowManager manager;
+	private WindowManager manager; 
 	private JLabel lblHeaderError;
 	/**
 	 * Launch the application.
