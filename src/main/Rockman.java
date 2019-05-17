@@ -111,7 +111,7 @@ public class Rockman extends Person{
 		System.out.println(String.format("Has Plague to begin = %s", rocky.getPlagueValue()));
 		rocky.addPlague();
 		System.out.println(String.format("Has Plague when added = %s", rocky.getPlagueValue()));
-		rocky.removePlauge();
+//		rocky.removePlauge();
 		System.out.println(String.format("Has Plague after removal = %s", rocky.getPlagueValue()));
 		
 		

@@ -199,13 +199,13 @@ public class Crew {
 	public Integer getCrewSize() {
 		return this.crewSize;
 	}
-	
+	// testing removing dead person from array
 	public void sendDeath(Person person) {
 		if (!person.alreadLabelledDead()) {
 			String s = person.getName() +" has died!";
+			person.setLabelledDead();
 			this.initGame.getMainScreen().printToLog(s);
 			this.initGame.getMainScreen().buildCrewMemberCombos();
-			person.setLabelledDead();
 		}
 	}
 	

@@ -17,7 +17,7 @@ public class Person {
 	protected Double person_repair_value;
 	protected Double person_search_value;
 	protected Boolean has_plague;
-	private boolean hasDied;
+	private boolean hasDied = false;
 	private boolean labelledDead = false;
 	private String person_status = "Healthy";
 
@@ -75,9 +75,18 @@ public class Person {
 		String spacing = new String(new char[spaceValue]).replace("\0", " ");
 		String status = "%s" + spacing + "%s" + spacing +"%s/%s"+ spacing +"%s/%s"+ spacing + "%s\n\n";
 		status = String.format(status, person_name, person_race, person_hunger, 
-				person_max_hunger, person_vigour, person_max_vigour, person_status );
+				person_max_hunger, person_vigour, person_max_vigour, getStatus() );
 		/// more to come
+		System.out.println(status);
 		return status;
+	}
+	
+
+
+	
+	
+	public String getStatus() {
+		return person_status;
 	}
 	
 	public int getUnique() {
@@ -141,7 +150,7 @@ public class Person {
 		this.has_plague = true;
 	}
 	
-	public void removePlauge() {
+	public void removePlague() {
 		person_status = "Healthy";
 		this.has_plague = false;			
 	}
@@ -168,12 +177,18 @@ public class Person {
 		}
 		else {
 			this.person_health = 0;
-			this.isDead();
+			person_status = "Dead";
+			kill();
 			System.out.println(person_name + " has died, add death function to remove from crew");
 			return true;
 			/// call death function, remove from crew
 		}
 		
+	}
+	
+	public void kill() {
+		hasDied = true;
+		removePlague();
 	}
 	
 	public boolean isDead() {
@@ -292,6 +307,7 @@ public class Person {
 	
 	public String endDayChanges() {
 		increaseHungerEndDay();
+		decreaseVigourTravel();
 		resetActions();
 		String s = plagueSickness();
 		return s;
@@ -403,13 +419,14 @@ public class Person {
 		System.out.println(String.format("Has Plague to begin = %s", grey.getPlagueValue()));
 		grey.addPlague();
 		System.out.println(String.format("Has Plague when added = %s", grey.getPlagueValue()));
-		grey.removePlauge();
+		grey.removePlague();
 		System.out.println(String.format("Has Plague after removal = %s", grey.getPlagueValue()));
 		
 		System.out.println("Print toString");
 		System.out.println(grey);
 		
 	}
+
 
 
 	

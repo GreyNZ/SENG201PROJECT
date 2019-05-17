@@ -5,10 +5,19 @@ public class Consumable implements Items{
 	protected String consumableName;
 	protected Integer consumableValue;
 	protected Integer amountOwned = 0;
+	protected String type;
 	
 	public Consumable() {
 		consumableName = "unnamed consumable";
 		consumableValue = 100;
+	}
+	
+	//Over ride hashcode so can use as key in dictionary
+//	public int HashCode() {
+//		int HashCode = 0;
+//	}
+	public String getType() {
+		return type;
 	}
 	
 	public void increaseAmountOwned(int numToAdd) {
@@ -27,7 +36,7 @@ public class Consumable implements Items{
 	}
 	
 	public String toString() {
-		return String.format("Name = %s\nValue= %s", this.getName(), this.getValue());
+		return consumableName;
 	}
 	
 	public String getName() {
@@ -36,6 +45,13 @@ public class Consumable implements Items{
 	
 	public Integer getValue() {
 		return consumableValue;
+	}
+	
+	public int getHunger() {
+		return -1;
+	}
+	public int getHealing() {
+		return -1;
 	}
 	
 	public static void main(String[] args) {

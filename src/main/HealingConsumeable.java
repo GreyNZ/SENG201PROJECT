@@ -7,6 +7,7 @@ public class HealingConsumeable extends Consumable {
 	public HealingConsumeable(String tempName, int tempvalue, int tempHealing) {
 		super(tempName, tempvalue);
 		Healing = tempHealing;
+		type = "healing";
 	}
 	
 	public int getHealing() {
@@ -14,8 +15,11 @@ public class HealingConsumeable extends Consumable {
 	}
 	
 
-	public String toString() {
+	public String toLongString() {
 		return String.format("Name = %s\nValue = %s\nHealing = %s", this.getName(), this.getValue(), getHealing());
+	}
+	public String toString() {
+		return getName();
 	}
 	
 	public static void main(String[] args) {

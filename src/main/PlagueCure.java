@@ -4,7 +4,7 @@ public class PlagueCure extends PlagueConsumeable {
 
 	public PlagueCure() {
 		super("PlagueCure", 100, true);
-		// TODO Auto-generated constructor stub
+		type = "plague";
 	}
 
 	public static void main(String[] args) {

@@ -7,18 +7,24 @@ import java.util.Map;
 public class ShopList {
 	
 	private HashMap<String, Integer> shopList = new HashMap<String, Integer>();
-	private ArrayList<String> foodList;
-	private ArrayList<String> medicalList;
+	private ArrayList<Consumable> foodItems = new ArrayList<Consumable>();
+	private ArrayList<Consumable> healItems = new ArrayList<Consumable>();
+	private ArrayList<Consumable> itemArray;
+	private ArrayList<Consumable> foodList;
+	private ArrayList<Consumable> medicalList;
 
 
 	
-	public ShopList(ArrayList<String> buildList) {
+	public ShopList(ArrayList<String> buildList, ArrayList<Consumable> itemArray) {
+		this.itemArray = itemArray;
 		for (String s : buildList) {
 			shopList.put(s, 0);
 		}
+		System.out.println(shopList);
+		buildCurrentItems();
 	}
 	
-	public Integer getItem(String item) {
+	public int getItem(String item) {
 		return shopList.get(item);
 	}
 	
@@ -48,24 +54,45 @@ public class ShopList {
 				                shopList.get("Nanites"),shopList.get("PlagueCure"),
 				                shopList.get("RottenFood"),shopList.get("SpaceSausage"),
 								shopList.get("SpaceCandy"),shopList.get("SpaceApple"),
-				                shopList.get("SpaceRoast"),shopList.get("MagicMuchrooms"));		
+				                shopList.get("SpaceRoast"),shopList.get("MagicMushrooms"));		
 	}
 	public HashMap<String, Integer> getShopMap() {
 		return this.shopList;
 	}
 	
-	
-	//doesn't do much. need to seperate the food and medical items somehow
-	public ArrayList<String> buildFoodItems(){
-		ArrayList<String> foodItems = new ArrayList<String>();
-		for (Map.Entry<String, Integer> item: shopList.entrySet()) {
-			if (item.getValue() > 0) {
-				foodItems.add(item.getKey());
-			}
-		}
+	public ArrayList<Consumable> getFoodItems(){
+		System.out.println(foodItems);
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		return foodItems;
 	}
 	
-
+	public ArrayList<Consumable> getMedicalItems(){
+		return healItems;
+	}
 	
+	
+	
+	public void buildCurrentItems(){
+		ArrayList<Consumable> foodItems = new ArrayList<Consumable>();
+		ArrayList<Consumable> healItems = new ArrayList<Consumable>();
+//		System.out.println("item array");
+//		System.out.println(itemArray);
+//		System.out.println("Shop list");
+//		System.out.println(shopList);
+
+		for (Consumable item : itemArray) {
+			System.out.println(shopList.get("Bandages"));
+			String name = item.getName();
+			System.out.println(name);
+			if (shopList.get(name) > 0) {
+				if (item.getType() == "food") {
+					foodItems.add(item);}
+				else {
+					healItems.add(item);
+					}
+			}
+		}
+		System.out.println(foodItems);
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!))");
+	}	
 }

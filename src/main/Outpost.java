@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import main.AllConsumables;
 
@@ -23,6 +24,7 @@ public class Outpost {
 	private InitGame initGame;
 	private ShopList shopList;
 	private Integer totalItems;
+	private ArrayList<Consumable> itemArray = new ArrayList<Consumable>();
 
 	
 	
@@ -32,7 +34,8 @@ public class Outpost {
 		this.initGame = initGame;
 		shopPrices = buildShopPrices();
 		buildItemNameArray();
-		shopList = new ShopList(this.itemNameArray);
+		buildItemArray();
+		shopList = new ShopList(this.itemNameArray, itemArray);
 
 	}
 		
@@ -51,42 +54,49 @@ public class Outpost {
 		itemNameArray.add("MagicMushrooms");
 
 	}
+	
+	public void buildItemArray() {
+		for (int i = 1; i < 11; i++) {
+			addItem(i);
+		}
+		System.out.println(itemArray);
+	}
+	
+	private void addItem(int i) {
+		switch (i) {
+		case 1:
+			itemArray.add(new Bandages());
+			break;
+		case 2:
+			itemArray.add(new Medkit());
+			break;
+		case 3:
+			itemArray.add(new Nanites());
+			break;
+		case 4:
+			itemArray.add(new PlagueCure());
+			break;
+		case 5:
+			itemArray.add(new RottenFood());
+			break;
+		case 6:
+			itemArray.add(new SpaceApple());
+			break;
+		case 7:
+			itemArray.add(new SpaceSausage());
+			break;
+		case 8:
+			itemArray.add(new SpaceCandy());
+			break;
+		case 9:
+			itemArray.add(new SpaceRoast());
+			break;
+		case 10:
+			itemArray.add(new MagicMushrooms());
+			break;
+		}
 		
-//	private void addItem(int rand) {
-//		switch (rand) {
-//		case 1:
-//			shopList.add(new Bandages());
-//			break;
-//		case 2:
-//			shopList.add(new Medkit());
-//			break;
-//		case 3:
-//			shopList.add(new Nanties());
-//			break;
-//		case 4:
-//			shopList.add(new PlagueCure());
-//			break;
-//		case 5:
-//			shopList.add(new RottenFood());
-//			break;
-//		case 6:
-//			shopList.add(new SpaceApple());
-//			break;
-//		case 7:
-//			shopList.add(new SpaceSausage());
-//			break;
-//		case 8:
-//			shopList.add(new SpaceCandy());
-//			break;
-//		case 9:
-//			shopList.add(new SpaceRoast());
-//			break;
-//		case 10:
-//			shopList.add(new MagicMushrooms());
-//			break;
-//		}
-//		
-//	}
+	}
 	
 //	public String toString() {
 //		String result = "";
@@ -145,7 +155,15 @@ public class Outpost {
 		return purchase;
 		
 	}
-
+	
+	// probably not necessary, can do it in MainScreen
+	public String useItem(Consumable item, Person person) {
+//		Integer index = itemNameArray.indexOf(itemName);
+//		Consumable item = itemArray.get(index);
+		ConsumeItem consume = new ConsumeItem(item, person);
+		String result = consume.consume();
+		return result;
+	}
 
 	public ArrayList<Integer> buildShopPrices(){
 		shopPrices = new ArrayList<Integer>();
@@ -182,6 +200,16 @@ public class Outpost {
 		return this.itemNameArray;
 	}
 
+	
+	public ArrayList<Consumable> refreshFoodList(){
+//		shopList.buildCurrentItems();
+		return shopList.getFoodItems();
+	}
+	
+	public ArrayList<Consumable> refreshHealList(){
+//		shopList.buildCurrentItems();
+		return shopList.getMedicalItems();
+	}
 
 
 	public ShopList getShopList() {
@@ -219,4 +247,21 @@ public class Outpost {
 		}
 		return "The pirates stole one " + s;
 	}
+	
+	
+
+	
+	
+	public static void main(String[] args) {
+		InitGame init = new InitGame();
+		Outpost outpost = new Outpost(init);
+		outpost.buildItemArray();
+		ArrayList<Consumable> foodItems = new ArrayList<Consumable>();
+		foodItems.add(new Nanites());
+		foodItems.add(new SpaceApple());
+		ShopList shopList = new ShopList(outpost.getItemNameArray(), foodItems);
+		shopList.buildCurrentItems();
+		
+	}
+	
 }

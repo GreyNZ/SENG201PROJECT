@@ -72,7 +72,7 @@ public class MainScreen {
 	private JComboBox<Person> comboBox_Medbay_Select_Crewmember;
 	private JComboBox<Person> comboBox_SelectCrewmember_CrewTab;
 	private JComboBox<Person> ShipTabAsignRepairman;
-	private JComboBox<Person> comboBox_3;
+	private JComboBox<Consumable> comboBox_3;
 	private JLabel lblPartsFound;
 	private JLabel lblShipHull;
 	private JLabel lblShipSheilds;
@@ -81,6 +81,7 @@ public class MainScreen {
 	private JLabel lblDaysRemaining;
 	private JLabel lblCurrentPlanetName;
 	private JTextArea textAreaCrewStatus;
+	private JComboBox<Consumable> comboBox_SelectFood_CrewTab;
 
 
 
@@ -154,6 +155,61 @@ public class MainScreen {
 		}
 		textAreaCrewStatus.setText(crewStatusText);
 		
+	}
+	
+	
+	public void updateItemCombos() {
+		updateFoodCombo();
+		updateMedicalCombo();
+	}
+	
+	protected void updateFoodCombo() {
+		comboBox_SelectFood_CrewTab.removeAllItems();
+		ArrayList<Consumable> foodList = outpost.refreshFoodList();
+		if (foodList.size() > 0){
+			for (Consumable item : foodList) {
+				comboBox_SelectFood_CrewTab.addItem(item);
+			}
+		}
+		System.out.println(comboBox_SelectFood_CrewTab.getItemCount());
+		System.out.println("POO");
+
+		if (comboBox_SelectFood_CrewTab.getItemCount() == 0) {
+			comboBox_SelectFood_CrewTab.addItem(new RottenFood());
+		}
+	}
+	
+	protected void updateMedicalCombo() {
+		comboBox_3.removeAllItems();
+		for (Consumable item : outpost.refreshHealList()) {
+			comboBox_3.addItem(item);
+			System.out.println("UPDATING");
+			System.out.println(item);
+
+		}
+		System.out.println(comboBox_3.getItemCount());
+		if (comboBox_3.getItemCount() == 0) {
+			comboBox_3.addItem(new Nanites());
+		}
+	}
+	
+	protected void eatFood() {
+		Person person = (Person) comboBox_SelectCrewmember_CrewTab.getSelectedItem();
+		Consumable item = (Consumable) comboBox_SelectFood_CrewTab.getSelectedItem();
+		ConsumeItem consume = new ConsumeItem(item, person);
+		String result = consume.consume();
+		printToLog(result);
+		updateFoodCombo();
+		
+	}
+	// add checks for item == null, ie no item selected. same with food
+	public void useHeal() {
+		Person person = (Person) comboBox_Medbay_Select_Crewmember.getSelectedItem();
+		Consumable item = (Consumable) comboBox_3.getSelectedItem();
+		ConsumeItem consume = new ConsumeItem(item, person);
+		String result = consume.consume();
+		printToLog(result);
+		updateMedicalCombo();
 	}
 	
 	public void refreshPieces() {
@@ -268,6 +324,7 @@ public class MainScreen {
 		else {
 			printToLog("<html>Not enough cash<br/></html>");
 		};
+		updateItemCombos();
 
 	}
 	public void resetSpinnerValues() {
@@ -294,10 +351,9 @@ public class MainScreen {
 			printToLog("Select two pilots.");
 		}
 		else if (initGame.travelToNewPlanet(pilot1, pilot2)) {
-			System.out.println("Let's go!");
-			
-			
+			System.out.println("Let's go!");		
 		}
+		updateAll();
 
 	}
 
@@ -486,6 +542,8 @@ public class MainScreen {
 				//System.out.println(getSpinnerValues());
 				resetSpinnerValues();
 				refreshMoney();
+				updateFoodCombo();
+				updateMedicalCombo();
 			}
 		});
 		btnPurchaseItems.setBounds(401, 551, 249, 66);
@@ -665,6 +723,11 @@ public class MainScreen {
 		MedbayPanel.add(comboBox_Medbay_Select_Crewmember);
 
 		JButton btnUseHealingItem = new JButton("Use Healing Item");
+		btnUseHealingItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				useHeal();
+			}
+		});
 		btnUseHealingItem.setBounds(359, 487, 291, 68);
 		MedbayPanel.add(btnUseHealingItem);
 
@@ -680,7 +743,7 @@ public class MainScreen {
 		lblSelectHealingItem.setBounds(24, 535, 301, 24);
 		MedbayPanel.add(lblSelectHealingItem);
 
-		comboBox_3 = new JComboBox<Person>();
+		comboBox_3 = new JComboBox<Consumable>();
 		comboBox_3.setToolTipText("Select Crewmember\n");
 		comboBox_3.setBounds(12, 571, 313, 24);
 		MedbayPanel.add(comboBox_3);
@@ -699,8 +762,9 @@ public class MainScreen {
 		comboBox_SelectCrewmember_CrewTab.setToolTipText("Select Crewmember\n");
 		comboBox_SelectCrewmember_CrewTab.setBounds(12, 502, 313, 24);
 		CrewPanel.add(comboBox_SelectCrewmember_CrewTab);
-
-		JComboBox comboBox_SelectFood_CrewTab = new JComboBox();
+		
+		
+		comboBox_SelectFood_CrewTab = new JComboBox();
 		comboBox_SelectFood_CrewTab.setToolTipText("Select Crewmember\n");
 		comboBox_SelectFood_CrewTab.setBounds(12, 560, 313, 24);
 		CrewPanel.add(comboBox_SelectFood_CrewTab);
@@ -715,6 +779,11 @@ public class MainScreen {
 		CrewPanel.add(button_Sleep_CrewTab);
 
 		JButton btnEatFood = new JButton("Eat Food");
+		btnEatFood.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				eatFood();
+			}
+		});
 		btnEatFood.setBounds(359, 560, 291, 68);
 		CrewPanel.add(btnEatFood);
 
@@ -862,6 +931,8 @@ public class MainScreen {
 		buildCrewMemberCombos();
 
 	}
+
+
 
 
 

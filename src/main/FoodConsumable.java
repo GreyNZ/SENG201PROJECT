@@ -7,14 +7,19 @@ public class FoodConsumable extends Consumable {
 	public FoodConsumable(String tempName, int tempvalue, int tempHunger) {
 		super(tempName, tempvalue);
 		Hunger = tempHunger;
+		type = "food";
 	}
 	
 	public int getHunger() {
 		return this.Hunger;
 	}
 	
-	public String toString() {
+	public String toLongString() {
 		return String.format("Name = %s\nValue = %s\nHunger = %s", this.getName(), this.getValue(), getHunger());
+	}
+	
+	public String toString() {
+		return getName();
 	}
 	
 	public static void main(String[] args) {
