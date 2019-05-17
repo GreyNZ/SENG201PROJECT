@@ -1,5 +1,12 @@
 package main;
 
+import java.io.File;
+import java.net.URL;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 public class WindowManager {
 	
 	private InitGame initGame;
@@ -50,4 +57,19 @@ public class WindowManager {
 		return this.initGame;
 	}
 
+	public void playSound(String url)
+    {
+      try 
+      {
+       AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(url).getAbsoluteFile());
+       Clip clip = AudioSystem.getClip();
+       clip.open(audioInputStream);
+       clip.start();
+      }
+      catch(Exception ex)
+      {
+        System.out.println("Error with playing sound.");
+        ex.printStackTrace( );
+      }
+    }
 }

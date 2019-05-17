@@ -221,6 +221,8 @@ public class NewGameScreen {
 			public void actionPerformed(ActionEvent arg0) {
 				manager.launchStartScreen();
 				closeWindow();
+				//manager.playSound("/home/cosc/student/gha47/Desktop/Seng201ProjectPictures/Sounds/button_click.wav");  //works from pc file path
+				
 			}
 		});
 		btnReturnToStartScreen.setFont(new Font("L M Roman Caps10", Font.BOLD, 21));
