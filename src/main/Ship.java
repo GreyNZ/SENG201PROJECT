@@ -33,7 +33,7 @@ public class Ship {
 	
 	//shields take full damage, hull takes damage * (1 - shield %)
 	public void takeDamage(Double damage) {
-		Double shieldModifier = 1 - (this.shipShields / 100);
+		Double shieldModifier = 1.2 - (this.shipShields / 100);
 		this.shipHealth -=  damage * shieldModifier;
 		this.lowerShield(damage);
 		if (this.shipHealth <= 0.0) {

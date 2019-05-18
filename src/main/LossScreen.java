@@ -38,11 +38,11 @@ public class LossScreen {
 	 * Create the application.
 	 */
 	
-//	public LossScreen(WindowManager incomingManager) {
-//		manager = incomingManager;
-//		initialize();
-//		frame.setVisible(true);
-//	}
+	public LossScreen(WindowManager incomingManager) {
+		manager = incomingManager;
+		initialize();
+		frame.setVisible(true);
+	}
 	
 	public LossScreen() {
 		initialize();
@@ -52,6 +52,12 @@ public class LossScreen {
 		frame.dispose();
 	}
 
+	public void newGame() {
+		InitGame newGame = new InitGame();
+		Game game = new Game();
+		game.mainLoop(newGame);
+	}
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -75,7 +81,7 @@ public class LossScreen {
 		JButton btnPlayAgain = new JButton("Play Again");
 		btnPlayAgain.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				manager.launchStartScreen();
+				newGame();
 				closeWindow();
 			}
 		});
@@ -99,7 +105,7 @@ public class LossScreen {
 		lblImage.setBounds(206, 145, 898, 532);
 		frame.getContentPane().add(lblImage);
 		
-		JLabel lblScoreMessage = new JLabel("Your score was:   Holding value"); //note to push
+		JLabel lblScoreMessage = new JLabel("Your score was:   " + manager.getInitGame().getPoints()); //note to push
 		lblScoreMessage.setFont(new Font("Dialog", Font.BOLD, 30));
 		lblScoreMessage.setHorizontalAlignment(SwingConstants.CENTER);
 		lblScoreMessage.setBounds(292, 88, 647, 71);

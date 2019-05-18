@@ -126,10 +126,10 @@ public class MainScreen {
 		lblDaysRemaining.setText(s);
 	}
 	protected void sleepPerson() {
-		Person person = (Person) comboBox_Medbay_Select_Crewmember.getSelectedItem();
+		Person person = (Person) comboBox_SelectCrewmember_CrewTab.getSelectedItem();
 		String sleepResult = person.personSleep();
 		printToLog(sleepResult);
-		refreshCrewStatus();
+		updateAll();
 		
 	}
 	
@@ -230,19 +230,32 @@ public class MainScreen {
 	
 	public void repairHullClick() {
 		Person person = (Person) ShipTabAsignRepairman.getSelectedItem();
-		Ship ship = initGame.getShip();
-		RepairShip repair = new RepairShip(ship, person);
-		String result = repair.repairShipHull();
-		refreshShipHealth();
+		String result = "";
+		if (person.attemptAction()) {
+			Ship ship = initGame.getShip();
+			RepairShip repair = new RepairShip(ship, person);
+			result = repair.repairShipHull();
+			updateAll();
+			
+		}
+		else {
+			result =  person.failedAction();
+		}
 		printToLog(result);
 	}
 	
 	public void repairShieldClick() {
 		Person person = (Person) ShipTabAsignRepairman.getSelectedItem();
-		Ship ship = initGame.getShip();
-		RepairShip repair = new RepairShip(ship, person);
-		String result = repair.repairShipShield();
-		refreshShipHealth();
+		String result = "";
+		if (person.attemptAction()) {
+			Ship ship = initGame.getShip();
+			RepairShip repair = new RepairShip(ship, person);
+			result = repair.repairShipShield();
+			updateAll();
+		}
+		else {
+			result = person.failedAction();
+		}
 		printToLog(result);
 	}
 	
@@ -296,6 +309,8 @@ public class MainScreen {
 		refreshShipHealth();
 		updatePartsFound();
 		updateDay();
+		refreshMoney();
+		updateItemCombos();
 		if (initGame.isGameOver()) {
 			manager.launchGameOverScreen();
 			closeWindow();
@@ -331,6 +346,10 @@ public class MainScreen {
 				System.out.println(person);
 			}
 		}
+		if (comboBox_1.getItemCount() == 0) {
+			initGame.isGameOver();
+			updateAll();
+		}
 		
 	}
 
@@ -347,7 +366,7 @@ public class MainScreen {
 			System.out.println("Success");
 		}
 		else {
-			printToLog("<html>Not enough cash<br/></html>");
+			printToLog("Not enough cash");
 		};
 		updateItemCombos();
 
@@ -751,6 +770,7 @@ public class MainScreen {
 		btnUseHealingItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				useHeal();
+				updateAll();
 			}
 		});
 		btnUseHealingItem.setBounds(359, 487, 291, 68);
@@ -807,6 +827,7 @@ public class MainScreen {
 		btnEatFood.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				eatFood();
+				updateAll();
 			}
 		});
 		btnEatFood.setBounds(359, 560, 291, 68);

@@ -295,6 +295,17 @@ public class Person {
 		
 	}
 	
+	public String failedAction() {
+		String failedReason = "";
+		if (person_vigour <= 0) {
+			failedReason = person_name + " is too tired to follow your orders. Let them sleep";
+		}
+		else {
+			failedReason = "Not enough actions";
+		}
+		return failedReason;
+	}
+	
 	public String plagueSickness() {
 		String s = "";
 		if (has_plague) {

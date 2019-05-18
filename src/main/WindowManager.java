@@ -35,7 +35,12 @@ public class WindowManager {
 	}
 	
 	public void launchGameOverScreen() {
-		GameOver gameOver = new GameOver(this);
+		if (initGame.hasWonGame()){
+			VictoryScreen victory = new VictoryScreen(this);
+	}
+		else {
+			LossScreen loss = new LossScreen(this);
+		}
 	}
 	public void closeGameOverScreen(GameOver gameOver) {
 		gameOver.closeWindow();

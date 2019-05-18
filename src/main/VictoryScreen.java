@@ -38,11 +38,11 @@ public class VictoryScreen {
 	 * Create the application.
 	 */
 	
-//	public VictoryScreen(WindowManager incomingManager) {
-//		manager = incomingManager;
-//		initialize();
-//		frame.setVisible(true);
-//	}
+	public VictoryScreen(WindowManager incomingManager) {
+		manager = incomingManager;
+		initialize();
+		frame.setVisible(true);
+	}
 	
 	public VictoryScreen() {
 		initialize();
@@ -51,7 +51,11 @@ public class VictoryScreen {
 	public void closeWindow() {
 		frame.dispose();
 	}
-
+	public void newGame() {
+		InitGame newGame = new InitGame();
+		Game game = new Game();
+		game.mainLoop(newGame);
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -75,7 +79,7 @@ public class VictoryScreen {
 		JButton btnPlayAgain = new JButton("Play Again");
 		btnPlayAgain.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				manager.launchStartScreen();
+				newGame();
 				closeWindow();
 			}
 		});
@@ -106,7 +110,7 @@ public class VictoryScreen {
 //		refreshedCrewStats = lblCrewStatsLabelMainScreen;
 //		refreshCrewNameLabel(); //note to push
 		
-		lblScore = new JLabel("Your score was:   Holding value");
+		lblScore = new JLabel("Your score was:   " + manager.getInitGame().getPoints());
 		lblScore.setHorizontalAlignment(SwingConstants.CENTER);
 		lblScore.setFont(new Font("Dialog", Font.BOLD, 30));
 		lblScore.setBounds(304, 110, 647, 71);

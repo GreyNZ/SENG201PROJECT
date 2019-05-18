@@ -109,7 +109,7 @@ public class Crew {
 			return new Grey(name, i);
 		case "Bugman":
 			return new Bugman(name, i);
-		case "Grazer":
+		case "Gazer":
 			return new Gazer(name, i);
 		case "Warbot":
 			return new Warbot(name, i);
@@ -237,6 +237,14 @@ public class Crew {
 			}
 		}
 		return points;
+	}
+	
+	// for new game screen
+	public void destroyCrew() {
+		if (crewSize > 0) {
+			crewMemberArray = new ArrayList<Person>();
+		}
+		
 	}
 	
 }

@@ -14,6 +14,9 @@ import java.util.Random;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
+import java.awt.Color;
+import java.awt.SystemColor;
+import javax.swing.JTextArea;
 
 public class NewGameScreen {
 
@@ -26,6 +29,9 @@ public class NewGameScreen {
 	private String[] raceArray;
 	private Random rand = new Random();
 	private JComboBox comboBox;
+	private JTextArea textField;
+	private int maxCrewSize = 4;
+	private JSpinner spinner_GameLength;
 
 
 	/**
@@ -76,11 +82,75 @@ public class NewGameScreen {
 		frame.setVisible(true);
 	}
 	
+	public void checkStart() {
+		String shipName = txtEnterShipName.getText();
+		System.out.println(shipName);
+		if (shipName.equals("Please enter a ship name 3-12 characters")) {
+			textField.setText("Please enter a ship name");
+		}
+		else if (shipName.length() < 3 || shipName.length() > 12) {
+			textField.setText("Ship name must be 3-12 characters");
+		}
+		
+		else {
+			if (crew.getCrewSize() < 2) {
+				textField.setText("Add 2-4 crew members");
+			}
+			else {
+				int gameLength = (int) spinner_GameLength.getValue();
+				initGame.setGameLength(gameLength);
+				initGame.setShipName(shipName);
+				manager.launchMainScreen();
+				closeWindow();		
+			}
+		}
+	}
+	
 	
 	public void setDefaultValues() {
 		initGame.setShipName("The Enterprise");
 		initGame.setGameLength(3);
+		crew.destroyCrew();
 		initGame.getCrew().buildDefaultCrew();
+	}
+	
+	public void addMember() {
+		if (crew.getCrewSize() < 4) {
+			String race = (String) comboBox.getSelectedItem();
+			String name = txtEnterCrewMembers.getText();
+			if (name.equals("Enter Crew Members Name 3-12 characters")) {
+				textField.setText("Please enter a name");
+			}
+			else if (name.length() > 12 || name.length() < 3){
+				textField.setText("Please enter a name 3-12 characters");
+				
+			}
+			else {
+				crew.addCrewMember(name, race);
+				textField.setText("A " + race + " named " + name + " joined your crew");
+			}}
+		else {
+			textField.setText("Crew is full.");
+			}
+		
+	}
+	
+	private void displayRaceInfo() {
+		String race = (String) comboBox.getSelectedItem();
+		String info = RaceInfo.getInfo(race);
+		textField.setText(info);
+	}
+	
+	public void addRandomCrewMember() {
+		if (crew.getCrewSize() < maxCrewSize) {
+			String name = randomName();
+			String race = randomRace();
+			crew.addCrewMember(name, race);
+			textField.setText("A " + race + " named " + name + " has joined your crew");
+		}
+		else {
+			textField.setText("Crew is full.");
+		}
 	}
 	
 	public void buildRaceArray() {
@@ -107,47 +177,24 @@ public class NewGameScreen {
 		frame.getContentPane().add(txtEnterShipName);
 		txtEnterShipName.setColumns(10);
 		
-		JButton btnConfirmShipName = new JButton("Confirm");
-		btnConfirmShipName.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				String shipName = txtEnterShipName.getText();
-				if (shipName != "Please enter a ship name 3-12 characters") {
-					initGame.setShipName(shipName);
-				}
-				else {
-					initGame.setShipName("The Enterprise");
-				}
-				
-			}
-		});
-		btnConfirmShipName.setBounds(525, 27, 114, 25);
-		btnConfirmShipName.setFont(new Font("Dialog", Font.BOLD, 14));
-		frame.getContentPane().add(btnConfirmShipName);
-		
 		JLabel lblDays = new JLabel("Please select the number of days the game lasts:");
 		lblDays.setBounds(12, 70, 470, 31);
 		lblDays.setFont(new Font("Dialog", Font.BOLD, 16));
 		frame.getContentPane().add(lblDays);
 		
-		JButton btn_ConfirmDays = new JButton("Confirm");
-		btn_ConfirmDays.setBounds(525, 74, 114, 25);
-		btn_ConfirmDays.setFont(new Font("Dialog", Font.BOLD, 14));
-		frame.getContentPane().add(btn_ConfirmDays);
-		
-		JSpinner spinner_GameLength = new JSpinner();
+		spinner_GameLength = new JSpinner();
 		spinner_GameLength.setBounds(467, 77, 46, 20);
-		spinner_GameLength.setModel(new SpinnerNumberModel(3, 3, 12, 1));
+		spinner_GameLength.setModel(new SpinnerNumberModel(3, 3, 10, 1));
 		frame.getContentPane().add(spinner_GameLength);
 		
 		JButton btnStartGame = new JButton("Start Game");
 		btnStartGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				// if all inputs completed close window and open mane game running it will all inputs
-				// else: throw error saying your missing shit
+				checkStart();
 				// closeWindow();   // bundle into if all working above
 			}
 		});
-		btnStartGame.setBounds(957, 689, 231, 71);
+		btnStartGame.setBounds(957, 543, 231, 71);
 		btnStartGame.setFont(new Font("L M Roman Caps10", Font.BOLD, 21));
 		frame.getContentPane().add(btnStartGame);
 		
@@ -167,7 +214,7 @@ public class NewGameScreen {
 		frame.getContentPane().add(label);
 		
 		JButton btnStartDefultGame = new JButton("Quick Play");
-		btnStartDefultGame.setBounds(957, 543, 231, 71);
+		btnStartDefultGame.setBounds(957, 689, 231, 71);
 		btnStartDefultGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//initiate game with set values
@@ -190,16 +237,19 @@ public class NewGameScreen {
 		txtEnterCrewMembers.setColumns(10);
 		
 		JButton btnAddCrewmember = new JButton("Add Crewmember");
+		btnAddCrewmember.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				addMember();
+			}
+		});
 		btnAddCrewmember.setBounds(12, 237, 276, 31);
 		btnAddCrewmember.setFont(new Font("Dialog", Font.BOLD, 14));
 		frame.getContentPane().add(btnAddCrewmember);
 		
-		JButton btnDefaultCrewmember = new JButton("Add Default Crewmember");
+		JButton btnDefaultCrewmember = new JButton("Add Random Crewmember");
 		btnDefaultCrewmember.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String name = randomName();
-				String race = randomRace();
-				crew.addCrewMember(name, race);
+				addRandomCrewMember();
 			}
 		});
 		btnDefaultCrewmember.setBounds(12, 266, 276, 31);
@@ -209,6 +259,11 @@ public class NewGameScreen {
 		comboBox = new JComboBox(raceArray);
 		comboBox.setBounds(12, 185, 276, 24);
 		frame.getContentPane().add(comboBox);
+		comboBox.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		        displayRaceInfo();
+		    }
+		});
 		
 		JLabel lblSelectCrewmembersRace = new JLabel("Select Crewmembers Race");
 		lblSelectCrewmembersRace.setBounds(27, 157, 231, 31);
@@ -227,20 +282,14 @@ public class NewGameScreen {
 		btnReturnToStartScreen.setBounds(27, 689, 231, 71);
 		frame.getContentPane().add(btnReturnToStartScreen);
 		
-		JLabel pickCrewSizeLabel = new JLabel("Please select the number of days the game lasts:");
-		pickCrewSizeLabel.setFont(new Font("Dialog", Font.BOLD, 16));
-		pickCrewSizeLabel.setBounds(12, 114, 470, 31);
-		frame.getContentPane().add(pickCrewSizeLabel);
-		
-		JSpinner crewSizeSpiner = new JSpinner();
-		crewSizeSpiner.setModel(new SpinnerNumberModel(2, 2, 4, 1));
-		crewSizeSpiner.setBounds(467, 121, 46, 20);
-		frame.getContentPane().add(crewSizeSpiner);
-		
-		JButton btnCrewSizeConfirm = new JButton("Confirm");
-		btnCrewSizeConfirm.setFont(new Font("Dialog", Font.BOLD, 14));
-		btnCrewSizeConfirm.setBounds(525, 118, 114, 25);
-		frame.getContentPane().add(btnCrewSizeConfirm);
+		textField = new JTextArea();
+		textField.setBackground(SystemColor.window);
+		textField.setFocusable(false);
+		textField.setBounds(351, 188, 563, 426);
+		textField.setLineWrap(true);
+		textField.setWrapStyleWord(true);
+		frame.getContentPane().add(textField);
+		textField.setColumns(10);
 	}
 	
 	protected String randomRace() {

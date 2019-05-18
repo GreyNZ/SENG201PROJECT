@@ -22,6 +22,7 @@ public class InitGame {
 	private Random rand = new Random();
 	private Ship ship;
 	private boolean gameHeckinOver = false;
+	private boolean wonGame = false;
 	private int points = 0;
 
 	
@@ -98,13 +99,19 @@ public class InitGame {
 	}
 	
 	public void getAddCurrentPieces() {
-		this.currentPieces = this.getCurrentPieces() + 1;
+		currentPieces += 1;
+		if (currentPieces >= pieces) {
+			wonGame = true;
+			points += 10000;
+			gameOver();
+		}
 	}
 
 	public void endDay() {
 		this.currentDay += 1;
+		calculatePoints();
 		if (currentDay > days) {
-			gameOver();
+			gameHeckinOver = true;
 		}
 		String s = crew.endDayActions();
 		mainScreen.printToLog(s);
@@ -112,7 +119,9 @@ public class InitGame {
 		
 	}
 
-	private void gameOver() {
+	public void gameOver() {
+		calculatePoints();
+		points += money;
 		this.gameHeckinOver = true;
 		
 	}
@@ -171,6 +180,8 @@ public class InitGame {
 	public MainScreen getMainScreen() {
 		return this.mainScreen;
 	}
+	
+	// new class?
 	public String searchPlanet(String name) {
 		Person crewMember = crew.getMember(name);
 		System.out.println(crewMember.getRace());
@@ -195,7 +206,7 @@ public class InitGame {
 				// find piece, update pieces found, decrement pieces left on planet.
 				if (planet.foundPiece()) {
 					searchResult = "Found piece!";
-					this.currentPieces += 1;
+					this.getAddCurrentPieces();
 				}
 				else {
 					searchResult = "Found an ornate mahogany set of drawers";
@@ -257,18 +268,26 @@ public class InitGame {
 		default:
 			break;
 		}
+		mainScreen.updateAll();
 		
 	}
+	
+
 	private void asteroidBelt() {
 		Integer chance = rand.nextInt(3);
 		if (chance != 0) {
 			String s = "Oh no, we're passing through an asteroid belt. Hold on tight";
-			ship.takeDamage(10.0);
+			ship.takeDamage(50.0);
 			System.out.println(ship.getShipHealth() + "" + ship.getShipSheild());
 			mainScreen.printToLog(s);
+			if (ship.getShipHealth() <= 0) {
+				gameOver();
+			}
 		}
 		
 	}
+	
+	// make class
 	private void spacePlague() {
 		Integer plaguedIndex = rand.nextInt(crew.getCrewSize());
 		Person plaguedGuy = crew.getCrewMemberArray().get(plaguedIndex);
@@ -276,6 +295,7 @@ public class InitGame {
 		// 10 % of a second plague victim
 		Integer secondChance = rand.nextInt(10);
 		Integer secondIndex = rand.nextInt(crew.getCrewSize());
+		
 		if (secondChance == 9 && plaguedIndex != secondIndex) {
 			Person secondGuy = crew.getCrewMemberArray().get(secondIndex);
 			secondGuy.addPlague();
@@ -311,5 +331,15 @@ public class InitGame {
 		points += pieces * 100;
 		points += crew.crewPoints();
 	}
+	
+	public boolean hasWonGame() {
+		return wonGame;
+	}
+	public int getPoints() {
+		
+		return points;
+	}
+	
+
 	
 }

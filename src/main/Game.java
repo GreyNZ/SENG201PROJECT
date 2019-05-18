@@ -4,27 +4,27 @@ import java.util.ArrayList;
 
 public class Game {
 	
-	private boolean gameHeckinOver= false;
-	private Crew crew;
-	private int pieces;
-	private int days;
+//	private boolean gameHeckinOver= false;
+//	private Crew crew;
+//	private int pieces;
+//	private int days;
 	private InitGame initGame;
 	private WindowManager manager;
 	
-	public Game(int days, int pieces) {
-//		this.crew = crew;
-		this.days = days;
-		this.pieces = pieces;
-	}
+//	public Game(int days, int pieces) {
+////		this.crew = crew;
+//		this.days = days;
+//		this.pieces = pieces;
+//	}
 
 	public Game() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void gameOver() {
-		System.out.println("GAME HECKIN OVER SON");
-		gameHeckinOver = true;
-	}
+//	public void gameOver() {
+//		System.out.println("GAME HECKIN OVER SON");
+//		gameHeckinOver = true;
+//	}
 	
 	//console
 	public void mainLoop(Crew crew, InitGame newGame) {
@@ -53,8 +53,10 @@ public class Game {
 //		uncomment these for console testing, using default constructor to save having to put in everything.
 //		Crew crew = new Crew(newGame.getCrewSize(), newGame.getShipName());
 //		game.mainLoop();
-		Game game = new Game(newGame.getDays(), newGame.getPieces());
-		Crew crew = new Crew(newGame);
+//		Game game = new Game(newGame.getDays(), newGame.getPieces());
+//		Crew crew = new Crew(newGame);
+		Game game = new Game();
+//		Crew crew = newGame.getCrew();
 //		crew.buildCrew();
 		game.mainLoop(newGame);
 	}
