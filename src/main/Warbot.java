@@ -110,7 +110,7 @@ public class Warbot extends Person {
 		System.out.println(String.format("Has Plague to begin = %s", terminator.getPlagueValue()));
 		terminator.addPlague();
 		System.out.println(String.format("Has Plague when added = %s", terminator.getPlagueValue()));
-		terminator.removePlauge();
+		terminator.removePlague();
 		System.out.println(String.format("Has Plague after removal = %s", terminator.getPlagueValue()));		
 		
 	}

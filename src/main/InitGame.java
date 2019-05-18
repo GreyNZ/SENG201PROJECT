@@ -22,6 +22,7 @@ public class InitGame {
 	private Random rand = new Random();
 	private Ship ship;
 	private boolean gameHeckinOver = false;
+	private int points = 0;
 
 	
 
@@ -233,7 +234,7 @@ public class InitGame {
 			randomEvent();
 			pilot1.attemptAction();
 			pilot2.attemptAction();
-			mainScreen.printToLog("Made it to a planet " + planetName);
+			mainScreen.printToLog("Made it to planet " + planetName);
 			return true;
 		}
 		else {
@@ -274,15 +275,15 @@ public class InitGame {
 		plaguedGuy.addPlague();
 		// 10 % of a second plague victim
 		Integer secondChance = rand.nextInt(10);
-		if (secondChance == 9) {
-			Integer secondIndex = rand.nextInt(crew.getCrewSize());
+		Integer secondIndex = rand.nextInt(crew.getCrewSize());
+		if (secondChance == 9 && plaguedIndex != secondIndex) {
 			Person secondGuy = crew.getCrewMemberArray().get(secondIndex);
 			secondGuy.addPlague();
-			String s = plaguedGuy + " and " + secondGuy + " contracted space aids!";
+			String s = plaguedGuy + " and " + secondGuy + " contracted space plague!";
 			mainScreen.printToLog(s);
 		}
 		else {
-			String s = plaguedGuy + " contracted space aids!";
+			String s = plaguedGuy + " contracted space plague!";
 			mainScreen.printToLog(s);
 		}
 		
@@ -304,6 +305,11 @@ public class InitGame {
 	public Planet getPlanet() {
 		
 		return this.planet;
+	}
+	
+	public void calculatePoints() {
+		points += pieces * 100;
+		points += crew.crewPoints();
 	}
 	
 }

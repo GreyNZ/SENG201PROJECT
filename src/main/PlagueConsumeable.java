@@ -13,8 +13,11 @@ public class PlagueConsumeable extends Consumable {
 		return this.curePlague;
 	}
 	
-	public String toString() {
+	public String toLongString() {
 		return String.format("Name = %s\nValue = %s\nCures Plague = %s", this.getName(), this.getValue(), getCurePlague());
+	}
+	public String toString() {
+		return getName();
 	}
 	
 	public static void main(String[] args) {

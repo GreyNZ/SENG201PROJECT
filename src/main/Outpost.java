@@ -252,6 +252,9 @@ public class Outpost {
 
 	
 	
+	
+	
+	
 	public static void main(String[] args) {
 		InitGame init = new InitGame();
 		Outpost outpost = new Outpost(init);

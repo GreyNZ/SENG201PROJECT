@@ -10,12 +10,15 @@ public class Ship {
 	}
 	
 
-	public void raiseShield(Double raiseValue) {
+	public Double raiseShield(Double raiseValue) {
 		if (this.shipShields + raiseValue > 100.0) {
+			Double oldShieldValue = shipShields;
 			this.shipShields = 100.0;
+			return shipShields - oldShieldValue;
 		}
 		else {
 			this.shipShields += raiseValue;
+			return raiseValue;
 		}
 	}
 	public void lowerShield(Double lowerValue) {
@@ -25,7 +28,8 @@ public class Ship {
 		else {
 			this.shipShields -= lowerValue;
 		}
-	}	
+	}
+	
 	
 	//shields take full damage, hull takes damage * (1 - shield %)
 	public void takeDamage(Double damage) {
@@ -36,9 +40,22 @@ public class Ship {
 //			Game.gameOver();
 			System.out.println("GAME HECKIN OVER SON");
 		}
-		
-
 	}
+	
+	public Double repairHull(Double repair) {
+		Double repairResult = repair;
+		Double previousHealth = shipHealth;
+		if (shipHealth + repair >= 100.0) {
+			shipHealth = 100.0;
+			repairResult = shipHealth - previousHealth;
+			return repairResult;
+		}
+		else {
+			shipHealth += repair;
+			return repairResult;
+		}
+	}
+	
 	public String toString() {
 		String status = String.format("Shipname: %s\nShip Health: %s\nShip Shield: %s", this.shipName, this.shipHealth, this.shipShields);
 		return status;

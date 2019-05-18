@@ -227,6 +227,17 @@ public class Crew {
 		}
 		return s;
 	}
+
+	public int crewPoints() {
+		int points = 0;
+		for (Person person : crewMemberArray) {
+			points += person.getHealth();
+			if (person.getPlagueValue()) {
+				points -= 50;
+			}
+		}
+		return points;
+	}
 	
 }
 

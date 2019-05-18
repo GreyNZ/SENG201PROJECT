@@ -165,51 +165,58 @@ public class MainScreen {
 	
 	protected void updateFoodCombo() {
 		comboBox_SelectFood_CrewTab.removeAllItems();
-		ArrayList<Consumable> foodList = outpost.refreshFoodList();
+		outpost.getShopList().buildCurrentItems();
+		ArrayList<Consumable> foodList = outpost.getShopList().getFoodItems();
 		if (foodList.size() > 0){
 			for (Consumable item : foodList) {
 				comboBox_SelectFood_CrewTab.addItem(item);
 			}
 		}
-		System.out.println(comboBox_SelectFood_CrewTab.getItemCount());
-		System.out.println("POO");
-
-		if (comboBox_SelectFood_CrewTab.getItemCount() == 0) {
-			comboBox_SelectFood_CrewTab.addItem(new RottenFood());
-		}
 	}
 	
 	protected void updateMedicalCombo() {
 		comboBox_3.removeAllItems();
-		for (Consumable item : outpost.refreshHealList()) {
+		outpost.getShopList().buildCurrentItems();
+		ArrayList<Consumable> healList = outpost.getShopList().getMedicalItems();
+		for (Consumable item :healList) {
 			comboBox_3.addItem(item);
-			System.out.println("UPDATING");
-			System.out.println(item);
+
 
 		}
-		System.out.println(comboBox_3.getItemCount());
-		if (comboBox_3.getItemCount() == 0) {
-			comboBox_3.addItem(new Nanites());
-		}
+//		System.out.println(comboBox_3.getItemCount());
+//		if (comboBox_3.getItemCount() == 0) {
+//			comboBox_3.addItem(new Nanites());
+//		}
 	}
 	
 	protected void eatFood() {
-		Person person = (Person) comboBox_SelectCrewmember_CrewTab.getSelectedItem();
-		Consumable item = (Consumable) comboBox_SelectFood_CrewTab.getSelectedItem();
-		ConsumeItem consume = new ConsumeItem(item, person);
-		String result = consume.consume();
-		printToLog(result);
-		updateFoodCombo();
-		
+		if (comboBox_SelectFood_CrewTab.getItemCount() == 0){
+			printToLog("You have no food. \nThe Space Shop has a selection of snacks for hungry space explorers");
+		}
+		else {
+			Person person = (Person) comboBox_SelectCrewmember_CrewTab.getSelectedItem();
+			Consumable item = (Consumable) comboBox_SelectFood_CrewTab.getSelectedItem();
+			ConsumeItem consume = new ConsumeItem(item, person);
+			String result = consume.consume();
+			outpost.getShopList().removeItem(item.getName());
+			printToLog(result);
+			updateFoodCombo();
+		}
 	}
 	// add checks for item == null, ie no item selected. same with food
 	public void useHeal() {
-		Person person = (Person) comboBox_Medbay_Select_Crewmember.getSelectedItem();
-		Consumable item = (Consumable) comboBox_3.getSelectedItem();
-		ConsumeItem consume = new ConsumeItem(item, person);
-		String result = consume.consume();
-		printToLog(result);
-		updateMedicalCombo();
+		if (comboBox_3.getItemCount() == 0){
+			printToLog("You have no heal items. \nThe friendly Space Shop will have what you need");
+		}
+		else {
+			Person person = (Person) comboBox_Medbay_Select_Crewmember.getSelectedItem();
+			Consumable item = (Consumable) comboBox_3.getSelectedItem();
+			ConsumeItem consume = new ConsumeItem(item, person);
+			String result = consume.consume();
+			outpost.getShopList().removeItem(item.getName());
+			printToLog(result);
+			updateMedicalCombo();
+		}
 	}
 	
 	public void refreshPieces() {
@@ -218,7 +225,25 @@ public class MainScreen {
 	}
 	public void refreshShipHealth() {
 		lblShipHull.setText("Ship Hull: "+ initGame.getShip().getShipHealth().toString());
-		lblShipSheilds.setText("Ship Health: " + initGame.getShip().getShipSheild());
+		lblShipSheilds.setText("Ship Shield: " + initGame.getShip().getShipSheild());
+	}
+	
+	public void repairHullClick() {
+		Person person = (Person) ShipTabAsignRepairman.getSelectedItem();
+		Ship ship = initGame.getShip();
+		RepairShip repair = new RepairShip(ship, person);
+		String result = repair.repairShipHull();
+		refreshShipHealth();
+		printToLog(result);
+	}
+	
+	public void repairShieldClick() {
+		Person person = (Person) ShipTabAsignRepairman.getSelectedItem();
+		Ship ship = initGame.getShip();
+		RepairShip repair = new RepairShip(ship, person);
+		String result = repair.repairShipShield();
+		refreshShipHealth();
+		printToLog(result);
 	}
 	
 	public void refreshMoney() {
@@ -390,7 +415,7 @@ public class MainScreen {
 		gbc_lblShipHull.gridy = 0;
 		frame.getContentPane().add(lblShipHull, gbc_lblShipHull);
 
-		lblShipSheilds = new JLabel("Ship Sheilds: 100");
+		lblShipSheilds = new JLabel("Ship Shield: 100");
 		lblShipSheilds.setFont(new Font("Dialog", Font.BOLD, 14));
 		GridBagConstraints gbc_lblShipSheilds = new GridBagConstraints();
 		gbc_lblShipSheilds.fill = GridBagConstraints.HORIZONTAL;
@@ -843,10 +868,20 @@ public class MainScreen {
 		ShipPanel.add(ShipTabAssignRepairmanLabel);
 
 		JButton ShipTabRepairSheildButton = new JButton("Repair Shields");
+		ShipTabRepairSheildButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				repairShieldClick();
+			}
+		});
 		ShipTabRepairSheildButton.setBounds(117, 527, 199, 45);
 		ShipPanel.add(ShipTabRepairSheildButton);
 
 		JButton ShipTabRepairHull = new JButton("Repair Hull");
+		ShipTabRepairHull.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				repairHullClick();
+			}
+		});
 		ShipTabRepairHull.setBounds(352, 529, 169, 43);
 		ShipPanel.add(ShipTabRepairHull);
 

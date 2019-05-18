@@ -73,12 +73,13 @@ public class ShopList {
 	
 	
 	public void buildCurrentItems(){
-		ArrayList<Consumable> foodItems = new ArrayList<Consumable>();
-		ArrayList<Consumable> healItems = new ArrayList<Consumable>();
+
 //		System.out.println("item array");
 //		System.out.println(itemArray);
 //		System.out.println("Shop list");
 //		System.out.println(shopList);
+		foodItems = new ArrayList<Consumable>();
+		healItems = new ArrayList<Consumable>();
 
 		for (Consumable item : itemArray) {
 			System.out.println(shopList.get("Bandages"));
