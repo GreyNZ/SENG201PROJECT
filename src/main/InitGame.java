@@ -288,26 +288,7 @@ public class InitGame {
 	}
 	
 	// make class
-	private void spacePlague() {
-		Integer plaguedIndex = rand.nextInt(crew.getCrewSize());
-		Person plaguedGuy = crew.getCrewMemberArray().get(plaguedIndex);
-		plaguedGuy.addPlague();
-		// 10 % of a second plague victim
-		Integer secondChance = rand.nextInt(10);
-		Integer secondIndex = rand.nextInt(crew.getCrewSize());
-		
-		if (secondChance == 9 && plaguedIndex != secondIndex) {
-			Person secondGuy = crew.getCrewMemberArray().get(secondIndex);
-			secondGuy.addPlague();
-			String s = plaguedGuy + " and " + secondGuy + " contracted space plague!";
-			mainScreen.printToLog(s);
-		}
-		else {
-			String s = plaguedGuy + " contracted space plague!";
-			mainScreen.printToLog(s);
-		}
-		
-	}
+
 	public void pirateAttack() {
 		String s = "Pirates are attacking!";
 		System.out.println(s);
@@ -340,6 +321,31 @@ public class InitGame {
 		return points;
 	}
 	
+	
+	private void spacePlague() {
+		PlagueSick spacePlague = new PlagueSick(this);
+	}
+	
+//	private void spacePlague() {
+//		Integer plaguedIndex = rand.nextInt(crew.getCrewSize());
+//		Person plaguedGuy = crew.getCrewMemberArray().get(plaguedIndex);
+//		plaguedGuy.addPlague();
+//		// 10 % of a second plague victim
+//		Integer secondChance = rand.nextInt(10);
+//		Integer secondIndex = rand.nextInt(crew.getCrewSize());
+//		
+//		if (secondChance == 9 && plaguedIndex != secondIndex) {
+//			Person secondGuy = crew.getCrewMemberArray().get(secondIndex);
+//			secondGuy.addPlague();
+//			String s = plaguedGuy + " and " + secondGuy + " contracted space plague!";
+//			mainScreen.printToLog(s);
+//		}
+//		else {
+//			String s = plaguedGuy + " contracted space plague!";
+//			mainScreen.printToLog(s);
+//		}
+//		
+//	}
 
 	
 }

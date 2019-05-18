@@ -148,6 +148,9 @@ public class Person {
 	public void addPlague() {
 		person_status = "Plagued";
 		this.has_plague = true;
+		if (this.getPlagueValue()) {
+			this.decreaseHealth(30);
+		}
 	}
 	
 	public void removePlague() {

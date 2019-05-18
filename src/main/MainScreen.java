@@ -82,6 +82,10 @@ public class MainScreen {
 	private JLabel lblCurrentPlanetName;
 	private JTextArea textAreaCrewStatus;
 	private JComboBox<Consumable> comboBox_SelectFood_CrewTab;
+	private JLabel lblFoodInfo;
+	private JLabel lblItemInfo;
+	private JLabel ShipTabSheildsValue;
+	private JLabel ShipTabHullValue;
 
 
 
@@ -157,6 +161,24 @@ public class MainScreen {
 		
 	}
 	
+	public void displayFoodInfo() {
+		if (comboBox_SelectFood_CrewTab.getItemCount() > 0){
+			Consumable food = (Consumable) comboBox_SelectFood_CrewTab.getSelectedItem();
+			int amount = outpost.getShopList().getItem(food.getName());
+			String s = "<html>" + food.getName() + " satiate " + food.getHunger() + 
+					" hunger.</br> You currently own " + amount + "</html>";
+			lblFoodInfo.setText(s);}
+	}
+
+	public void displayHealItemInfo() {
+		if (comboBox_3.getItemCount() > 0) {
+			Consumable item = (Consumable) comboBox_3.getSelectedItem();
+			int amount = outpost.getShopList().getItem(item.getName());
+			String s = "<html>" + item.getName() + " heals " + item.getHealing() + 
+					" health.</br> You currently own " + amount + "</html>";
+			lblItemInfo.setText(s);
+		}
+	}
 	
 	public void updateItemCombos() {
 		updateFoodCombo();
@@ -224,8 +246,15 @@ public class MainScreen {
 		labelPieces.setText(s);
 	}
 	public void refreshShipHealth() {
-		lblShipHull.setText("Ship Hull: "+ initGame.getShip().getShipHealth().toString());
-		lblShipSheilds.setText("Ship Shield: " + initGame.getShip().getShipSheild());
+		
+		String hullFormat = "Ship Hull: %.0f/100";
+		String shieldFormat = "Ship Shield: %.0f/100";
+		String hullText = String.format(hullFormat, initGame.getShip().getShipHealth());
+		String shieldText = String.format(shieldFormat, initGame.getShip().getShipSheild());
+		lblShipHull.setText(hullText);
+		ShipTabHullValue.setText(hullText);
+		lblShipSheilds.setText(shieldText);
+		ShipTabSheildsValue.setText(shieldText);
 	}
 	
 	public void repairHullClick() {
@@ -266,12 +295,12 @@ public class MainScreen {
 
 	public void refreshCrewHealth() {
 		String s = "";
-		String format = "%s<br/>";
+		String format = "%s/%s<br/>";
 //		for (Person person : crew.getCrewMemberArray()) {
 //			s += person.getName() + "  " + person.getHealth() + " " + "holding action points" + "<br/>";
 //		}
 		for (Person person : crew.getCrewMemberArray()) {
-			s += String.format(format, person.getHealth());
+			s += String.format(format, person.getHealth(), person.getMaxHealth());
 		}
 //		lblCrewStatsLabelMainScreen.setText(crew.getCrewMemberArray());
 		refreshedCrewHealth.setText("<html>" + s + "</html>");
@@ -334,6 +363,7 @@ public class MainScreen {
 		comboBox_Medbay_Select_Crewmember.removeAllItems();
 		comboBox_SelectCrewmember_CrewTab.removeAllItems();
 		ShipTabAsignRepairman.removeAllItems();
+
 		for (Person person : crew.getCrewMemberArray()) {
 			//add person to all combos, except if dead
 			if (!person.isDead()) {
@@ -570,7 +600,7 @@ public class MainScreen {
 		CurrentPlanetPanel.add(assignCrewMemberSearchPartsComboBox, gbc_assignCrewMemberSearchPartsComboBox);
 
 		JPanel TradePanel = new JPanel();
-		tabbedPane.addTab("Trade", null, TradePanel, null);
+		tabbedPane.addTab("Space Outpost", null, TradePanel, null);
 		TradePanel.setLayout(null);
 
 		JLabel lblWelcomeToThe = new JLabel("Welcome to the Space Shop, here for all you space needs");
@@ -789,6 +819,11 @@ public class MainScreen {
 		MedbayPanel.add(lblSelectHealingItem);
 
 		comboBox_3 = new JComboBox<Consumable>();
+		comboBox_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				displayHealItemInfo();
+			}
+		});
 		comboBox_3.setToolTipText("Select Crewmember\n");
 		comboBox_3.setBounds(12, 571, 313, 24);
 		MedbayPanel.add(comboBox_3);
@@ -798,6 +833,10 @@ public class MainScreen {
 		lbl_MedicalBay_Image.setFont(new Font("Dialog", Font.BOLD, 19));
 		lbl_MedicalBay_Image.setBounds(12, 12, 638, 439);
 		MedbayPanel.add(lbl_MedicalBay_Image);
+		
+		lblItemInfo = new JLabel("");
+		lblItemInfo.setBounds(22, 607, 303, 30);
+		MedbayPanel.add(lblItemInfo);
 
 		JPanel CrewPanel = new JPanel();
 		tabbedPane.addTab("Crew", null, CrewPanel, null);
@@ -810,6 +849,11 @@ public class MainScreen {
 		
 		
 		comboBox_SelectFood_CrewTab = new JComboBox();
+		comboBox_SelectFood_CrewTab.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				displayFoodInfo();
+			}
+		});
 		comboBox_SelectFood_CrewTab.setToolTipText("Select Crewmember\n");
 		comboBox_SelectFood_CrewTab.setBounds(12, 560, 313, 24);
 		CrewPanel.add(comboBox_SelectFood_CrewTab);
@@ -855,6 +899,10 @@ public class MainScreen {
 		textAreaCrewStatus = new JTextArea();
 		textAreaCrewStatus.setBounds(12, 52, 635, 387);
 		CrewPanel.add(textAreaCrewStatus);
+		
+		lblFoodInfo = new JLabel("");
+		lblFoodInfo.setBounds(12, 587, 313, 41);
+		CrewPanel.add(lblFoodInfo);
 		refreshCrewStatus();
 
 		JPanel ShipPanel = new JPanel();
@@ -866,15 +914,15 @@ public class MainScreen {
 		ShipImageShipTab.setBounds(12, 0, 638, 404);
 		ShipPanel.add(ShipImageShipTab);
 
-		JLabel ShipTabSheildsValue = new JLabel("Shields:  100/100");
+		ShipTabSheildsValue = new JLabel("Shields:  100/100");
 		ShipTabSheildsValue.setFont(new Font("Dialog", Font.BOLD, 18));
 		ShipTabSheildsValue.setBounds(117, 416, 199, 34);
 		ShipPanel.add(ShipTabSheildsValue);
 
-		JLabel ShipTabHullValue = new JLabel("Hull:  100/100");
+		ShipTabHullValue = new JLabel("Hull:  100/100");
 		ShipTabHullValue.setFont(new Font("Dialog", Font.BOLD, 18));
 
-		ShipTabHullValue.setBounds(352, 416, 169, 34);
+		ShipTabHullValue.setBounds(352, 416, 185, 34);
 		ShipPanel.add(ShipTabHullValue);
 
 		ShipTabAsignRepairman = new JComboBox<Person>();
