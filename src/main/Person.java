@@ -182,7 +182,8 @@ public class Person {
 			this.person_health = 0;
 			person_status = "Dead";
 			kill();
-			System.out.println(person_name + " has died, add death function to remove from crew");
+			person_actions_remaining = 0;
+			System.out.println(person_name + " has died.");
 			return true;
 			/// call death function, remove from crew
 		}
@@ -191,6 +192,7 @@ public class Person {
 	
 	public void kill() {
 		hasDied = true;
+		person_actions_remaining = 0;
 		removePlague();
 	}
 	

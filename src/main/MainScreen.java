@@ -632,9 +632,9 @@ public class MainScreen {
 		lblHealingItems.setBounds(22, 122, 146, 24);
 		TradePanel.add(lblHealingItems);
 
-		JLabel lblBandagesHeal = new JLabel("Item Name:                 Heaing:                    Cost:");
+		JLabel lblBandagesHeal = new JLabel("Item Name:                 Heaing:                    Cost:                 Owned:");
 		lblBandagesHeal.setVerticalAlignment(SwingConstants.TOP);
-		lblBandagesHeal.setBounds(22, 158, 349, 15);
+		lblBandagesHeal.setBounds(22, 158, 558, 15);
 		TradePanel.add(lblBandagesHeal);
 
 		JLabel lblNewLabel = new JLabel("Bandages                    20                             $50");
@@ -749,6 +749,10 @@ public class MainScreen {
 		JLabel LblMushrooms = new JLabel("Magic Mushrooms       200                            $200");
 		LblMushrooms.setBounds(22, 493, 329, 15);
 		TradePanel.add(LblMushrooms);
+		
+		JLabel lblCurrentlyOwnedItems = new JLabel("");
+		lblCurrentlyOwnedItems.setBounds(422, 179, 29, 345);
+		TradePanel.add(lblCurrentlyOwnedItems);
 
 		JPanel TravelPanel = new JPanel();
 		tabbedPane.addTab("Travel", null, TravelPanel, null);
