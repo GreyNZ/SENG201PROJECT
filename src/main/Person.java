@@ -4,11 +4,11 @@ package main;
 public class Person {
 	
 	protected Integer uniqueIdentifier;
-	protected String person_name;
-	protected String person_race;
-	protected Integer person_health;
-	protected Integer person_max_health;
-	protected Integer person_vigour;
+	protected String personName;
+	protected String personRace;
+	protected Integer personHealth;
+	protected Integer personMaxHealth;
+	protected Integer personVigour;
 	protected Integer person_max_vigour;
 	protected Integer person_hunger;
 	protected Integer person_max_hunger;
@@ -23,11 +23,11 @@ public class Person {
 
 	
 	public Person() {
-		person_name = "unnamed crewmember";
-		person_race = "unnamed race";
-		person_health = 100;
-		person_max_health = 100;
-		person_vigour = 100;
+		personName = "unnamed crewmember";
+		personRace = "unnamed race";
+		personHealth = 100;
+		personMaxHealth = 100;
+		personVigour = 100;
 		person_max_vigour = 100;
 		person_hunger = 0;
 		person_max_hunger = 100;
@@ -41,11 +41,11 @@ public class Person {
 	}
 	
 	public Person(String name, String race, int health, int maxHealth, int vigour, int maxVigour, int hunger, int maxHunger, int maxActions, int currentActions, double repairValue, double searchValue, boolean hasPlague, int unique) {
-		person_name = name;
-		person_race = race;
-		person_health = health;
-		person_max_health = maxHealth;
-		person_vigour = vigour;
+		personName = name;
+		personRace = race;
+		personHealth = health;
+		personMaxHealth = maxHealth;
+		personVigour = vigour;
 		person_max_vigour = maxVigour;
 		person_hunger = hunger;
 		person_max_hunger = maxHunger;
@@ -66,7 +66,7 @@ public class Person {
 		return String.format(status,  this.getName(), this.getRace(), this.getHealth(), this.getVigour(), this.getHunger(), this.getActions(), this.getPlagueValue());
 	}
 	public String toString() {
-		return this.person_name;
+		return this.personName;
 	}
 	
 	// for crew tab status
@@ -74,8 +74,8 @@ public class Person {
 		Integer spaceValue = 20;
 		String spacing = new String(new char[spaceValue]).replace("\0", " ");
 		String status = "%s" + spacing + "%s" + spacing +"%s/%s"+ spacing +"%s/%s"+ spacing + "%s\n\n";
-		status = String.format(status, person_name, person_race, person_hunger, 
-				person_max_hunger, person_vigour, person_max_vigour, getStatus() );
+		status = String.format(status, personName, personRace, person_hunger, 
+				person_max_hunger, personVigour, person_max_vigour, getStatus() );
 		/// more to come
 		System.out.println(status);
 		return status;
@@ -94,23 +94,23 @@ public class Person {
 	}
 	
 	public String getName() {
-		return person_name;
+		return personName;
 	}
 	
 	public String getRace() {
-		return person_race;
+		return personRace;
 	}
 	
 	public Integer getHealth() {
-		return person_health;
+		return personHealth;
 	}
 	
 	public Integer getMaxHealth() {
-		return person_max_health;
+		return personMaxHealth;
 	}
 	
 	public Integer getVigour() {
-		return person_vigour;
+		return personVigour;
 	}
 	
 	public Integer getMaxVigour() {
@@ -159,31 +159,31 @@ public class Person {
 	}
 	
 	public void increaseHealth(int increase) {
-		int currentHealth = this.person_health;
+		int currentHealth = this.personHealth;
 		int maxHealth = this.getMaxHealth();
 		currentHealth += increase;
 		if (currentHealth >= maxHealth) {
-			this.person_health = maxHealth;
+			this.personHealth = maxHealth;
 		} 
 		else {
-			this.person_health = currentHealth;
+			this.personHealth = currentHealth;
 		}
 	}
 	
 	public boolean decreaseHealth(int decrease) {
 		int minimumHealth = 0;
-		int currentHealth = this.person_health;
+		int currentHealth = this.personHealth;
 		currentHealth -= decrease;
 		if (currentHealth > minimumHealth) {
-			this.person_health = currentHealth;
+			this.personHealth = currentHealth;
 			return false; // not dead
 		}
 		else {
-			this.person_health = 0;
+			this.personHealth = 0;
 			person_status = "Dead";
 			kill();
 			person_actions_remaining = 0;
-			System.out.println(person_name + " has died.");
+			System.out.println(personName + " has died.");
 			return true;
 			/// call death function, remove from crew
 		}
@@ -208,8 +208,8 @@ public class Person {
 	public String personSleep() {
 		boolean canSleep = attemptAction();
 		if (canSleep) {
-			this.person_vigour = this.person_max_vigour;
-			return person_name + " had a nice rest.";
+			this.personVigour = this.person_max_vigour;
+			return personName + " had a nice rest.";
 		}
 		else {
 			return "Not enough action points";
@@ -217,26 +217,26 @@ public class Person {
 	}
 	
 	public void decreaseVigourAction(int decrease) { /// if enough vigour reduces vigor and returns true, if vigor to low returns false
-		int currentVigour = this.person_vigour;
+		int currentVigour = this.personVigour;
 		currentVigour -= decrease;
 		if (currentVigour >= 0) {
-			this.person_vigour = currentVigour;
+			this.personVigour = currentVigour;
 		}
 		else {
-			this.person_vigour = 0;
+			this.personVigour = 0;
 		}
 		
 	}
 	
 	public void decreaseVigourTravel() {
 		int decrease = 20;
-		int currentVigour = this.person_vigour;
+		int currentVigour = this.personVigour;
 		currentVigour -= decrease;
 		if (currentVigour >= 0) {
-			this.person_vigour = currentVigour;
+			this.personVigour = currentVigour;
 		}
 		else {
-			this.person_vigour = 0;
+			this.personVigour = 0;
 		}
 	}
 	
@@ -302,8 +302,8 @@ public class Person {
 	
 	public String failedAction() {
 		String failedReason = "";
-		if (person_vigour <= 0) {
-			failedReason = person_name + " is too tired to follow your orders. Let them sleep";
+		if (personVigour <= 0) {
+			failedReason = personName + " is too tired to follow your orders. Let them sleep";
 		}
 		else {
 			failedReason = "Not enough actions";
@@ -316,7 +316,7 @@ public class Person {
 		if (has_plague) {
 			Integer plagued = 30;
 			decreaseHealth(plagued);
-			s += person_name + " lost " + plagued + " health from the plague";
+			s += personName + " lost " + plagued + " health from the plague";
 		}
 		return s;
 	}

@@ -12,13 +12,13 @@ public class Warbot extends Person {
 	
 	
 	public void decreaseVigourAction(int decrease) { // Warbots never tire
-		int currentVigour = this.person_vigour;
-		this.person_vigour = currentVigour; 		
+		int currentVigour = this.personVigour;
+		this.personVigour = currentVigour; 		
 	}
 	
 	public void decreaseVigourTravel() { // Warbots never fatigue
-		int currentVigour = this.person_vigour;
-		this.person_vigour = currentVigour; 
+		int currentVigour = this.personVigour;
+		this.personVigour = currentVigour; 
 	}
 	
 	public void increaseHungerEndDay() { // Warbots never hunger

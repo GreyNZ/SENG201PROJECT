@@ -100,7 +100,7 @@ public class VictoryScreen {
 		
 		JLabel lblImage = new JLabel("");
 		lblImage.setIcon(new ImageIcon(VictoryScreen.class.getResource("/images/SpaceDisco.png")));
-		lblImage.setBounds(83, 202, 996, 475);
+		lblImage.setBounds(85, 167, 996, 510);
 		frame.getContentPane().add(lblImage);
 		
 //		lblCrewStatsLabelMainScreen = new JLabel("Holding Info For Crew Details");
