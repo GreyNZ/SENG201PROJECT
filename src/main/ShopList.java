@@ -20,6 +20,7 @@ public class ShopList {
 		for (String s : buildList) {
 			shopList.put(s, 0);
 		}
+		System.out.println("Shop Dictonary");
 		System.out.println(shopList);
 		buildCurrentItems();
 	}

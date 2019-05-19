@@ -57,7 +57,8 @@ public class MainScreen {
 	private JSpinner spinner_SpaceCandy;
 	private JSpinner spinner_SpaceApple;
 	private JSpinner spinner_SpaceRoast;
-	
+	private JLabel lblHealingOwnedItems;
+	private JLabel lblFoodItemsOwned;
 	private JSpinner spinner_Bandages;
 	private JSpinner spinner_Medkit;
 	private JSpinner spinner_Nanites;
@@ -245,6 +246,31 @@ public class MainScreen {
 		String s = "Parts Found: " + initGame.getCurrentPieces() + "/" + initGame.getPieces();
 		labelPieces.setText(s);
 	}
+	
+	public void refreshOwnedItems() {   //GREY WORKING HERE
+		String h = "";
+		String f = "";
+		for(Consumable Item : outpost.getShopList().getMedicalItems()) {
+			h += outpost.getShopList().getItem(Item.getName());
+			h += "<br/><br/>";
+		String heal = "<html>";
+		heal += h + "</html>";
+		System.out.println(heal);
+		lblHealingOwnedItems.setText(heal);
+		}
+		for(Consumable ConsumableItem : outpost.getShopList().getFoodItems()) {
+			f += outpost.getShopList().getItem(ConsumableItem.getName());
+			f += "<br/><br/>";
+		String food = "<html>";
+		food += f + "</html>";
+		System.out.println(food);
+		lblFoodItemsOwned.setText(food); 
+		}
+
+		
+		
+	}
+	
 	public void refreshShipHealth() {
 		
 		String hullFormat = "Ship Hull: %.0f/100";
@@ -330,6 +356,7 @@ public class MainScreen {
 
 	// try and use this sparingly. prefer to call each method individually
 	public void updateAll() {
+		refreshOwnedItems();
 		refreshCrewStatus();
 		refreshCrewNameLabel();
 		refreshCrewHealth();
@@ -618,6 +645,7 @@ public class MainScreen {
 				refreshMoney();
 				updateFoodCombo();
 				updateMedicalCombo();
+				updateAll();
 			}
 		});
 		btnPurchaseItems.setBounds(401, 551, 249, 66);
@@ -742,7 +770,7 @@ public class MainScreen {
 		TradePanel.add(spinner_MagicMushrooms);
 		spinnerArrayList.add(spinner_MagicMushrooms);
 
-		JLabel lblSubTotal = new JLabel("Holding Vlaue, subtotal");
+		JLabel lblSubTotal = new JLabel("");
 		lblSubTotal.setBounds(22, 551, 238, 54);
 		TradePanel.add(lblSubTotal);
 		
@@ -750,9 +778,15 @@ public class MainScreen {
 		LblMushrooms.setBounds(22, 493, 329, 15);
 		TradePanel.add(LblMushrooms);
 		
-		JLabel lblCurrentlyOwnedItems = new JLabel("");
-		lblCurrentlyOwnedItems.setBounds(422, 179, 29, 345);
-		TradePanel.add(lblCurrentlyOwnedItems);
+		lblHealingOwnedItems = new JLabel("");
+		lblHealingOwnedItems.setBounds(422, 174, 29, 132);
+		//ArrayList<Consumable> healList = outpost.getShopList().getMedicalItems();
+		
+		TradePanel.add(lblHealingOwnedItems);
+		
+		lblFoodItemsOwned = new JLabel("");
+		lblFoodItemsOwned.setBounds(422, 346, 29, 193);
+		TradePanel.add(lblFoodItemsOwned);
 
 		JPanel TravelPanel = new JPanel();
 		tabbedPane.addTab("Travel", null, TravelPanel, null);
