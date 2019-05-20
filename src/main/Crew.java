@@ -62,41 +62,12 @@ public class Crew {
 
 
 	/**
-	 * Adds Person objects to addCrewMember ArrayList
-	 */
-//	public void buildCrew() {
-//		for (int i = 0; i <this.crewSize; i+=1) {
-////			Person newMember = new Person();
-//			this.crewMemberArray.add(addCrewMember(i));
-////			this.addCrewMember(i);
-//		}
-//		System.out.println(this.crewMemberArray);
-//		}
-	/**
-	 * Receives user input to select the race of Person object
-	 * @param i         unique identifier for the Person object, based on what index they were added to crewMemberArray
-	 * @return          Person object, specifically the user the selected subclass (race)
-	 */
-//	public Person addCrewMember(int i) {
-//		int raceNum = 1;
-//		System.out.println("Name? ");
-//		String name = scanner.next();
-//		System.out.println("Please select a race.\n1. Human\n2. Rockman\n3. Grey\n4. Bugman\n5. Gazer\n6. Warbot");
-//		try {
-//			raceNum = scanner.nextInt();
-//		} catch (InputMismatchException e) {
-//			System.out.println("Invalid selection. Defaulting to human");
-////			int raceNum = 1;
-//		}
-//		return createCrewMember(name, i, raceNum);
-//	}
-	/**
 	 * Switch statement to create a Person object of specific race. 
 	 * Uses int's from 1-6 as cases. 
 	 * Defaults to Human to make invalid user input easier to deal with for command-line mode.
 	 * @param name              String that holds crew member's name
 	 * @param i                 Unique identifying int
-	 * @param raceNum           Switch case int
+	 * @param race           	String race to select
 	 * @return                  Person object 
 	 */
 	public Person createCrewMember(String name, int i, String race) {

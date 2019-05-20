@@ -24,6 +24,8 @@ public class InitGame {
 	private boolean gameHeckinOver = false;
 	private boolean wonGame = false;
 	private int points = 0;
+	private String causeOfDeath = "";
+	private MiscItems miscItems = new MiscItems();
 
 	
 
@@ -103,7 +105,7 @@ public class InitGame {
 		if (currentPieces >= pieces) {
 			wonGame = true;
 			points += 10000;
-			gameOver();
+			gameOver("");
 		}
 	}
 
@@ -119,7 +121,8 @@ public class InitGame {
 		
 	}
 
-	public void gameOver() {
+	public void gameOver(String death) {
+		causeOfDeath = death;
 		calculatePoints();
 		points += money;
 		this.gameHeckinOver = true;
@@ -185,8 +188,9 @@ public class InitGame {
 	public String searchPlanet(String name) {
 		Person crewMember = crew.getMember(name);
 		System.out.println(crewMember.getRace());
-		Integer foundNum = rand.nextInt(15);
+		Integer foundNum = rand.nextInt(26);
 		String searchResult = "";
+		System.out.println(foundNum);
 		if (crewMember.attemptAction()) {
 			if (foundNum < 8) {
 				String item = outpost.getItemNameArray().get(foundNum);
@@ -196,7 +200,7 @@ public class InitGame {
 			else if (foundNum == 9) {
 				searchResult = "Found nothing";
 			}
-			else if (foundNum > 9 && foundNum < 13){
+			else if (foundNum > 9 && foundNum < 16){
 				Integer goldAmount = randomGold();
 				addMoney(goldAmount);
 				searchResult = "Found " + goldAmount + " gold";
@@ -204,13 +208,23 @@ public class InitGame {
 			}
 			else {
 				// find piece, update pieces found, decrement pieces left on planet.
-				if (planet.foundPiece()) {
-					searchResult = "Found piece!";
-					this.getAddCurrentPieces();
+				searchResult = "Found an ornate mahogany set of drawers";
+				System.out.println("Made it here hmmm");
+				if (planet.hasPiece()) {
+					System.out.println("Rolling for piece");
+					boolean roll = crewMember.rollForPiece(rand);
+					if (roll){
+						searchResult = "Found piece!";
+						this.getAddCurrentPieces();
+						planet.foundPiece();
+					}
+					else {
+						searchResult = miscItems.getMiscItem();
+					}
 				}
-				else {
-					searchResult = "Found an ornate mahogany set of drawers";
-				}
+//				else {
+//					searchResult = "Found an ornate mahogany set of drawers";
+//				}
 				
 			}
 		}
@@ -278,10 +292,10 @@ public class InitGame {
 		if (chance != 0) {
 			String s = "Oh no, we're passing through an asteroid belt. Hold on tight";
 			ship.takeDamage(50.0);
-			System.out.println(ship.getShipHealth() + "" + ship.getShipSheild());
 			mainScreen.printToLog(s);
+			System.out.println(s);
 			if (ship.getShipHealth() <= 0) {
-				gameOver();
+				gameOver("Your ship " + getShipName() + " has exploded");
 			}
 		}
 		
@@ -295,7 +309,7 @@ public class InitGame {
 		mainScreen.printToLog(s);
 		String attack = outpost.stealItem();
 		mainScreen.printToLog(attack);
-		System.out.println(s);
+		System.out.println(attack);
 		
 		
 	}
@@ -324,6 +338,10 @@ public class InitGame {
 	
 	private void spacePlague() {
 		PlagueSick spacePlague = new PlagueSick(this);
+	}
+	
+	public String getCauseOfDeath() {
+		return causeOfDeath ;
 	}
 	
 //	private void spacePlague() {

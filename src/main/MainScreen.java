@@ -203,13 +203,7 @@ public class MainScreen {
 		ArrayList<Consumable> healList = outpost.getShopList().getMedicalItems();
 		for (Consumable item :healList) {
 			comboBox_3.addItem(item);
-
-
 		}
-//		System.out.println(comboBox_3.getItemCount());
-//		if (comboBox_3.getItemCount() == 0) {
-//			comboBox_3.addItem(new Nanites());
-//		}
 	}
 	
 	protected void eatFood() {
@@ -219,11 +213,13 @@ public class MainScreen {
 		else {
 			Person person = (Person) comboBox_SelectCrewmember_CrewTab.getSelectedItem();
 			Consumable item = (Consumable) comboBox_SelectFood_CrewTab.getSelectedItem();
-			ConsumeItem consume = new ConsumeItem(item, person);
-			String result = consume.consume();
-			outpost.getShopList().removeItem(item.getName());
-			printToLog(result);
-			updateFoodCombo();
+			if (person.attemptAction()) {
+				ConsumeItem consume = new ConsumeItem(item, person);
+				String result = consume.consume();
+				outpost.getShopList().removeItem(item.getName());
+				printToLog(result);
+				updateFoodCombo();
+			}
 		}
 	}
 	// add checks for item == null, ie no item selected. same with food
@@ -232,13 +228,16 @@ public class MainScreen {
 			printToLog("You have no heal items. \nThe friendly Space Shop will have what you need");
 		}
 		else {
+			
 			Person person = (Person) comboBox_Medbay_Select_Crewmember.getSelectedItem();
 			Consumable item = (Consumable) comboBox_3.getSelectedItem();
-			ConsumeItem consume = new ConsumeItem(item, person);
-			String result = consume.consume();
-			outpost.getShopList().removeItem(item.getName());
-			printToLog(result);
-			updateMedicalCombo();
+			if (person.attemptAction()) {
+				ConsumeItem consume = new ConsumeItem(item, person);
+				String result = consume.consume();
+				outpost.getShopList().removeItem(item.getName());
+				printToLog(result);
+				updateMedicalCombo();
+			}
 		}
 	}
 	
@@ -398,11 +397,10 @@ public class MainScreen {
 				comboBox_Medbay_Select_Crewmember.addItem(person);
 				comboBox_SelectCrewmember_CrewTab.addItem(person);
 				ShipTabAsignRepairman.addItem(person);
-				System.out.println(person);
 			}
 		}
 		if (comboBox_1.getItemCount() == 0) {
-			initGame.isGameOver();
+			initGame.gameOver("Everyone's dead");
 			updateAll();
 		}
 		
@@ -414,8 +412,6 @@ public class MainScreen {
 		for (JSpinner spinner: this.spinnerArrayList) {
 			int value = (int) spinner.getValue();
 			shopItems.add(value);
-//			System.out.println(shopItems);
-//			System.out.println(spinner.getValue());
 		}
 		if (outpost.buyItems(shopItems)) {
 			System.out.println("Success");
@@ -638,7 +634,6 @@ public class MainScreen {
 		btnPurchaseItems.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				getSpinnerValues();
-				//System.out.println(getSpinnerValues());
 				resetSpinnerValues();
 				refreshMoney();
 				updateFoodCombo();

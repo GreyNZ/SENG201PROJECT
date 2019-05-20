@@ -20,8 +20,6 @@ public class ShopList {
 		for (String s : buildList) {
 			shopList.put(s, 0);
 		}
-		System.out.println("Shop Dictonary");
-		System.out.println(shopList);
 		buildCurrentItems();
 	}
 	
@@ -62,8 +60,6 @@ public class ShopList {
 	}
 	
 	public ArrayList<Consumable> getFoodItems(){
-		System.out.println(foodItems);
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		return foodItems;
 	}
 	
@@ -74,18 +70,11 @@ public class ShopList {
 	
 	
 	public void buildCurrentItems(){
-
-//		System.out.println("item array");
-//		System.out.println(itemArray);
-//		System.out.println("Shop list");
-//		System.out.println(shopList);
 		foodItems = new ArrayList<Consumable>();
 		healItems = new ArrayList<Consumable>();
 
 		for (Consumable item : itemArray) {
-			System.out.println(shopList.get("Bandages"));
 			String name = item.getName();
-			System.out.println(name);
 			if (shopList.get(name) > 0) {
 				if (item.getType() == "food") {
 					foodItems.add(item);}
@@ -94,7 +83,5 @@ public class ShopList {
 					}
 			}
 		}
-		System.out.println(foodItems);
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!))");
 	}	
 }

@@ -21,20 +21,7 @@ public class Game {
 		// TODO Auto-generated constructor stub
 	}
 
-//	public void gameOver() {
-//		System.out.println("GAME HECKIN OVER SON");
-//		gameHeckinOver = true;
-//	}
-	
-	//console
-	public void mainLoop(Crew crew, InitGame newGame) {
-		Console console = new Console(crew, newGame);
-		Ship ship = new Ship(newGame.getShipName());
-		while (newGame.getDays() > 0) {
-			System.out.println("Day: "+ newGame.getCurrentDay());
-			console.showOptions();
-			}
-		}
+
 	//gui
 	public void mainLoop(InitGame newGame) {
 		manager = new WindowManager(newGame);

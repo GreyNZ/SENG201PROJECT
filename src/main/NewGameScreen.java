@@ -84,7 +84,6 @@ public class NewGameScreen {
 	
 	public void checkStart() {
 		String shipName = txtEnterShipName.getText();
-		System.out.println(shipName);
 		if (shipName.equals("Please enter a ship name 3-12 characters")) {
 			textField.setText("Please enter a ship name");
 		}

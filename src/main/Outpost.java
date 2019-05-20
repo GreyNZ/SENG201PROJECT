@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import main.AllConsumables;
 
 
 public class Outpost {
@@ -59,7 +58,6 @@ public class Outpost {
 		for (int i = 1; i < 11; i++) {
 			addItem(i);
 		}
-		System.out.println(itemArray);
 	}
 	
 	private void addItem(int i) {
@@ -116,7 +114,6 @@ public class Outpost {
 //	}
 	public boolean buyItems(ArrayList<Integer> shopItems) {
 		int price = calculatePrice(shopItems);
-		System.out.println(price);
 		if (price > initGame.getMoney()) {
 			raiseNotEnoughMoney(price);
 			return false;}
@@ -148,7 +145,6 @@ public class Outpost {
 			
 			
 		}
-		System.out.println(shopList);
 		if (!madePurchase) {
 			purchase = "";
 		}

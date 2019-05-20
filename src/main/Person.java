@@ -1,5 +1,6 @@
 package main;
 
+import java.util.Random;
 
 public class Person {
 	
@@ -77,7 +78,6 @@ public class Person {
 		status = String.format(status, personName, personRace, person_hunger, 
 				person_max_hunger, personVigour, person_max_vigour, getStatus() );
 		/// more to come
-		System.out.println(status);
 		return status;
 	}
 	
@@ -300,6 +300,17 @@ public class Person {
 		
 	}
 	
+	public boolean rollForPiece(Random rand) {
+		Double roll = rand.nextInt(100) * person_search_value;
+		System.out.println(roll);
+		if (roll >= 50) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	public String failedAction() {
 		String failedReason = "";
 		if (personVigour <= 0) {
@@ -442,6 +453,8 @@ public class Person {
 		System.out.println(grey);
 		
 	}
+
+
 
 
 
