@@ -247,24 +247,21 @@ public class MainScreen {
 		labelPieces.setText(s);
 	}
 	
-	public void refreshOwnedItems() {   //GREY WORKING HERE
+	public void refreshOwnedItems() { 
 		String h = "";
 		String f = "";
-		//System.out.println("values" + outpost.getShopList().getMedicalItems());  //shows where error is
 		for(Consumable Item : outpost.getShopList().getMedicalItems()) {
-			h += outpost.getShopList().getItem(Item.getName());
-			h += "<br/><br/>";
-		String heal = "<html>";
+			h += Item + ": " + outpost.getShopList().getItem(Item.getName());
+			h += "<br/>";
+		String heal = "<html>Healing Items Owned:<br/>";
 		heal += h + "</html>";
-		//System.out.println(heal);
 		lblHealingOwnedItems.setText(heal);
 		}
 		for(Consumable ConsumableItem : outpost.getShopList().getFoodItems()) {
-			f += outpost.getShopList().getItem(ConsumableItem.getName());
-			f += "<br/><br/>";
-		String food = "<html>";
+			f += ConsumableItem + ": " + outpost.getShopList().getItem(ConsumableItem.getName());
+			f += "<br/>";
+		String food = "<html>Food Items Owned:<br/>";
 		food += f + "</html>";
-		//System.out.println(food);
 		lblFoodItemsOwned.setText(food); 
 		}
 
@@ -661,7 +658,7 @@ public class MainScreen {
 		lblHealingItems.setBounds(22, 122, 146, 24);
 		TradePanel.add(lblHealingItems);
 
-		JLabel lblBandagesHeal = new JLabel("Item Name:                 Heaing:                    Cost:                 Owned:");
+		JLabel lblBandagesHeal = new JLabel("Item Name:                 Heaing:                    Cost:  ");
 		lblBandagesHeal.setVerticalAlignment(SwingConstants.TOP);
 		lblBandagesHeal.setBounds(22, 158, 558, 15);
 		TradePanel.add(lblBandagesHeal);
@@ -779,14 +776,16 @@ public class MainScreen {
 		LblMushrooms.setBounds(22, 493, 329, 15);
 		TradePanel.add(LblMushrooms);
 		
-		lblHealingOwnedItems = new JLabel("<html>0<br/><br/>0<br/><br/>0<br/><br/>0</html>");
-		lblHealingOwnedItems.setBounds(422, 171, 29, 132);
+		lblHealingOwnedItems = new JLabel("No Healing items owned");
+		lblHealingOwnedItems.setVerticalAlignment(SwingConstants.TOP);
+		lblHealingOwnedItems.setBounds(422, 171, 215, 129);
 		//ArrayList<Consumable> healList = outpost.getShopList().getMedicalItems();
 		
 		TradePanel.add(lblHealingOwnedItems);
 		
-		lblFoodItemsOwned = new JLabel("<html>0<br/><br/>0<br/><br/>0<br/><br/>0<br/><br/>0<br/><br/>0</html>");
-		lblFoodItemsOwned.setBounds(422, 341, 29, 186);
+		lblFoodItemsOwned = new JLabel("No Food items owned");
+		lblFoodItemsOwned.setVerticalAlignment(SwingConstants.TOP);
+		lblFoodItemsOwned.setBounds(422, 341, 215, 186);
 		TradePanel.add(lblFoodItemsOwned);
 
 		JPanel TravelPanel = new JPanel();
