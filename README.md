@@ -1,9 +1,9 @@
 <html>TO DO <br/>
 
-Add Rcial chance bonus/negatives to part finding chance<br/>
+Add Racial chance bonus/negatives to part finding chance<br/>
 
 death function<br/>
-another field in the trade tab showing how many of each item are already owned<br/>
+Fix bug in item owed jlabels that does not enter items if we own zero<br/>
 gui tweaks <br/>
 
 Cool but not super necessary things:<br/>
