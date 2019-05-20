@@ -779,14 +779,14 @@ public class MainScreen {
 		LblMushrooms.setBounds(22, 493, 329, 15);
 		TradePanel.add(LblMushrooms);
 		
-		lblHealingOwnedItems = new JLabel("");
-		lblHealingOwnedItems.setBounds(422, 174, 29, 132);
+		lblHealingOwnedItems = new JLabel("<html>0<br/><br/>0<br/><br/>0<br/><br/>0</html>");
+		lblHealingOwnedItems.setBounds(422, 171, 29, 132);
 		//ArrayList<Consumable> healList = outpost.getShopList().getMedicalItems();
 		
 		TradePanel.add(lblHealingOwnedItems);
 		
-		lblFoodItemsOwned = new JLabel("");
-		lblFoodItemsOwned.setBounds(422, 346, 29, 193);
+		lblFoodItemsOwned = new JLabel("<html>0<br/><br/>0<br/><br/>0<br/><br/>0<br/><br/>0<br/><br/>0</html>");
+		lblFoodItemsOwned.setBounds(422, 341, 29, 186);
 		TradePanel.add(lblFoodItemsOwned);
 
 		JPanel TravelPanel = new JPanel();
