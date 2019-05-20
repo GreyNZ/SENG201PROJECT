@@ -250,12 +250,13 @@ public class MainScreen {
 	public void refreshOwnedItems() {   //GREY WORKING HERE
 		String h = "";
 		String f = "";
+		//System.out.println("values" + outpost.getShopList().getMedicalItems());  //shows where error is
 		for(Consumable Item : outpost.getShopList().getMedicalItems()) {
 			h += outpost.getShopList().getItem(Item.getName());
 			h += "<br/><br/>";
 		String heal = "<html>";
 		heal += h + "</html>";
-		System.out.println(heal);
+		//System.out.println(heal);
 		lblHealingOwnedItems.setText(heal);
 		}
 		for(Consumable ConsumableItem : outpost.getShopList().getFoodItems()) {
@@ -263,7 +264,7 @@ public class MainScreen {
 			f += "<br/><br/>";
 		String food = "<html>";
 		food += f + "</html>";
-		System.out.println(food);
+		//System.out.println(food);
 		lblFoodItemsOwned.setText(food); 
 		}
 
