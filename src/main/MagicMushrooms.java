@@ -1,15 +1,17 @@
 package main;
 
+/**
+ * Magic mushrooms food item
+ * 
+ * @author Grey Harris, Cameron Bodger
+ *
+ */
 public class MagicMushrooms extends FoodConsumable {
 
+	/**
+	 * Magic mushrooms constructor
+	 */
 	public MagicMushrooms() {
-		super("MagicMushrooms", 200, 200);
-		
-	}
-	
-	
-	public static void main(String[] args) {
-		MagicMushrooms camsMusshies = new MagicMushrooms();
-		System.out.println(camsMusshies);	
+		super("MagicMushrooms", 200, 200);	
 	}
 }

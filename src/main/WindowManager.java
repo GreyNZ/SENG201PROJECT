@@ -83,12 +83,20 @@ public class WindowManager {
 		}
 	}
 	/**
-	 * Closes the {@link GameOver} screen
+	 * Closes the {@link LossScreen} screen
 	 * 
 	 * @param gameOver
 	 */
-	public void closeGameOverScreen(GameOver gameOver) {
-		gameOver.closeWindow();
+	public void closeLossScreen(LossScreen loss) {
+		loss.closeWindow();
+	}
+	/**
+	 * Closes the {@link VictoryScreen} screen
+	 * 
+	 * @param victory 	VictoryScreen to be closed
+	 */
+	public void closeVictoryScreen(VictoryScreen victory) {
+		victory.closeWindow();
 	}
 	
 	/**

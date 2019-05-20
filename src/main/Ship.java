@@ -37,7 +37,6 @@ public class Ship {
 		this.shipHealth -=  damage * shieldModifier;
 		this.lowerShield(damage);
 		if (this.shipHealth <= 0.0) {
-//			Game.gameOver();
 			System.out.println("GAME HECKIN OVER SON");
 		}
 	}
@@ -66,24 +65,5 @@ public class Ship {
 	}
 	public Double getShipSheild() {
 		return this.shipShields;
-	}
-	
-	public static void main(String[] args) {
-		Ship newShip = new Ship("Betty");
-		newShip.takeDamage(20.0);
-		System.out.println(newShip);
-
-		newShip.takeDamage(20.0);
-		System.out.println(newShip);
-
-		newShip.takeDamage(20.0);
-		System.out.println(newShip);
-
-		newShip.takeDamage(20.0);
-		System.out.println(newShip);
-
-		newShip.takeDamage(900.0);
-
-		System.out.println(newShip);
 	}
 }

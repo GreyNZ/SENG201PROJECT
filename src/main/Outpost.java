@@ -10,54 +10,43 @@ import java.util.Random;
 
 public class Outpost {
 	
-	private ArrayList<String> itemNameArray = new ArrayList<String>();
-	private int shopSize;
-	private int minSize = 5;
-	private int maxSize = 6;
-//	private ArrayList<String> foodItems = new ArrayList<String>();
-//	private ArrayList<String> healItems = new ArrayList<String>();
-//	private ArrayList<String> allItems;
 	private Random random = new Random();
-	private int numTotalItems = 10;
-	private ArrayList<Integer> shopPrices;
 	private InitGame initGame;
 	private ShopList shopList;
-	private Integer totalItems;
 	private ArrayList<Consumable> itemArray = new ArrayList<Consumable>();
+	private ArrayList<String> itemNameArray;
+	private ArrayList<Integer> shopPrices;
+
+
 
 	
 	
 
 	public Outpost(InitGame initGame) {
-		
 		this.initGame = initGame;
-		shopPrices = buildShopPrices();
-		buildItemNameArray();
 		buildItemArray();
+		buildNameAndPriceArrays();
 		shopList = new ShopList(this.itemNameArray, itemArray);
 
 	}
 		
-		
 
-	public void buildItemNameArray() {
-		itemNameArray.add("Bandages");
-		itemNameArray.add("Medkit");
-		itemNameArray.add("Nanites");
-		itemNameArray.add("PlagueCure");
-		itemNameArray.add("RottenFood");
-		itemNameArray.add("SpaceSausage");
-		itemNameArray.add("SpaceCandy");
-		itemNameArray.add("SpaceApple");
-		itemNameArray.add("SpaceRoast");
-		itemNameArray.add("MagicMushrooms");
 
-	}
-	
+
 	public void buildItemArray() {
 		for (int i = 1; i < 11; i++) {
 			addItem(i);
 		}
+	}
+	
+	private void buildNameAndPriceArrays() {
+		shopPrices = new ArrayList<Integer>();
+		itemNameArray = new ArrayList<String>();
+		for(Consumable item : itemArray) {
+			itemNameArray.add(item.getName());
+			shopPrices.add(item.getValue());
+		}
+		
 	}
 	
 	private void addItem(int i) {
@@ -96,22 +85,7 @@ public class Outpost {
 		
 	}
 	
-//	public String toString() {
-//		String result = "";
-//		int i = 0;
-//		for (Consumable e: shopList) {
-//			result += "Item No." + i + ". \n"+ e.toString() + "\n";
-//			i += 1;
-//		}
-//		return result;
-//	}
-//	public ArrayList<Consumable> getShopList(){
-//		return this.shopList;
-//	}
-//	public void buyItem(int decision) {
-//		// TODO Auto-generated method stub
-//		
-//	}
+
 	public boolean buyItems(ArrayList<Integer> shopItems) {
 		int price = calculatePrice(shopItems);
 		if (price > initGame.getMoney()) {
@@ -120,15 +94,11 @@ public class Outpost {
 		else {
 			initGame.subtractMoney(price);
 			String purchase = populateShopList(shopItems);
-//			initGame.getMainScreen().printToLog(shopList.toString());
 			initGame.getMainScreen().printToLog(purchase);
-
 			return true;
 		}
 	}
-//	no see I want a dict like structure so if it's in the list already I can increment the amount
-//	or add it if it isn't
-	// ok it's called a hashmap
+
 	private String populateShopList(ArrayList<Integer> shopItems) {
 		int index = 0;
 		String purchase = "Purchased: \n";
@@ -153,28 +123,12 @@ public class Outpost {
 	}
 	
 	// probably not necessary, can do it in MainScreen
-	public String useItem(Consumable item, Person person) {
-//		Integer index = itemNameArray.indexOf(itemName);
-//		Consumable item = itemArray.get(index);
-		ConsumeItem consume = new ConsumeItem(item, person);
-		String result = consume.consume();
-		return result;
-	}
+//	public String useItem(Consumable item, Person person) {
+//		ConsumeItem consume = new ConsumeItem(item, person);
+//		String result = consume.consume();
+//		return result;
+//	}
 
-	public ArrayList<Integer> buildShopPrices(){
-		shopPrices = new ArrayList<Integer>();
-		shopPrices.add(50);
-		shopPrices.add(100);
-		shopPrices.add(150);
-		shopPrices.add(100);
-		shopPrices.add(5);
-		shopPrices.add(30);
-		shopPrices.add(50);
-		shopPrices.add(75);
-		shopPrices.add(130);
-		shopPrices.add(200);
-		return shopPrices;
-	}
 	
 	public int calculatePrice(ArrayList<Integer> shopItems) {
 		int price = 0;
@@ -189,21 +143,16 @@ public class Outpost {
 		return "Not enough money.\n Cost is $" + price + " but you only have $" + initGame.getMoney();
 	}
 	
-	public String boughtItemString() {
-		return "";
-	}
 	public ArrayList<String> getItemNameArray(){
 		return this.itemNameArray;
 	}
 
 	
 	public ArrayList<Consumable> refreshFoodList(){
-//		shopList.buildCurrentItems();
 		return shopList.getFoodItems();
 	}
 	
 	public ArrayList<Consumable> refreshHealList(){
-//		shopList.buildCurrentItems();
 		return shopList.getMedicalItems();
 	}
 
@@ -242,25 +191,5 @@ public class Outpost {
 			}
 		}
 		return "The pirates stole one " + s;
-	}
-	
-	
-
-	
-	
-	
-	
-	
-	public static void main(String[] args) {
-		InitGame init = new InitGame();
-		Outpost outpost = new Outpost(init);
-		outpost.buildItemArray();
-		ArrayList<Consumable> foodItems = new ArrayList<Consumable>();
-		foodItems.add(new Nanites());
-		foodItems.add(new SpaceApple());
-		ShopList shopList = new ShopList(outpost.getItemNameArray(), foodItems);
-		shopList.buildCurrentItems();
-		
-	}
-	
+	}	
 }

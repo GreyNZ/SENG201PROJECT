@@ -55,7 +55,7 @@ public class LossScreen {
 	public void newGame() {
 		InitGame newGame = new InitGame();
 		Game game = new Game();
-		game.mainLoop(newGame);
+		game.startGame(newGame);
 	}
 	
 	/**
@@ -71,7 +71,7 @@ public class LossScreen {
 		JButton btnExitGame = new JButton("Exit Game");
 		btnExitGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				closeWindow();
+				frame.dispose();
 			}
 		});
 		btnExitGame.setFont(new Font("L M Roman Caps10", Font.BOLD, 21));

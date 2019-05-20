@@ -54,7 +54,7 @@ public class VictoryScreen {
 	public void newGame() {
 		InitGame newGame = new InitGame();
 		Game game = new Game();
-		game.mainLoop(newGame);
+		game.startGame(newGame);
 	}
 	/**
 	 * Initialize the contents of the frame.

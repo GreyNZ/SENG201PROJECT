@@ -1,16 +1,17 @@
 package main;
 
+/**
+ * Bandages healing item
+ * 
+ * @author Cameron Bodger, Grey Harris
+ *
+ */
 public class Bandages extends HealingConsumeable {
 
-
+	/**
+	 * Bandages constructor. Heals 20, costs $50
+	 */
 	public Bandages() {
 		super("Bandages", 50, 20);
-	}
-	
-
-	public static void main(String[] args) {
-		Bandages bandaid = new Bandages();
-		System.out.println(bandaid);
-	}
-	
+	}	
 }

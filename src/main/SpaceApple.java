@@ -5,10 +5,4 @@ public class SpaceApple extends FoodConsumable {
 		super("SpaceApple", 75, 25);
 		
 	}
-	
-	public static void main(String[] args) {
-		SpaceApple apal = new SpaceApple();
-		System.out.println(apal);	
-	}
-
 }

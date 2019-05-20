@@ -139,19 +139,57 @@ public class MainScreen {
 	}
 	
 	public void refreshCrewNameLabel() {
+		String name = "";
+		String actions = "";
+		String health = "";
+		String format = "%s<br/>";
+		String healthFormat = "%s/%s<br/>";
+
+//		for (Person person : crew.getCrewMemberArray()) {
+//			s += person.getName() + "  " + person.getHealth() + " " + "holding action points" + "<br/>";
+//		}
+		for (Person person : crew.getCrewMemberArray()) {
+			name += String.format(format, person.getName());
+			health += String.format(healthFormat, person.getHealth(), person.getMaxHealth());
+			actions += String.format(format, person.getActions());
+
+
+		}
+//		lblCrewStatsLabelMainScreen.setText(crew.getCrewMemberArray());
+		refreshedCrewStats.setText("<html>" + name + "</html>");
+		refreshedCrewHealth.setText("<html>" + health + "</html>");
+		refreshedCrewActions.setText("<html>" + actions + "</html>");
+
+
+
+	}
+	public void refreshCrewHealth() {
+		String s = "";
+		String format = "%s/%s<br/>";
+//		for (Person person : crew.getCrewMemberArray()) {
+//			s += person.getName() + "  " + person.getHealth() + " " + "holding action points" + "<br/>";
+//		}
+		for (Person person : crew.getCrewMemberArray()) {
+			s += String.format(format, person.getHealth(), person.getMaxHealth());
+		}
+//		lblCrewStatsLabelMainScreen.setText(crew.getCrewMemberArray());
+		refreshedCrewHealth.setText("<html>" + s + "</html>");
+
+	}
+
+	public void refreshCrewActions() {
 		String s = "";
 		String format = "%s<br/>";
 //		for (Person person : crew.getCrewMemberArray()) {
 //			s += person.getName() + "  " + person.getHealth() + " " + "holding action points" + "<br/>";
 //		}
 		for (Person person : crew.getCrewMemberArray()) {
-			s += String.format(format, person.getName());
+			s += String.format(format, person.getActions());
 		}
 //		lblCrewStatsLabelMainScreen.setText(crew.getCrewMemberArray());
-		refreshedCrewStats.setText("<html>" + s + "</html>");
+		refreshedCrewActions.setText("<html>" + s + "</html>");
 
 	}
-	
 	public void refreshCrewStatus() {
 		ArrayList<Person> crewArray = crew.getCrewMemberArray();
 		String crewStatusText = "";
@@ -222,7 +260,8 @@ public class MainScreen {
 			}
 		}
 	}
-	// add checks for item == null, ie no item selected. same with food
+
+	
 	public void useHeal() {
 		if (comboBox_3.getItemCount() == 0){
 			printToLog("You have no heal items. \nThe friendly Space Shop will have what you need");
@@ -237,6 +276,9 @@ public class MainScreen {
 				outpost.getShopList().removeItem(item.getName());
 				printToLog(result);
 				updateMedicalCombo();
+			}
+			else {
+				printToLog("No remaining actions");
 			}
 		}
 	}
@@ -316,33 +358,7 @@ public class MainScreen {
 		lblSpaceCash.setText(s);
 	}
 
-	public void refreshCrewHealth() {
-		String s = "";
-		String format = "%s/%s<br/>";
-//		for (Person person : crew.getCrewMemberArray()) {
-//			s += person.getName() + "  " + person.getHealth() + " " + "holding action points" + "<br/>";
-//		}
-		for (Person person : crew.getCrewMemberArray()) {
-			s += String.format(format, person.getHealth(), person.getMaxHealth());
-		}
-//		lblCrewStatsLabelMainScreen.setText(crew.getCrewMemberArray());
-		refreshedCrewHealth.setText("<html>" + s + "</html>");
 
-	}
-
-	public void refreshCrewActions() {
-		String s = "";
-		String format = "%s<br/>";
-//		for (Person person : crew.getCrewMemberArray()) {
-//			s += person.getName() + "  " + person.getHealth() + " " + "holding action points" + "<br/>";
-//		}
-		for (Person person : crew.getCrewMemberArray()) {
-			s += String.format(format, person.getActions());
-		}
-//		lblCrewStatsLabelMainScreen.setText(crew.getCrewMemberArray());
-		refreshedCrewActions.setText("<html>" + s + "</html>");
-
-	}
 	
 	public void updatePartsFound() {
 		String s = "Parts Found: " + initGame.getCurrentPieces() + "/" + initGame.getPieces();
@@ -356,8 +372,6 @@ public class MainScreen {
 		refreshOwnedItems();
 		refreshCrewStatus();
 		refreshCrewNameLabel();
-		refreshCrewHealth();
-		refreshCrewActions();
 		refreshPieces();
 		refreshShipHealth();
 		updatePartsFound();
@@ -1015,7 +1029,6 @@ public class MainScreen {
 		lblCrewStatsLabelMainScreen.setVerticalAlignment(SwingConstants.TOP);
 		panel.add(lblCrewStatsLabelMainScreen);
 		refreshedCrewStats = lblCrewStatsLabelMainScreen;
-		refreshCrewNameLabel();
 
 
 		lblHealthLabelMainScreen = new JLabel("");
@@ -1023,14 +1036,15 @@ public class MainScreen {
 		lblHealthLabelMainScreen.setVerticalAlignment(SwingConstants.TOP);
 		panel.add(lblHealthLabelMainScreen);
 		refreshedCrewHealth = lblHealthLabelMainScreen;
-		refreshCrewHealth();
+//		refreshCrewHealth();
 
 		lblActionsLabelMainScreen = new JLabel("");
 		lblActionsLabelMainScreen.setBounds(248, 72, 122, 144);
 		lblActionsLabelMainScreen.setVerticalAlignment(SwingConstants.TOP);
 		panel.add(lblActionsLabelMainScreen);
 		refreshedCrewActions = lblActionsLabelMainScreen;
-		
+		refreshCrewNameLabel();
+
 		JButton btnEndDay = new JButton("End day");
 		btnEndDay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -1045,7 +1059,7 @@ public class MainScreen {
 		lblNextDay.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNextDay.setBounds(168, 187, 154, 29);
 		panel.add(lblNextDay);
-		refreshCrewActions();
+//		refreshCrewActions();
 
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();

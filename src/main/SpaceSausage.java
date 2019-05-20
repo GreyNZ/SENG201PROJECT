@@ -6,9 +6,4 @@ public class SpaceSausage extends FoodConsumable {
 		super("SpaceSausage", 30, 20);
 		
 	}
-	
-	public static void main(String[] args) {
-		SpaceSausage saussie = new SpaceSausage();
-		System.out.println(saussie);	
-	}
 }

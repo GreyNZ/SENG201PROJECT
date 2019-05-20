@@ -1,6 +1,6 @@
 package main;
 
-import java.awt.EventQueue;
+//import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,32 +16,12 @@ public class StartScreen {
 	JFrame frame;
 	private WindowManager manager;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					StartScreen window = new StartScreen();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 	
 	public StartScreen(WindowManager incomingManager) {
 		manager = incomingManager;
 		initialize();
 		frame.setVisible(true);
 	}
-	
-//	public void launchNewGameScreen() {
-//		NewGameScreen newGame = new NewGameScreen();
-//		newGame.frame.setVisible(true);
-//	}
 	
 	
 	public void closeWindow() {

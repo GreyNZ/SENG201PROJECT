@@ -10,9 +10,6 @@ public class ShopList {
 	private ArrayList<Consumable> foodItems = new ArrayList<Consumable>();
 	private ArrayList<Consumable> healItems = new ArrayList<Consumable>();
 	private ArrayList<Consumable> itemArray;
-	private ArrayList<Consumable> foodList;
-	private ArrayList<Consumable> medicalList;
-
 
 	
 	public ShopList(ArrayList<String> buildList, ArrayList<Consumable> itemArray) {

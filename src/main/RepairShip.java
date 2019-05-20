@@ -9,8 +9,6 @@ public class RepairShip {
 		this.ship = ship;
 		this.person = person;
 	}
-
-	
 	public String repairShipHull() {
 		String s = "Ship hull repaired %.1f";
 		Double repairAmount = 10.0;
