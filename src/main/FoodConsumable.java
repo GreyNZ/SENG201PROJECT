@@ -2,7 +2,7 @@ package main;
 
 /**
  * Food item superclass. Extends {@code Consumable}
- * @author c
+ * @author Cameron Bodger, Grey Harris
  *
  */
 public class FoodConsumable extends Consumable {

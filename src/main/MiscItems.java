@@ -2,17 +2,38 @@ package main;
 
 import java.util.Random;
 
+/**
+ * MiscItems. Randomly generated space junk
+ * @author Cameron Bodger, Grey Harris
+ *
+ */
 public class MiscItems {
 	
+	/**
+	 * Array of miscellaneous items
+	 */
 	String[] items;
+	/**
+	 * Array of miscellaneous adjectives
+	 */
 	String[] adjectives;
+	/**
+	 * Random number generator
+	 */
 	Random rand = new Random();
+	/**
+	 * MiscItems constructor
+	 */
 	public MiscItems() {
 		buildItems();
 		buildAdjectives();
 		
 	}
 	
+	/**
+	 * Gets a random combination of adjective + item
+	 * @return random miscellaneous item string
+	 */
 	public String getMiscItem() {
 		int itemIndex = rand.nextInt(50);
 		int adjIndex = rand.nextInt(50);
@@ -20,6 +41,9 @@ public class MiscItems {
 		return result;
 	}
 	
+	/**
+	 * Creates the array of miscellaneous items
+	 */
 	private void buildItems() {
 		items = new String[] {"toe ring",
 			"carrots",
@@ -73,6 +97,9 @@ public class MiscItems {
 			"monitor"};
 	}
 	
+	/**
+	 * Creates the array of miscellaneous adjectives
+	 */
 	private void buildAdjectives() {
 		adjectives = new String[] {"quarrelsome",
 				"impartial",
@@ -125,6 +152,4 @@ public class MiscItems {
 				"agonizing",
 				"neighborly"};
 	}
-	
-
 }

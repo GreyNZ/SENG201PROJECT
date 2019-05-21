@@ -29,7 +29,8 @@ public class LossScreen {
 	/**
 	 * JLabel displays player score
 	 */
-	private JLabel lblScore;
+	private JLabel lblScoreMessage;
+	private JLabel lblHeader;
 	
 	/**
 	 * LossScreen constructor
@@ -88,8 +89,8 @@ public class LossScreen {
 		btnPlayAgain.setFont(new Font("L M Roman Caps10", Font.BOLD, 21));
 		btnPlayAgain.setBounds(12, 689, 231, 71);
 		frame.getContentPane().add(btnPlayAgain);
-		
-		JLabel lblHeader = new JLabel("You Lose");
+		String loss = "You Lose";
+		lblHeader = new JLabel(manager.getInitGame().getCauseOfDeath());
 		lblHeader.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHeader.setFont(new Font("Dialog", Font.BOLD, 66));
 		lblHeader.setBounds(12, 12, 1176, 86);
@@ -105,10 +106,10 @@ public class LossScreen {
 		lblImage.setBounds(206, 145, 898, 532);
 		frame.getContentPane().add(lblImage);
 		
-		JLabel lblScoreMessage = new JLabel("Your score was:   " + manager.getInitGame().getPoints()); //note to push
+		lblScoreMessage = new JLabel(String.format("You found %s/%s parts using %s days, Your score was: %s", manager.getInitGame().getCurrentPieces(), manager.getInitGame().getPieces(), manager.getInitGame().getCurrentDay() - 1, manager.getInitGame().getPoints())); //note to push
 		lblScoreMessage.setFont(new Font("Dialog", Font.BOLD, 30));
 		lblScoreMessage.setHorizontalAlignment(SwingConstants.CENTER);
-		lblScoreMessage.setBounds(292, 88, 647, 71);
+		lblScoreMessage.setBounds(22, 88, 1166, 71);
 		frame.getContentPane().add(lblScoreMessage);
 	}
 }

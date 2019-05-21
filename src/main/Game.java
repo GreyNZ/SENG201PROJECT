@@ -3,7 +3,7 @@ package main;
 
 /**
  * Starts the game
- * @author c
+ * @author Cameron Bodger, Grey Harris
  *
  */
 public class Game {

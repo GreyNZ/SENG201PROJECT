@@ -3,7 +3,8 @@ package main;
 import java.util.Random;
 
 /**
- * @author c
+ * Person
+ * @author Cameron Bodger, Grey Harris
  *
  */
 public class Person {

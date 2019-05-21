@@ -6,7 +6,7 @@ import java.util.Map;
 
 /**
  * ShopList. Holds items owned by the player
- * @author c
+ * @author Cameron Bodger, Grey Harris
  *
  */
 public class ShopList {

@@ -175,7 +175,7 @@ public class InitGame {
 		this.currentDay += 1;
 		calculatePoints();
 		if (currentDay > days) {
-			gameOver("You ran out of days to complete the mission");
+			gameOver("You ran out of days");
 		}
 		else {
 			String s = crew.endDayActions();
@@ -436,7 +436,7 @@ public class InitGame {
 			mainScreen.printToLog(s);
 			System.out.println(s);
 			if (ship.getShipHealth() <= 0) {
-				gameOver("Your ship " + getShipName() + " has exploded");
+				gameOver("Your ship exploded");
 			}
 		}
 	}

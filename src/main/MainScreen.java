@@ -39,18 +39,44 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 
+/**
+ * Main gameplay window
+ *
+ */
 public class MainScreen {
 
+
 	private JFrame frame;
+	/**
+	 * {@code WindowManager} handles opening closing windows
+	 */
 	private WindowManager manager;
+	/**
+	 * The game environment
+	 */
 	private InitGame initGame;
+	/**
+	 * The Crew object
+	 */
 	private Crew crew;
+	/**
+	 * Jlabel displays crew stat title
+	 */
 	private JLabel lblCrewStatsLabelMainScreen;
+	/**
+	 * JLabel displays crew members health
+	 */
 	private JLabel lblHealthLabelMainScreen;
+	/**
+	 * JLabel displays crew members actions
+	 */
 	private JLabel lblActionsLabelMainScreen;
 	private JLabel refreshedCrewStats;
 	private JLabel refreshedCrewHealth;
 	private JLabel refreshedCrewActions;
+	/**
+	 * JComboBox assign crew member to search planet
+	 */
 	private JComboBox<Person> assignCrewMemberSearchPartsComboBox;
 	private JSpinner spinner_RottenFood;
 	private JSpinner spinner_SpaceSausage;
@@ -64,16 +90,44 @@ public class MainScreen {
 	private JSpinner spinner_Nanites;
 	private JSpinner spinner_PlagueCure;
 	private JSpinner spinner_MagicMushrooms;
+	/**
+	 * ArrayList that holds the spinners for buying items
+	 */
 	private ArrayList<JSpinner> spinnerArrayList = new ArrayList<JSpinner>();
+	/**
+	 * Outpost object 
+	 */
 	private Outpost outpost;
 	private JTextArea ScrollableGameLog;
 	private JLabel labelPieces;
+	/**
+	 * JComboBox select first pilot
+	 */
 	private JComboBox<Person> comboBox;
-	private JComboBox<Person> comboBox_1;
+	/**
+	 * JComboBox select second pilot
+	 */
+	private JComboBox<Person> comboBoxPilot2;
+	/**
+	 * JComboBox select person to heal
+	 */
 	private JComboBox<Person> comboBox_Medbay_Select_Crewmember;
+	/**
+	 * JComboBox select crew member to sleep or eat
+	 */
 	private JComboBox<Person> comboBox_SelectCrewmember_CrewTab;
+	/**
+	 * JComboBox select crew member to repair
+	 */
 	private JComboBox<Person> ShipTabAsignRepairman;
-	private JComboBox<Consumable> comboBox_3;
+	/**
+	 * JComboBox select heal item
+	 */
+	private JComboBox<Consumable> comboBoxHealItem;
+	/**
+	 * JComboBox to select food items in the crew tab
+	 */
+	private JComboBox<Consumable> comboBox_SelectFood_CrewTab;
 	private JLabel lblPartsFound;
 	private JLabel lblShipHull;
 	private JLabel lblShipSheilds;
@@ -82,7 +136,6 @@ public class MainScreen {
 	private JLabel lblDaysRemaining;
 	private JLabel lblCurrentPlanetName;
 	private JTextArea textAreaCrewStatus;
-	private JComboBox<Consumable> comboBox_SelectFood_CrewTab;
 	private JLabel lblFoodInfo;
 	private JLabel lblItemInfo;
 	private JLabel ShipTabSheildsValue;
@@ -90,29 +143,10 @@ public class MainScreen {
 
 
 
-
-	/* Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainScreen window = new MainScreen();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
-	 * Create the application.
+	 * MainScreen constructor. Initialize window and set visible
+	 * @param windowManager        {@code WindowManager} handles opening and closing windows
 	 */
-	public MainScreen() {
-		initialize();
-	}
-
 	public MainScreen(WindowManager windowManager) {
 		manager = windowManager;
 		this.initGame = manager.getInitGame();
@@ -122,74 +156,66 @@ public class MainScreen {
 		frame.setVisible(true);
 		}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
+
 	
+	
+	/**
+	 * Close the window by disposing the JFrame
+	 */
+	public void closeWindow() {
+		frame.dispose();
+		
+	}
+
+	/**
+	 * Updates the planet name after flying to a new planet
+	 * @param planetName         String planet name
+	 */
+	public void updatePlanetName(String planetName) {
+		lblCurrentPlanetName.setText(planetName);
+		
+	}
+	
+	/**
+	 * Refresh the days passed label
+	 */
 	public void updateDay() {
 		String s = "Current Day : " + initGame.getCurrentDay() + "/" + initGame.getDays();
 		lblDaysRemaining.setText(s);
 	}
+	
+	/**
+	 * Causes the selected crew member to have a nice nap
+	 */
 	protected void sleepPerson() {
 		Person person = (Person) comboBox_SelectCrewmember_CrewTab.getSelectedItem();
 		String sleepResult = person.personSleep();
 		printToLog(sleepResult);
 		updateAll();
-		
 	}
 	
+	/**
+	 * Refresh the Crew Stats info in the main window
+	 */
 	public void refreshCrewNameLabel() {
 		String name = "";
 		String actions = "";
 		String health = "";
 		String format = "%s<br/>";
 		String healthFormat = "%s/%s<br/>";
-
-//		for (Person person : crew.getCrewMemberArray()) {
-//			s += person.getName() + "  " + person.getHealth() + " " + "holding action points" + "<br/>";
-//		}
 		for (Person person : crew.getCrewMemberArray()) {
 			name += String.format(format, person.getName());
 			health += String.format(healthFormat, person.getHealth(), person.getMaxHealth());
 			actions += String.format(format, person.getActions());
-
-
 		}
-//		lblCrewStatsLabelMainScreen.setText(crew.getCrewMemberArray());
 		refreshedCrewStats.setText("<html>" + name + "</html>");
 		refreshedCrewHealth.setText("<html>" + health + "</html>");
 		refreshedCrewActions.setText("<html>" + actions + "</html>");
-
-
-
-	}
-	public void refreshCrewHealth() {
-		String s = "";
-		String format = "%s/%s<br/>";
-//		for (Person person : crew.getCrewMemberArray()) {
-//			s += person.getName() + "  " + person.getHealth() + " " + "holding action points" + "<br/>";
-//		}
-		for (Person person : crew.getCrewMemberArray()) {
-			s += String.format(format, person.getHealth(), person.getMaxHealth());
-		}
-//		lblCrewStatsLabelMainScreen.setText(crew.getCrewMemberArray());
-		refreshedCrewHealth.setText("<html>" + s + "</html>");
-
 	}
 
-	public void refreshCrewActions() {
-		String s = "";
-		String format = "%s<br/>";
-//		for (Person person : crew.getCrewMemberArray()) {
-//			s += person.getName() + "  " + person.getHealth() + " " + "holding action points" + "<br/>";
-//		}
-		for (Person person : crew.getCrewMemberArray()) {
-			s += String.format(format, person.getActions());
-		}
-//		lblCrewStatsLabelMainScreen.setText(crew.getCrewMemberArray());
-		refreshedCrewActions.setText("<html>" + s + "</html>");
-
-	}
+	/**
+	 * Updates the crew status label
+	 */
 	public void refreshCrewStatus() {
 		ArrayList<Person> crewArray = crew.getCrewMemberArray();
 		String crewStatusText = "";
@@ -200,6 +226,9 @@ public class MainScreen {
 		
 	}
 	
+	/**
+	 * Displays information about the selected food item
+	 */
 	public void displayFoodInfo() {
 		if (comboBox_SelectFood_CrewTab.getItemCount() > 0){
 			Consumable food = (Consumable) comboBox_SelectFood_CrewTab.getSelectedItem();
@@ -209,9 +238,12 @@ public class MainScreen {
 			lblFoodInfo.setText(s);}
 	}
 
+	/**
+	 * Displays information about the selected medical item
+	 */
 	public void displayHealItemInfo() {
-		if (comboBox_3.getItemCount() > 0) {
-			Consumable item = (Consumable) comboBox_3.getSelectedItem();
+		if (comboBoxHealItem.getItemCount() > 0) {
+			Consumable item = (Consumable) comboBoxHealItem.getSelectedItem();
 			int amount = outpost.getShopList().getItem(item.getName());
 			String s = "<html>" + item.getName() + " heals " + item.getHealing() + 
 					" health.</br> You currently own " + amount + "</html>";
@@ -219,11 +251,17 @@ public class MainScreen {
 		}
 	}
 	
+	/**
+	 * calls the updateFoodCombo() and updateMedicalCombo() methods 
+	 */
 	public void updateItemCombos() {
 		updateFoodCombo();
 		updateMedicalCombo();
 	}
 	
+	/**
+	 * Refreshes the food combo box items
+	 */
 	protected void updateFoodCombo() {
 		comboBox_SelectFood_CrewTab.removeAllItems();
 		outpost.getShopList().buildCurrentItems();
@@ -235,15 +273,21 @@ public class MainScreen {
 		}
 	}
 	
+	/**
+	 * Refreshes the medical combo box items
+	 */
 	protected void updateMedicalCombo() {
-		comboBox_3.removeAllItems();
+		comboBoxHealItem.removeAllItems();
 		outpost.getShopList().buildCurrentItems();
 		ArrayList<Consumable> healList = outpost.getShopList().getMedicalItems();
 		for (Consumable item :healList) {
-			comboBox_3.addItem(item);
+			comboBoxHealItem.addItem(item);
 		}
 	}
 	
+	/**
+	 * Eat food item on button click. Checks if item exist, gets item and person, attempts action then either eats or fails
+	 */
 	protected void eatFood() {
 		if (comboBox_SelectFood_CrewTab.getItemCount() == 0){
 			printToLog("You have no food. \nThe Space Shop has a selection of snacks for hungry space explorers");
@@ -262,14 +306,17 @@ public class MainScreen {
 	}
 
 	
+	/**
+	 * Use healing item on heal button click. Checks if item exist, gets item and person, attempts action then either heals or fails
+	 */
 	public void useHeal() {
-		if (comboBox_3.getItemCount() == 0){
+		if (comboBoxHealItem.getItemCount() == 0){
 			printToLog("You have no heal items. \nThe friendly Space Shop will have what you need");
 		}
 		else {
 			
 			Person person = (Person) comboBox_Medbay_Select_Crewmember.getSelectedItem();
-			Consumable item = (Consumable) comboBox_3.getSelectedItem();
+			Consumable item = (Consumable) comboBoxHealItem.getSelectedItem();
 			if (person.attemptAction()) {
 				ConsumeItem consume = new ConsumeItem(item, person);
 				String result = consume.consume();
@@ -283,11 +330,17 @@ public class MainScreen {
 		}
 	}
 	
+	/**
+	 * Refresh found pieces label
+	 */
 	public void refreshPieces() {
 		String s = "Parts Found: " + initGame.getCurrentPieces() + "/" + initGame.getPieces();
 		labelPieces.setText(s);
 	}
 	
+	/**
+	 * Refresh owned items labels
+	 */
 	public void refreshOwnedItems() { 
 		String h = "";
 		String f = "";
@@ -310,6 +363,9 @@ public class MainScreen {
 		
 	}
 	
+	/**
+	 * Refresh ship health label
+	 */
 	public void refreshShipHealth() {
 		
 		String hullFormat = "Ship Hull: %.0f/100";
@@ -322,6 +378,9 @@ public class MainScreen {
 		ShipTabSheildsValue.setText(shieldText);
 	}
 	
+	/**
+	 * Repairs ship hull on button click. Gets selected crew member, attempts action and either repairs or fails
+	 */
 	public void repairHullClick() {
 		Person person = (Person) ShipTabAsignRepairman.getSelectedItem();
 		String result = "";
@@ -338,6 +397,9 @@ public class MainScreen {
 		printToLog(result);
 	}
 	
+	/**
+	 * Repairs ship shield on button click. Gets selected crew member, attempts action and either repairs or fails
+	 */
 	public void repairShieldClick() {
 		Person person = (Person) ShipTabAsignRepairman.getSelectedItem();
 		String result = "";
@@ -353,6 +415,9 @@ public class MainScreen {
 		printToLog(result);
 	}
 	
+	/**
+	 * Refresh the space cash label after state change
+	 */
 	public void refreshMoney() {
 		String s = "Space Cash: $" + initGame.getMoney();
 		lblSpaceCash.setText(s);
@@ -360,6 +425,9 @@ public class MainScreen {
 
 
 	
+	/**
+	 * Update the parts found labels if a piece is found
+	 */
 	public void updatePartsFound() {
 		String s = "Parts Found: " + initGame.getCurrentPieces() + "/" + initGame.getPieces();
 		lblPartsFound.setText(s);
@@ -367,7 +435,9 @@ public class MainScreen {
 		lblPartsRemainingOnPlanetLabel.setText(parts);
 	}
 
-	// try and use this sparingly. prefer to call each method individually
+	/**
+	 * Updates all necessary labels after a state change, and checks for game over
+	 */
 	public void updateAll() {
 		refreshOwnedItems();
 		refreshCrewStatus();
@@ -385,19 +455,13 @@ public class MainScreen {
 		
 	}
 
-//	public String[] buildCrewArrayForCombos() {
-//		ArrayList<Person> crewArrayList = crew.getCrewMemberArray();
-//		String[] crewMembers = new String[crewArrayList.size()];
-//		for (int i=0; i < crewArrayList.size(); i++ ) {
-//			crewMembers[i] = crewArrayList.get(i).toString();
-//		}
-//		return crewMembers;
-//	}
-	// its
+	/**
+	 * Builds the JComboBox crew members. On rebuild, skips dead crew
+	 */
 	public void buildCrewMemberCombos() {
 		assignCrewMemberSearchPartsComboBox.removeAllItems();
 		comboBox.removeAllItems();
-		comboBox_1.removeAllItems();
+		comboBoxPilot2.removeAllItems();
 		comboBox_Medbay_Select_Crewmember.removeAllItems();
 		comboBox_SelectCrewmember_CrewTab.removeAllItems();
 		ShipTabAsignRepairman.removeAllItems();
@@ -407,20 +471,22 @@ public class MainScreen {
 			if (!person.isDead()) {
 				assignCrewMemberSearchPartsComboBox.addItem(person);
 				comboBox.addItem(person);
-				comboBox_1.addItem(person);
+				comboBoxPilot2.addItem(person);
 				comboBox_Medbay_Select_Crewmember.addItem(person);
 				comboBox_SelectCrewmember_CrewTab.addItem(person);
 				ShipTabAsignRepairman.addItem(person);
 			}
 		}
-		if (comboBox_1.getItemCount() == 0) {
+		if (comboBoxPilot2.getItemCount() == 0) {
 			initGame.gameOver("Everyone's dead");
 			updateAll();
 		}
 		
 	}
 
-	// this could separated so shop can have subtotal
+	/**
+	 * Gets the shop spinner values and attempts to buy selected items
+	 */
 	public void getSpinnerValues() {
 		ArrayList<Integer> shopItems = new ArrayList<>();
 		for (JSpinner spinner: this.spinnerArrayList) {
@@ -436,16 +502,27 @@ public class MainScreen {
 		updateItemCombos();
 
 	}
+	/**
+	 * Resets the shop purchase spinners to 0
+	 */
 	public void resetSpinnerValues() {
 		for (JSpinner spinner: this.spinnerArrayList) {
 			spinner.setValue(0);
 		}
 	}
+	/**
+	 * Print message to scollable log
+	 * 
+	 * @param s          String message to print
+	 */
 	public void printToLog(String s) {
 		String currentLog = ScrollableGameLog.getText();
 		ScrollableGameLog.setText(currentLog + s + "\n");
 		
 	}
+	/**
+	 * Get selected crew member and search the planet
+	 */
 	private void searchPlanet() {
 		String name = assignCrewMemberSearchPartsComboBox.getSelectedItem().toString();
 		String searchResult = initGame.searchPlanet(name);
@@ -453,9 +530,12 @@ public class MainScreen {
 		updateAll();
 	}
 	
+	/**
+	 * Get 2 selected pilots and travel to a new planet
+	 */
 	protected void travelToPlanet() {
 		Person pilot1 = (Person) comboBox.getSelectedItem();
-		Person pilot2 = (Person) comboBox_1.getSelectedItem();
+		Person pilot2 = (Person) comboBoxPilot2.getSelectedItem();
 		if (pilot1 == pilot2) {
 			printToLog("Select two pilots.");
 		}
@@ -469,6 +549,9 @@ public class MainScreen {
 
 		
 	
+	/**
+	 * Initialize the contents of the frame.
+	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBackground(Color.LIGHT_GRAY);
@@ -815,9 +898,9 @@ public class MainScreen {
 		comboBox.setBounds(51, 95, 247, 24);
 		TravelPanel.add(comboBox);
 
-		comboBox_1 = new JComboBox<Person>();
-		comboBox_1.setBounds(348, 95, 280, 24);
-		TravelPanel.add(comboBox_1);
+		comboBoxPilot2 = new JComboBox<Person>();
+		comboBoxPilot2.setBounds(348, 95, 280, 24);
+		TravelPanel.add(comboBoxPilot2);
 
 		JLabel lblCockpitImage = new JLabel("HoldingText for Cockpit Image");
 		lblCockpitImage.setIcon(new ImageIcon(MainScreen.class.getResource("/images/hyperspace.jpg")));
@@ -865,15 +948,15 @@ public class MainScreen {
 		lblSelectHealingItem.setBounds(24, 535, 301, 24);
 		MedbayPanel.add(lblSelectHealingItem);
 
-		comboBox_3 = new JComboBox<Consumable>();
-		comboBox_3.addActionListener(new ActionListener() {
+		comboBoxHealItem = new JComboBox<Consumable>();
+		comboBoxHealItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				displayHealItemInfo();
 			}
 		});
-		comboBox_3.setToolTipText("Select Crewmember\n");
-		comboBox_3.setBounds(12, 571, 313, 24);
-		MedbayPanel.add(comboBox_3);
+		comboBoxHealItem.setToolTipText("Select Crewmember\n");
+		comboBoxHealItem.setBounds(12, 571, 313, 24);
+		MedbayPanel.add(comboBoxHealItem);
 
 		JLabel lbl_MedicalBay_Image = new JLabel("Nice Big medical bay image");
 		lbl_MedicalBay_Image.setIcon(new ImageIcon(MainScreen.class.getResource("/images/medbaysnip.png")));
@@ -1083,17 +1166,4 @@ public class MainScreen {
 
 	}
 
-
-
-
-
-	public void closeWindow() {
-		frame.dispose();
-		
-	}
-
-	public void updatePlanetName(String planetName) {
-		lblCurrentPlanetName.setText(planetName);
-		
-	}
 }

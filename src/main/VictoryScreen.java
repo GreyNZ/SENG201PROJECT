@@ -105,10 +105,10 @@ public class VictoryScreen {
 		frame.getContentPane().add(lblImage);
 		
 		
-		lblScore = new JLabel("Your score was:   " + manager.getInitGame().getPoints());
+		lblScore = new JLabel(String.format("You found %s/%s parts in %s days, Your score was: %s", manager.getInitGame().getCurrentPieces(), manager.getInitGame().getPieces(), manager.getInitGame().getCurrentDay(), manager.getInitGame().getPoints()));
 		lblScore.setHorizontalAlignment(SwingConstants.CENTER);
 		lblScore.setFont(new Font("Dialog", Font.BOLD, 30));
-		lblScore.setBounds(304, 110, 647, 71);
+		lblScore.setBounds(34, 64, 1133, 105);
 		frame.getContentPane().add(lblScore);
 	}
 

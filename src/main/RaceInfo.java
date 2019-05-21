@@ -1,8 +1,18 @@
 package main;
 
+/**
+ * RaceInfo. Holds and gets the information about each race class
+ * @author Cameron Bodger, Grey Harris
+ *
+ */
 public class RaceInfo {
 	
 	
+	/**
+	 * Gets the information string based on the name of the race using a switch statement.
+	 * @param race        String name of race
+	 * @return string of information about race
+	 */
 	public static String getInfo(String race) {
 		switch (race){
 		case "Human":
@@ -23,6 +33,10 @@ public class RaceInfo {
 	}
 	
 
+	/**
+	 * Get string of bugman info
+	 * @return string of bugman info
+	 */
 	private static String getBugman() {
 		String bugman = "Race: Bugman  \n" + 
 				"\n" + 
@@ -36,6 +50,10 @@ public class RaceInfo {
 		return bugman;
 	}
 	
+	/**
+	 * Get string of human info
+	 * @return string of human info
+	 */
 	private static String getHuman() {
 		String human = "Race: Human \n" + 
 				"\n" + 
@@ -47,6 +65,10 @@ public class RaceInfo {
 		return human;
 	}
 	
+	/**
+	 * Get string of rockman info
+	 * @return string of rockman info
+	 */
 	private static String getRockman() {
 		String rockman = "Race: Rockman \n" + 
 				"\n" + 
@@ -60,6 +82,10 @@ public class RaceInfo {
 		return rockman;
 	}
 	
+	/**
+	 * Get string of grey info
+	 * @return string of grey info
+	 */
 	private static String getGrey() {
 		String grey = "Race: Grey \n" + 
 				"\n" + 
@@ -74,6 +100,10 @@ public class RaceInfo {
 		return grey;
 	}
 	
+	/**
+	 * Get string of gazer info
+	 * @return string of gazer info
+	 */
 	private static String getGazer() {
 		String gazer = "Race: Gazer \n" + 
 				"\n" + 
@@ -89,6 +119,10 @@ public class RaceInfo {
 		return gazer;
 	}
 	
+	/**Get string of gazer info.
+	 * 
+	 * @return string of gazer info 
+	 */
 	private static String getWarbot() {
 		String warbot = "Race: Warbot \n" + 
 				"\n" + 

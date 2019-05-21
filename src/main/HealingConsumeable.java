@@ -1,7 +1,9 @@
 package main;
 
 /**
- * @author c
+ * Healing Consumeable
+ * 
+ * @author Cameron Bodger, Grey Harris
  *
  */
 public class HealingConsumeable extends Consumable {

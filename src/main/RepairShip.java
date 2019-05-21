@@ -2,7 +2,7 @@ package main;
 
 /**
  * Repair the ship
- * @author c
+ * @author Cameron Bodger, Grey Harris
  *
  */
 public class RepairShip {
