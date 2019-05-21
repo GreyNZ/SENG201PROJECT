@@ -1,25 +1,14 @@
 package main;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
-import java.awt.GridLayout;
-import javax.swing.JTextField;
 import javax.swing.JPanel;
 import java.awt.Color;
-import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JList;
-import javax.swing.JProgressBar;
 import javax.swing.JTabbedPane;
 import javax.swing.JScrollPane;
 import javax.swing.JScrollBar;
-import java.awt.Component;
-import java.awt.Container;
-
-import javax.swing.Box;
 import java.awt.GridBagLayout;
 //import com.jgoodies.forms.layout.FormLayout;
 //import com.jgoodies.forms.layout.ColumnSpec;
@@ -29,8 +18,6 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerListModel;
-import javax.swing.JTable;
 import javax.swing.JComboBox;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.ImageIcon;
@@ -295,12 +282,15 @@ public class MainScreen {
 		else {
 			Person person = (Person) comboBox_SelectCrewmember_CrewTab.getSelectedItem();
 			Consumable item = (Consumable) comboBox_SelectFood_CrewTab.getSelectedItem();
-			if (person.attemptAction()) {
+			if (person.attemptSleepOrEat()) {
 				ConsumeItem consume = new ConsumeItem(item, person);
 				String result = consume.consume();
 				outpost.getShopList().removeItem(item.getName());
 				printToLog(result);
 				updateFoodCombo();
+			}
+			else {
+				printToLog(person.failedAction());
 			}
 		}
 	}
@@ -325,7 +315,7 @@ public class MainScreen {
 				updateMedicalCombo();
 			}
 			else {
-				printToLog("No remaining actions");
+				printToLog(person.failedAction());
 			}
 		}
 	}
@@ -978,7 +968,7 @@ public class MainScreen {
 		CrewPanel.add(comboBox_SelectCrewmember_CrewTab);
 		
 		
-		comboBox_SelectFood_CrewTab = new JComboBox();
+		comboBox_SelectFood_CrewTab = new JComboBox<Consumable>();
 		comboBox_SelectFood_CrewTab.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				displayFoodInfo();

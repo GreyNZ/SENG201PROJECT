@@ -385,13 +385,13 @@ public class Person {
 	 * @return string of the sleep result
 	 */
 	public String personSleep() {
-		boolean canSleep = attemptAction();
+		boolean canSleep = attemptSleepOrEat();
 		if (canSleep) {
 			this.personVigour = this.person_max_vigour;
 			return personName + " had a nice rest.";
 		}
 		else {
-			return "Not enough action points";
+			return failedAction();
 		}
 	}
 	
@@ -492,7 +492,7 @@ public class Person {
 	public boolean attemptAction() {      /// attempts an action if there is actions remaining reduces by 1 and returns true, if not returns false
 		int currentActions = person_actions_remaining;
 		currentActions -= 1;
-		if (currentActions >= 0) {
+		if (currentActions >= 0 && tiredOrHungryCheck()) {
 			person_actions_remaining = currentActions;
 			increaseHungerEndDay();
 			decreaseVigourTravel();
@@ -500,6 +500,44 @@ public class Person {
 		}
 		else {
 			return false;
+		}
+		
+	}
+	
+	
+	/**
+	 * Separate attempt action for sleeping and eating food.
+	 * Can sleep or eat when tired or hungry, at no cost to hunger or vigour
+	 * @return boolean enough action points to sleep or eat
+	 */
+	public boolean attemptSleepOrEat() {      
+		int currentActions = person_actions_remaining;
+		currentActions -= 1;
+		if (currentActions >= 0) {
+			person_actions_remaining = currentActions;
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
+	
+	
+
+	/**
+	 * Checks if person is too tired or hungry to perform the action
+	 * @return {@code true} if not tired or hungry, {@code false} otherwise
+	 */
+	public boolean tiredOrHungryCheck() {
+		if (getHunger() == getMaxHunger()) {
+			return false;
+		}
+		else if (getVigour() <= 0) {
+			return false;
+		}
+		else {
+			return true;
 		}
 		
 	}
@@ -529,7 +567,10 @@ public class Person {
 		if (personVigour <= 0) {
 			failedReason = personName + " is too tired to follow your orders. Let them sleep";
 		}
-		else {
+		else if (getHunger() == getMaxHunger()) {
+			failedReason = personName + " needs sustenance";
+		}
+		else{
 			failedReason = "Not enough actions";
 		}
 		return failedReason;

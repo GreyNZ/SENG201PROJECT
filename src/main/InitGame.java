@@ -354,7 +354,7 @@ public class InitGame {
 			}
 		}
 		else {
-			searchResult = name + " has no actions left.";
+			searchResult = crewMember.failedAction();
 		}
 		return searchResult;
 
