@@ -2,12 +2,30 @@ package main;
 
 import java.util.Random;
 
+/**
+ * PlagueSick
+ * @author Grey Harris, Cameron Bodger
+ *
+ */
 public class PlagueSick {
 	
+	/**
+	 * Random number generator
+	 */
 	Random rand = new Random();
+	/**
+	 * Game environment object
+	 */
 	private InitGame initGame;
+	/**
+	 * Crew object
+	 */
 	private Crew crew;
 	
+	/**
+	 * PlagueSick constructor. Calls the spacePlague() method
+	 * @param initGame
+	 */
 	public PlagueSick(InitGame initGame) {
 		this.initGame = initGame;
 		crew = initGame.getCrew();
@@ -15,6 +33,10 @@ public class PlagueSick {
 	}
 	
 	
+	/**
+	 * Uses RNG to select a crew member to be plagued.<p>
+	 * 10% chance of a second plague victim
+	 */
 	private void spacePlague() {
 		Integer plaguedIndex = rand.nextInt(crew.getCrewSize());
 		Person plaguedGuy = crew.getCrewMemberArray().get(plaguedIndex);
@@ -38,6 +60,11 @@ public class PlagueSick {
 		}
 	}
 	
+	/**
+	 * Checks if crew member can be plagued. Rockman and Warbot cannot be plagued
+	 * @param person        Person crew member to be plague checked
+	 * @return {@code true} if can be plagued, {@code false} otherwise
+	 */
 	private boolean canBePlagued(Person person) {
 		if (person.getRace().equals("Rockman") || person.getRace().equals("Warbot")){
 			return false;

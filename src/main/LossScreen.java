@@ -12,46 +12,46 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 
+/**
+ * Loss Screen
+ * 
+ * @author Grey Harris, Cameron Bodger
+ *
+ */
 public class LossScreen {
 
+
 	JFrame frame;
+	/**
+	 * {@code WindowManager} handles opening closing windows
+	 */
 	private WindowManager manager;
+	/**
+	 * JLabel displays player score
+	 */
 	private JLabel lblScore;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LossScreen window = new LossScreen();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
 	
+	/**
+	 * LossScreen constructor
+	 * @param incomingManager    WindowManager handles opening closing windows
+	 */
 	public LossScreen(WindowManager incomingManager) {
 		manager = incomingManager;
 		initialize();
 		frame.setVisible(true);
 	}
 	
-	public LossScreen() {
-		initialize();
-	}
-	
+
+	/**
+	 * Closes the window by disposing the JFrame
+	 */
 	public void closeWindow() {
 		frame.dispose();
 	}
 
+	/**
+	 * Starts a new game
+	 */
 	public void newGame() {
 		InitGame newGame = new InitGame();
 		Game game = new Game();

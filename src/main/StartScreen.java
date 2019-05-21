@@ -11,12 +11,25 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Start Screen to begin the game
+ * @author Cameron Bodger, Grey Harris
+ *
+ */
 public class StartScreen {
 
+
 	JFrame frame;
+	/**
+	 * {@code WindowManager} handles opening closing windows
+	 */
 	private WindowManager manager;
 
 	
+	/**
+	 * StartScreen constructor. Creates the window
+	 * @param incomingManager    WindowManager handles opening closing windows
+	 */
 	public StartScreen(WindowManager incomingManager) {
 		manager = incomingManager;
 		initialize();
@@ -24,16 +37,14 @@ public class StartScreen {
 	}
 	
 	
+	/**
+	 * Closes the window by disposing the JFrame
+	 */
 	public void closeWindow() {
 		frame.dispose();
 	}
 
-	/**
-	 * Create the application.
-	 */
-	public StartScreen() {
-		initialize();
-	}
+
 
 	/**
 	 * Initialize the contents of the frame.

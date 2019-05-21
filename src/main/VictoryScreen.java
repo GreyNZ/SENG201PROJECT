@@ -12,45 +12,45 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 
+/**
+ * Victory Screen
+ * @author Cameron Bodger, Grey Harris
+ *
+ */
 public class VictoryScreen {
 
+
 	JFrame frame;
+	/**
+	 * {@code WindowManager} handles opening closing windows
+	 */
 	private WindowManager manager;
+	/**
+	 * JLabel displays player score
+	 */
 	private JLabel lblScore;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VictoryScreen window = new VictoryScreen();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
-	 * Create the application.
+	 * VictoryScreen constructor
+	 * @param incomingManager    WindowManager handles opening closing windows
 	 */
-	
 	public VictoryScreen(WindowManager incomingManager) {
 		manager = incomingManager;
 		initialize();
 		frame.setVisible(true);
 	}
 	
-	public VictoryScreen() {
-		initialize();
-	}
-	
+	/**
+	 * Closes the window by disposing the JFrame
+	 */
 	public void closeWindow() {
 		frame.dispose();
 	}
+	/**
+	 * Starts a new game
+	 */
 	public void newGame() {
 		InitGame newGame = new InitGame();
 		Game game = new Game();
@@ -59,6 +59,7 @@ public class VictoryScreen {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBackground(Color.LIGHT_GRAY);
@@ -103,12 +104,6 @@ public class VictoryScreen {
 		lblImage.setBounds(85, 167, 996, 510);
 		frame.getContentPane().add(lblImage);
 		
-//		lblCrewStatsLabelMainScreen = new JLabel("Holding Info For Crew Details");
-//		lblCrewStatsLabelMainScreen.setBounds(0, 72, 122, 144);
-//		lblCrewStatsLabelMainScreen.setVerticalAlignment(SwingConstants.TOP);
-//		panel.add(lblCrewStatsLabelMainScreen);
-//		refreshedCrewStats = lblCrewStatsLabelMainScreen;
-//		refreshCrewNameLabel(); //note to push
 		
 		lblScore = new JLabel("Your score was:   " + manager.getInitGame().getPoints());
 		lblScore.setHorizontalAlignment(SwingConstants.CENTER);

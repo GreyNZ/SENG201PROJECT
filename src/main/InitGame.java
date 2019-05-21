@@ -3,7 +3,8 @@ package main;
 import java.util.Random;
 
 /**
- * @author c
+ * InitGame. The game environment
+ * @author Cameron Bodger, Grey Harris
  *
  */
 public class InitGame {

@@ -14,11 +14,23 @@ import java.util.Scanner;
  */
 public class Crew {
 	
+	/**
+	 * Stores the Person objects in an ArrayList
+	 */
 	private ArrayList<Person> crewMemberArray;
 
-
+	
+	/**
+	 * The number of crew members on board
+	 */
 	private int crewSize = 0;
+	/**
+	 * The ship object
+	 */
 	private Ship ship;
+	/**
+	 * The game environment
+	 */
 	private InitGame initGame;
 
 
@@ -73,6 +85,9 @@ public class Crew {
 		
 	}
 	
+	/**
+	 * Adds the default crew to the crew member array. Used for quick start
+	 */
 	public void buildDefaultCrew() {
 		Person bruce = new Human("Bruce", 0);
 		Person pancakes = new Warbot("Pancakes", 1);
@@ -86,16 +101,35 @@ public class Crew {
 	}
 	
 	
+	/**
+	 * Adds new {@code Person} object to the crew member array.
+	 * Takes name and race as input and creates a new Person object by calling
+	 *  {@code Crew.addCrewMember}, increments crew size then adds the person to the crew member arraylist 
+	 * 
+	 * @param name	 String name of the new crew member
+	 * @param race   String race of the new crew member
+	 */
 	public void addCrewMember(String name, String race) {
-	Person newMember = createCrewMember(name, this.crewSize, race);
-	this.crewSize += 1;
-	this.crewMemberArray.add(newMember);
+		Person newMember = createCrewMember(name, this.crewSize, race);
+		this.crewSize += 1;
+		this.crewMemberArray.add(newMember);
 }
 	
+	/**
+	 * Gets the {@code Person} object from the crewMemberArray, based on the index
+	 * @param i         int index of the person to return
+	 * @return          the person object from the given index in crewMemberArray
+	 */
 	public String getMemberName(int i) {
 		return this.crewMemberArray.get(i).getName();
 	}
 	
+	/**
+	 * Gets the {@code Person} object from the crewMemberArray, based on the name
+	 * @param name      String name of the person to return
+	 * @return          the person object with the given name in crewMemberArray
+	 * @return
+	 */
 	public Person getMember(String name) {
 		for (Person person : this.crewMemberArray) {
 			if (person.getName() == name) {
@@ -105,16 +139,32 @@ public class Crew {
 		return this.crewMemberArray.get(0);	
 	}	
 	
+	/**
+	 * Gets the ship object
+	 * @return        {@code Ship} object
+ 	 */
 	public Ship getShip() {
 		return this.ship;
 	}
+	/**
+	 * Gets the crew member ArrayList
+	 * @return     The ArrayList containing the {@code Person} objects
+	 */
 	public ArrayList<Person> getCrewMemberArray() {
 		return this.crewMemberArray;
 	}
+	/**
+	 * Gets how many crew members are on board
+	 * @return int the size of the crew
+	 */
 	public Integer getCrewSize() {
 		return this.crewSize;
 	}
-	// testing removing dead person from array
+	
+	/**
+	 * Takes person object who has died and warns the player by printing to game log
+	 * @param person    Person who has died
+	 */
 	public void sendDeath(Person person) {
 		if (!person.alreadLabelledDead()) {
 			String s = person.getName() +" has died!";
@@ -125,6 +175,9 @@ public class Crew {
 	}
 	
 	// for when the pirates gank you with no item
+	/**
+	 * If pirates attack when player has no items, they attack the crew for 40 hp each
+	 */
 	public void beatUpCrew() {
 		for (Person person : crewMemberArray) {
 			boolean death = person.decreaseHealth(40);
@@ -135,6 +188,10 @@ public class Crew {
 		
 	}
 
+	/**
+	 * Applies the end of day changes to each crew member, adding any status changes to a string which is returned.
+	 * @return String s any status changes that crew members experienced ending the day
+	 */
 	public String endDayActions() {
 		String s = "";
 		for (Person person: crewMemberArray) {
@@ -143,6 +200,11 @@ public class Crew {
 		return s;
 	}
 
+	/**
+	 * Calculates points scored related to crew members
+	 * 
+	 * @return
+	 */
 	public int crewPoints() {
 		int points = 0;
 		for (Person person : crewMemberArray) {
@@ -155,6 +217,9 @@ public class Crew {
 	}
 	
 	// for new game screen, can quick start after already selecting members
+	/**
+	 * Removes all {@code Person} objects from the crewMemberArray. Used for resetting the ArrayList before quick start.
+	 */
 	public void destroyCrew() {
 		if (crewSize > 0) {
 			crewMemberArray = new ArrayList<Person>();

@@ -18,55 +18,76 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import javax.swing.JTextArea;
 
+/**
+ * NewGameScreen
+ * @author Cameron Bodger, Grey Harris
+ *
+ */
 public class NewGameScreen {
 
-	JFrame frame;
-	private JTextField txtEnterShipName;
-	private JTextField txtEnterCrewMembers;
-	private WindowManager manager;
-	private InitGame initGame;
-	private Crew crew;
-	private String[] raceArray;
-	private Random rand = new Random();
-	private JComboBox comboBox;
-	private JTextArea textField;
-	private int maxCrewSize = 4;
-	private JSpinner spinner_GameLength;
 
+	JFrame frame;
 
 	/**
-	 * Launch the application.
+	 * {@code WindowManager} handles opening closing windows
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NewGameScreen window = new NewGameScreen();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private WindowManager manager;
+	/**
+	 * The game environment
+	 */
+	private InitGame initGame;
+	/**
+	 * The Crew object
+	 */
+	private Crew crew;
+	/**
+	 * Maximum crew size is 4
+	 */
+	private int maxCrewSize = 4;
+	/**
+	 * Array of selectable races 
+	 */
+	private String[] raceArray;
+	/**
+	 * Random number generator
+	 */
+	private Random rand = new Random();
+	/**
+	 * Spinner to select number of days
+	 */
+	private JSpinner spinner_GameLength;
+	/**
+	 * TextField to enter ship name
+	 */
+	private JTextField txtEnterShipName;
+	/**
+	 * TextField to enter crew member name
+	 */
+	private JTextField txtEnterCrewMembers;
+	/**
+	 * Displays information about the races, and error messages
+	 */
+	private JTextArea textField;
+	/**
+	 * Combobox to select race
+	 */
+	private JComboBox<String> comboBox;
+
+
+
+
+
 	
-	public void launchNewGameScreen() {
-		NewGameScreen newGame = new NewGameScreen();
-		newGame.frame.setVisible(true);
-	}
-	
-	public void launchStartScreen() {
-		StartScreen StartScreen = new StartScreen();
-		StartScreen.frame.setVisible(true);
-	}
-	
+	/**
+	 * Closes the window by disposing the JFrame
+	 */
 	public void closeWindow() {
 		frame.dispose();
 	}
 
 	/**
 	 * Create the application.
-	 * @param windowManager 
+	 * @param windowManager          {@code WindowManager} handles opening closing windows
 	 */
 	public NewGameScreen(WindowManager windowManager) {
 		manager = windowManager;
@@ -76,12 +97,11 @@ public class NewGameScreen {
 		initialize();
 		frame.setVisible(true);
 	}
-	//Old constructor for testing 
-	public NewGameScreen() {
-		initialize();
-		frame.setVisible(true);
-	}
+
 	
+	/**
+	 * Checks if start game variables are set. Either displays what needs to be fixed, or starts the game
+	 */
 	public void checkStart() {
 		String shipName = txtEnterShipName.getText();
 		if (shipName.equals("Please enter a ship name 3-12 characters")) {
@@ -106,6 +126,9 @@ public class NewGameScreen {
 	}
 	
 	
+	/**
+	 * Sets the default game values for quick play
+	 */
 	public void setDefaultValues() {
 		initGame.setShipName("The Enterprise");
 		initGame.setGameLength(3);
@@ -113,6 +136,9 @@ public class NewGameScreen {
 		initGame.getCrew().buildDefaultCrew();
 	}
 	
+	/**
+	 * Adds a person to the crew
+	 */
 	public void addMember() {
 		if (crew.getCrewSize() < 4) {
 			String race = (String) comboBox.getSelectedItem();
@@ -134,12 +160,18 @@ public class NewGameScreen {
 		
 	}
 	
+	/**
+	 * Display information about the race classes when selected in combobox
+	 */
 	private void displayRaceInfo() {
 		String race = (String) comboBox.getSelectedItem();
 		String info = RaceInfo.getInfo(race);
 		textField.setText(info);
 	}
 	
+	/**
+	 * Adds a randomly generated person to the crew
+	 */
 	public void addRandomCrewMember() {
 		if (crew.getCrewSize() < maxCrewSize) {
 			String name = randomName();
@@ -152,9 +184,13 @@ public class NewGameScreen {
 		}
 	}
 	
+	/**
+	 * Adds the names of the races to the race array
+	 */
 	public void buildRaceArray() {
 		raceArray = new String[] {"Human", "Rockman", "Grey", "Bugman", "Gazer", "Warbot"};
 	}
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -255,7 +291,7 @@ public class NewGameScreen {
 		btnDefaultCrewmember.setFont(new Font("Dialog", Font.BOLD, 14));
 		frame.getContentPane().add(btnDefaultCrewmember);
 		
-		comboBox = new JComboBox(raceArray);
+		comboBox = new JComboBox<String>(raceArray);
 		comboBox.setBounds(12, 185, 276, 24);
 		frame.getContentPane().add(comboBox);
 		comboBox.addActionListener (new ActionListener () {
@@ -291,13 +327,27 @@ public class NewGameScreen {
 		textField.setColumns(10);
 	}
 	
+	/**
+	 * Uses RNG to select a random race
+	 * @return randomly selected race
+	 */
 	protected String randomRace() {
 		int index = rand.nextInt(6);
 		return raceArray[index];
 	}
 
+	/**
+	 * Uses RNG to select a random name from an array of names
+	 * @return random name string
+	 */
 	private String randomName() {
-		String[] names = new String[]{"Talisha", "Lulu", "Sid", "Gracia", "Tomas", "Jamison", "Christeen", "Tammera", "Fatima", "Alec", "Slyvia", "Oscar", "Evelia", "Lynetta", "Elly", "Merlene", "Shaunna", "Artie", "Shanika", "Fred", "Maisha", "Kenton", "Lynell", "Sha", "Shantae", "Vina", "Laure", "Treena", "Belkis", "Terry", "Carlee", "Fernanda", "Sharon", "Birgit", "Nenita", "Jenee", "Laurie", "Stephenie", "Misty", "Mitchell", "Felix", "Ailene", "Jonie", "Amelia", "Jannet", "Dorathy", "Stewart", "Lauran", "Lucila", "Manual"};
+		String[] names = new String[]{"Talisha", "Lulu", "Sid", "Gracia", 
+				"Tomas", "Jamison", "Christeen", "Tammera", "Fatima", "Alec", 
+				"Slyvia", "Oscar", "Evelia", "Lynetta", "Elly", "Merlene", "Shaunna", 
+				"Artie", "Shanika", "Fred", "Maisha", "Kenton", "Lynell", "Sha", "Shantae", 
+				"Vina", "Laure", "Treena", "Belkis", "Terry", "Carlee", "Fernanda", "Sharon", 
+				"Birgit", "Nenita", "Jenee", "Laurie", "Stephenie", "Misty", "Mitchell", "Felix", 
+				"Ailene", "Jonie", "Amelia", "Jannet", "Dorathy", "Stewart", "Lauran", "Lucila", "Manual"};
 		int index = rand.nextInt(50);
 		return names[index];
 

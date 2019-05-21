@@ -39,7 +39,7 @@ public class RaceInfo {
 	private static String getHuman() {
 		String human = "Race: Human \n" + 
 				"\n" + 
-				"Home Planet: Dirt  “Advised this is a translation error” \n" + 
+				"Home Planet: Dirt  (Advised this is a translation error) \n" + 
 				"\n" + 
 				"Skills and Abilities: Totally average in every way. They are the base the rest of the universe rates itself. \n" + 
 				"\n" + 
@@ -53,7 +53,7 @@ public class RaceInfo {
 				"Home Planet: Europa Three \n" + 
 				"\n" + 
 				"Skills and Abilities: Very hardy and easy going folk, Rockmen are slow to anger but terrifying "
-				+ "if you manage to piss them off.  Rockmen struggle to repair other races “puny tech” "
+				+ "if you manage to piss them off.  Rockmen struggle to repair other races 'puny tech' "
 				+ "but tire far slower than others.  \n" + 
 				"\n" + 
 				"Misc: Don’t spit on the ground you might be spitting on his mom..... ";
@@ -67,9 +67,9 @@ public class RaceInfo {
 				"\n" + 
 				"Skills and Abilities: Incredibly intelligent race who replace their young "
 				+ "wasted empathetic brain areas with cybernetic enhancements at birth. "
-				+ "Grey’s repair at twice the speed of other races due to their innate ability to “feel” where technology is hurting. \n" + 
+				+ "Grey's repair at twice the speed of other races due to their innate ability to 'feel' where technology is hurting. \n" + 
 				"\n" + 
-				"Misc: Grey’s are fabled in human story telling for abducting people and "
+				"Misc: Grey's are fabled in human story telling for abducting people and "
 				+ "inserting probes in unmentionable places. But come on you cant hold that one weird guy against all of us? ";
 		return grey;
 	}
@@ -98,7 +98,7 @@ public class RaceInfo {
 				+ "protect you rest assured you are safe, if not you are facing a never "
 				+ "tiring machine that feels no fear or hunger. On the up side they are a bit dumb. \n" + 
 				"\n" + 
-				"Misc: Don’t send it to search for parts, you will be lucky if it finds its way back to the ship.";
+				"Misc: Don't send it to search for parts, you will be lucky if it finds its way back to the ship.";
 		return warbot;
 	}
 	
