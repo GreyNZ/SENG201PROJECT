@@ -10,7 +10,7 @@ package main;
  *
  *Skills and Abilities: A verifiable killing machine. If it is programed to protect you rest assured you are safe, if not you are facing a never tiring machine that feels no fear or hunger. On the up side they are a bit dumb. 
  *<p>
- *Misc: Don’t send it to search for parts, you will be lucky if it finds its way back to the ship.
+ *Misc: Donï¿½t send it to search for parts, you will be lucky if it finds its way back to the ship.
  * 
  * @author Grey Harris, Cameron Bodger
  *
@@ -65,7 +65,6 @@ public class Warbot extends Person {
 	 */
 	@Override 
 	public void increaseHunger(int increase) {  
-		int currentHunger = this.person_hunger;
-		this.person_hunger = currentHunger; 
+		this.person_hunger = 0; 
 	}
 }

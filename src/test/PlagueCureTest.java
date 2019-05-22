@@ -29,5 +29,23 @@ class PlagueCureTest {
 		assertEquals((int)100, (int)item.getValue());
 	}
 	
+	@Test
+	public void healingTest() {
+		PlagueCure item = new PlagueCure();
+		assertEquals((int)0, (int)item.getHealing());
+	}
+	
+	@Test
+	public void namingTest() {
+		PlagueCure item = new PlagueCure();
+		assertEquals((String)"PlagueCure", (String)item.toString());
+	}
+	@Test
+	public void toLongStringTest() {
+		PlagueCure item = new PlagueCure();
+		assertEquals((String)item.toLongString(), (String)item.toLongString());
+	}
+	
+
 
 }
