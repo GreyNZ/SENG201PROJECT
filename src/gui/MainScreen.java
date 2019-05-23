@@ -535,8 +535,8 @@ public class MainScreen {
 	 * Get selected crew member and search the planet
 	 */
 	private void searchPlanet() {
-		String name = assignCrewMemberSearchPartsComboBox.getSelectedItem().toString();
-		String searchResult = initGame.searchPlanet(name);
+		Person guy = (Person) assignCrewMemberSearchPartsComboBox.getSelectedItem();
+		String searchResult = initGame.searchPlanet(guy);
 		printToLog(searchResult);
 		updateAll();
 	}
@@ -1037,7 +1037,8 @@ public class MainScreen {
 		CrewPanel.add(LblCrewTabHeader);
 		
 		textAreaCrewStatus = new JTextArea();
-		textAreaCrewStatus.setBounds(12, 52, 635, 387);
+		textAreaCrewStatus.setFont(new Font("Liberation Mono", Font.PLAIN, 12));
+		textAreaCrewStatus.setBounds(12, 52, 635, 340);
 		CrewPanel.add(textAreaCrewStatus);
 		
 		lblFoodInfo = new JLabel("");

@@ -238,6 +238,7 @@ public class NewGameScreen {
 		JButton btnResetScreen = new JButton("Reset Game");
 		btnResetScreen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				crew.destroyCrew();
 				manager.launchNewGameScreen();
 				closeWindow();
 			}

@@ -158,13 +158,10 @@ public class Person {
 	 * @return formatted string of the status of the crew member
 	 */
 	public String getPersonStatus() {
-		Integer spaceValue = 20;
-		String spacing = new String(new char[spaceValue]).replace("\0", " ");
-		String status = "%s" + spacing + "%s" + spacing +"%s/%s"+ spacing +"%s/%s"+ spacing + "%s\n\n";
+		String status = "%-17s%-17s%s/%-17s%s/%-17s%s%n\n\n";
 		status = String.format(status, personName, personRace, person_hunger, 
 				person_max_hunger, personVigour, person_max_vigour, getStatus() );
-		/// more to come
-		return status;
+		return "\n"+status;
 	}
 	
 

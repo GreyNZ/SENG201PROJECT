@@ -228,6 +228,7 @@ public class Crew {
 	public void destroyCrew() {
 		if (crewSize > 0) {
 			crewMemberArray = new ArrayList<Person>();
+			crewSize = 0;
 		}
 		
 	}

@@ -320,8 +320,8 @@ public class InitGame {
 	 * @param name     String the crew members name
 	 * @return The String result of the search
 	 */
-	public String searchPlanet(String name) {
-		Person crewMember = crew.getMember(name);
+	public String searchPlanet(Person crewMember) {
+//		Person crewMember = crew.getMember(name);
 		Integer foundNum = rand.nextInt(26);
 		String searchResult = "";
 		if (crewMember.attemptAction()) {
