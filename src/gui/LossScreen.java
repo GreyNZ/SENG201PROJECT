@@ -62,7 +62,7 @@ public class LossScreen {
 	}
 	
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the contents of the frame. 
 	 */
 	private void initialize() {
 		frame = new JFrame();
@@ -91,7 +91,6 @@ public class LossScreen {
 		btnPlayAgain.setFont(new Font("L M Roman Caps10", Font.BOLD, 21));
 		btnPlayAgain.setBounds(12, 689, 231, 71);
 		frame.getContentPane().add(btnPlayAgain);
-		String loss = "You Lose";
 		lblHeader = new JLabel(manager.getInitGame().getCauseOfDeath());
 		lblHeader.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHeader.setFont(new Font("Dialog", Font.BOLD, 66));

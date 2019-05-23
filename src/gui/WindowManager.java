@@ -25,6 +25,7 @@ public class WindowManager {
 	/**
 	 * Creates and initializes the {@link StartScreen}
 	 */
+	@SuppressWarnings("unused")
 	public void launchStartScreen() {
 		StartScreen start = new StartScreen(this);
 		}
@@ -42,6 +43,7 @@ public class WindowManager {
 	/**
 	 * Creates and initializes the {@link NewGameScreen}
 	 */
+	@SuppressWarnings("unused")
 	public void launchNewGameScreen() {
 		NewGameScreen newGame = new NewGameScreen(this);
 	}
@@ -77,6 +79,7 @@ public class WindowManager {
 	 * Launches either {@link VictoryScreen} or {@link LossScreen}
 	 * depending on whether the player has won or lost
 	 */
+	@SuppressWarnings("unused")
 	public void launchGameOverScreen() {
 		if (initGame.hasWonGame()){
 			if (lostalready) {

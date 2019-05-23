@@ -2,12 +2,10 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 
 import main.Ship;
-import person.Person;
 
 class ShipTest {
 	private Ship spaceShip;
@@ -20,7 +18,7 @@ class ShipTest {
 	
 	@Test
 	public void nameTest() {
-		Ship spaceShip = new Ship("lollipop");
+		spaceShip = new Ship("lollipop");
 		//System.out.println(spaceShip.toString());
 		assertEquals("Shipname: lollipop\nShip Health: 100.0\nShip Shield: 100.0", (String)spaceShip.toString());
 	}

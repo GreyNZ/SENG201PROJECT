@@ -2,12 +2,10 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Random;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import person.Human;
 import person.Person;
 
 class PersonTest {
@@ -42,6 +40,7 @@ class PersonTest {
 	@Test
 	public void isDeadTest() {
 		Integer vigour = people.getMaxVigour();
+		vigour -= 1;
 	    assertEquals(false, people.isDead());
 	}
 	

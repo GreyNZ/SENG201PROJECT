@@ -341,7 +341,7 @@ public class MainScreen {
 	}
 	
 	/**
-	 * Refresh owned items labels
+	 * Refresh owned items labels. Reinitializes labels if no item owned
 	 */
 	public void refreshOwnedItems() { 
 		

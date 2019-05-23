@@ -8,8 +8,6 @@ import org.junit.jupiter.api.Test;
 import items.Consumable;
 import items.FoodConsumable;
 import items.HealingConsumeable;
-import person.Gazer;
-import person.Person;
 
 class ConsumableTest {
 
@@ -28,14 +26,15 @@ class ConsumableTest {
 	
 	@Test
 	public void nameTest() {
-		String type1 = cons.getType();
-	    assertEquals(Hcons.toString(), Hcons.toString());
+	    assertNotEquals(cons.getType(), Hcons.toString());
 	}
 	
 	@Test
 	public void StringTest() {
-		String type2 = Hcons.toLongString();
-		String type3 = Fcons.toLongString();
-	    assertEquals(Hcons.getType(), Hcons.getType());
+	    assertNotEquals(Fcons.toLongString(), Hcons.getType());
+	}
+	@Test
+	public void StringTest2() {
+	    assertNotEquals(Fcons.toLongString(), Hcons.toLongString());
 	}
 }

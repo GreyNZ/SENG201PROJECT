@@ -503,6 +503,7 @@ public class InitGame {
 	/**
 	 * Initializes a new {@code PlagueSick} event
 	 */
+	@SuppressWarnings("unused")
 	private void spacePlague() {
 		PlagueSick spacePlague = new PlagueSick(this);
 	}
