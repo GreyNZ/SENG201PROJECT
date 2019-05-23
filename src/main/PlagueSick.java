@@ -2,6 +2,9 @@ package main;
 
 import java.util.Random;
 
+import gui.MainScreen;
+import person.Person;
+
 /**
  * PlagueSick
  * @author Grey Harris, Cameron Bodger

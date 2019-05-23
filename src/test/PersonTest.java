@@ -7,8 +7,8 @@ import java.util.Random;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import main.Human;
-import main.Person;
+import person.Human;
+import person.Person;
 
 class PersonTest {
 

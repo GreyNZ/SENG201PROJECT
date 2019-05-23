@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 //import org.junit.jupiter.params.ParameterizedTest;
 //import org.junit.jupiter.params.provider.ValueSource;
 
-import main.Nanites;
-//import main.HealingConsumeable;
+import items.Nanites;
 
 class NanitesTest {
 //	private HealingConsumeable greyGoo;

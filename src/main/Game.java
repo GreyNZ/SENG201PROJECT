@@ -1,5 +1,6 @@
 package main;
 
+import gui.WindowManager;
 
 /**
  * Starts the game

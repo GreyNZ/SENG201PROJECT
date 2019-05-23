@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import main.Gazer;
-import main.Person;
+import person.Gazer;
+import person.Person;
 
 class GazerTest {
 	private Person gazzie;

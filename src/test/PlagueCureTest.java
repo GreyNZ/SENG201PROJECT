@@ -5,8 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-
-import main.PlagueCure;
+import items.PlagueCure;
 
 
 class PlagueCureTest {

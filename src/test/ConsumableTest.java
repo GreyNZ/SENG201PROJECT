@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import main.Consumable;
-import main.FoodConsumable;
-import main.Gazer;
-import main.HealingConsumeable;
-import main.Person;
+import items.Consumable;
+import items.FoodConsumable;
+import items.HealingConsumeable;
+import person.Gazer;
+import person.Person;
 
 class ConsumableTest {
 

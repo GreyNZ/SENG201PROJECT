@@ -6,8 +6,8 @@ import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import main.Person;
 import main.Ship;
+import person.Person;
 
 class ShipTest {
 	private Ship spaceShip;

@@ -3,8 +3,7 @@ package test;
 import static org.junit.Assert.assertEquals;
 import org.junit.jupiter.api.Test;
 
-
-import main.SpaceSausage;
+import items.SpaceSausage;
 
 
 class SpaceSausageTest {

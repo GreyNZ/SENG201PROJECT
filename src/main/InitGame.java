@@ -2,6 +2,11 @@ package main;
 
 import java.util.Random;
 
+import gui.MainScreen;
+import gui.WindowManager;
+import outpost.Outpost;
+import person.Person;
+
 /**
  * InitGame. The game environment
  * @author Cameron Bodger, Grey Harris
@@ -308,8 +313,8 @@ public class InitGame {
 	 * Searches the planet for a piece.<p>
 	 * Takes a crew member name String as input, then generates a random number between 0-25 to
 	 * corresponding to what item is found 0-8 gets an item, 9 gets nothing, 10-15 gets gold,
-	 * >15 gets the chance to find either a piece or a random junk item. If there are no pieces 
-	 * left to find on the planet and the number > 15, the player is rewarded with an ornate set of 
+	 * greater than 15 gets the chance to find either a piece or a random junk item. If there are no pieces 
+	 * left to find on the planet and the number greater than 15, the player is rewarded with an ornate set of 
 	 * mahogany drawers.
 	 * 
 	 * @param name     String the crew members name
@@ -319,7 +324,6 @@ public class InitGame {
 		Person crewMember = crew.getMember(name);
 		Integer foundNum = rand.nextInt(26);
 		String searchResult = "";
-		System.out.println(foundNum);
 		if (crewMember.attemptAction()) {
 			if (foundNum < 8) {
 				String item = outpost.getItemNameArray().get(foundNum);
@@ -338,9 +342,7 @@ public class InitGame {
 			else {
 				// find piece, update pieces found, decrement pieces left on planet.
 				searchResult = "Found an ornate mahogany set of drawers";
-				System.out.println("Made it here hmmm");
 				if (planet.hasPiece()) {
-					System.out.println("Rolling for piece");
 					boolean roll = crewMember.rollForPiece(rand);
 					if (roll){
 						searchResult = "Found piece!";
@@ -434,7 +436,6 @@ public class InitGame {
 			String s = "Oh no, we're passing through an asteroid belt. Hold on tight";
 			ship.takeDamage(50.0);
 			mainScreen.printToLog(s);
-			System.out.println(s);
 			if (ship.getShipHealth() <= 0) {
 				gameOver("Your ship exploded");
 			}
@@ -447,11 +448,9 @@ public class InitGame {
 	 */
 	public void pirateAttack() {
 		String s = "Pirates are attacking!";
-		System.out.println(s);
 		mainScreen.printToLog(s);
 		String attack = outpost.stealItem();
 		mainScreen.printToLog(attack);
-		System.out.println(attack);
 		
 		
 	}

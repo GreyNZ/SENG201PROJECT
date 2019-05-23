@@ -2,6 +2,14 @@ package main;
 
 import java.util.ArrayList;
 
+import person.Bugman;
+import person.Gazer;
+import person.Grey;
+import person.Human;
+import person.Person;
+import person.Rockman;
+import person.Warbot;
+
 
 
 /**
@@ -76,7 +84,7 @@ public class Crew {
 		case "Warbot":
 			return new Warbot(name, i);
 		default:
-			System.out.println("Invalid selection. Defaulting to human.");
+			//Should never happen
 			return new Human(name, i);
 		}
 		

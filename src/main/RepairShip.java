@@ -1,5 +1,7 @@
 package main;
 
+import person.Person;
+
 /**
  * Repair the ship
  * @author Cameron Bodger, Grey Harris

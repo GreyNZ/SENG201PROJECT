@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import main.Warbot;
-import main.Person;
+import person.Person;
+import person.Warbot;
 
 class WarbotTest {
 	private Person terminator;

@@ -3,8 +3,7 @@ package test;
 import static org.junit.Assert.assertEquals;
 import org.junit.jupiter.api.Test;
 
-
-import main.SpaceCandy;
+import items.SpaceCandy;
 
 
 class SpaceCandyTest {

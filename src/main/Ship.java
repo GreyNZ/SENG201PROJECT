@@ -67,7 +67,7 @@ public class Ship {
 		this.shipHealth -=  damage * shieldModifier;
 		this.lowerShield(damage);
 		if (this.shipHealth <= 0.0) {
-			System.out.println("GAME HECKIN OVER SON");
+			
 		}
 	}
 	
