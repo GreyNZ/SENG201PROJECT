@@ -389,16 +389,21 @@ public class InitGame {
 	 */
 	public boolean travelToNewPlanet(Person pilot1, Person pilot2) {
 		if (pilot1.getActions() > 0 && pilot2.getActions() > 0 ) {
-			this.planet = new Planet();
-			String planetName = planet.getName();
-			mainScreen.updatePlanetName(planetName);
-			asteroidBelt();
-			//random event for testing, remove
-			randomEvent();
-			pilot1.attemptAction();
-			pilot2.attemptAction();
-			mainScreen.printToLog("Made it to planet " + planetName);
-			return true;
+			if (pilot1.tiredOrHungryCheck() && pilot2.tiredOrHungryCheck()) {
+				this.planet = new Planet();
+				String planetName = planet.getName();
+				mainScreen.updatePlanetName(planetName);
+				asteroidBelt();
+				//random event for testing, remove
+				randomEvent();
+				pilot1.attemptAction();
+				pilot2.attemptAction();
+				mainScreen.printToLog("Made it to planet " + planetName);
+				return true;}
+			else {
+				mainScreen.printToLog("Pilots are sleepy. Driving tired is dangerous");
+				return false;
+			}
 		}
 		else {
 			String s = "Not enough actions.";
