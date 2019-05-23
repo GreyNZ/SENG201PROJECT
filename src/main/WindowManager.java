@@ -8,6 +8,7 @@ package main;
  */
 public class WindowManager {
 	
+	boolean lostalready = true;
 
 	private InitGame initGame;
 	
@@ -76,10 +77,17 @@ public class WindowManager {
 	 */
 	public void launchGameOverScreen() {
 		if (initGame.hasWonGame()){
+			if (lostalready) {
 			VictoryScreen victory = new VictoryScreen(this);
+			lostalready = false;
+			}
+			
 	}
 		else {
+			if (lostalready) {
 			LossScreen loss = new LossScreen(this);
+			lostalready = false;
+			}
 		}
 	}
 	/**

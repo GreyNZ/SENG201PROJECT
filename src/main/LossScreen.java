@@ -104,7 +104,7 @@ public class LossScreen {
 		lblImage.setBounds(206, 145, 898, 532);
 		frame.getContentPane().add(lblImage);
 		
-		lblScoreMessage = new JLabel(String.format("You found %s/%s parts using %s days, Your score was: %s", manager.getInitGame().getCurrentPieces(), manager.getInitGame().getPieces(), manager.getInitGame().getCurrentDay() - 1, manager.getInitGame().getPoints())); //note to push
+		lblScoreMessage = new JLabel(String.format("You found %s/%s parts using %s days, Your score was: %s", manager.getInitGame().getCurrentPieces(), manager.getInitGame().getPieces(), manager.getInitGame().getCurrentDay(), manager.getInitGame().getPoints())); //note to push
 		lblScoreMessage.setFont(new Font("Dialog", Font.BOLD, 30));
 		lblScoreMessage.setHorizontalAlignment(SwingConstants.CENTER);
 		lblScoreMessage.setBounds(22, 88, 1166, 71);

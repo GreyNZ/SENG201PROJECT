@@ -1121,6 +1121,8 @@ public class MainScreen {
 		JButton btnEndDay = new JButton("End day");
 		btnEndDay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int day = initGame.getCurrentDay();
+				printToLog("End of day " + day + ".");
 				initGame.endDay();
 				updateAll();
 			}
